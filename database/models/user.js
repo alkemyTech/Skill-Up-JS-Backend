@@ -1,31 +1,58 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      User.belongsTo(models.Role, { foreignKey: 'roleId' });
-    }
-  };
-  User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    avatar: DataTypes.STRING,
-    roleId: DataTypes.INTEGER,
-    deletedAt: {
-      type: DataTypes.STRING
+const { Model, DataTypes, Sequelize } = require('sequelize');
+const { ROLE_TABLE } = require('./role')
+
+const USER_TABLE = 'users';
+
+const UserSchema = {
+  id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    primaryKey: true,
+  },
+  firstName: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'first_name'
+  },
+  lastName: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    field: 'last_name'
+  },
+  email: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    unique: true
+  },
+  password: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  roleId: {
+    field: 'role_id',
+    type: DataTypes.INTEGER,
+    references: {
+      model: ROLE_TABLE,
+      key: 'id'
     },
-  }, {
-    sequelize,
-    timestamps: true,
-    modelName: 'User',
-  });
-  return User;
-};
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  }
+}
+
+class User extends Model {
+  static associate(models) {
+    this.belongsTo(models.Role, {as: 'role'});
+  }
+
+  static config(sequelize) {
+    return {
+      sequelize,
+      tableName: USER_TABLE,
+      modelName: 'User',
+      timestamps: false
+    }
+  }
+}
+
+module.exports = { USER_TABLE, UserSchema, User }
