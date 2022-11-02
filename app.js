@@ -7,6 +7,7 @@ const cors = require('cors')
 require('dotenv').config()
 
 const indexRouter = require('./routes/index')
+const db = require('./database/models')
 
 const port = process.env.PORT || 3000
 
@@ -37,6 +38,7 @@ app.use((err, req, res) => {
   res.render('error')
 })
 
+db.sequelize.sync({ force: false })
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Servidor funcionando en el puerto ${port}`)
