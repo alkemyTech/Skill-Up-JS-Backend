@@ -11,13 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Transaction.belongsTo(models.User, { foreignKey: 'userId' });
+      Transaction.belongsTo(models.Category, { foreignKey: 'categoryId' });
     }
   };
   Transaction.init({
     description: DataTypes.STRING,
     amount: DataTypes.DECIMAL,
     userId: DataTypes.INTEGER,
+    categoryId: DataTypes.INTEGER,
     date: DataTypes.DATE,
+    type: {
+      type: DataTypes.ENUM,
+      values: ['income', 'outcome']
+    },
   }, {
     sequelize,
     paranoid: true,
