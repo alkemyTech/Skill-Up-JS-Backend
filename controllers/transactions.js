@@ -21,7 +21,7 @@ module.exports = {
       next(httpError)
     }
   }),
-  createTransaction: createAsync(async (req, res, next) => {
+  createTransaction: catchAsync(async (req, res, next) => {
     const { amount, description, userId, categoryId, date, type } = req.body;
     if (!amount || !description || !userId || !categoryId || !date || !type) {
       const httpError = createHttpError(
@@ -52,7 +52,7 @@ module.exports = {
       next(httpError)
     }
   }),
-  updateTransaction: createAsync(async (req, res, next) => {
+  updateTransaction: catchAsync(async (req, res, next) => {
     const { userId, categoryId, amount, date } = req.body
     const { id } = req.params;
     if (!amount || !userId || !categoryId || !date) {
@@ -84,7 +84,7 @@ module.exports = {
       next(httpError)
     }
   }),
-  deleteTransaction: createAsync(async (req, res, next) => {
+  deleteTransaction: catchAsync(async (req, res, next) => {
     const { id } = req.params;
 
     try {
