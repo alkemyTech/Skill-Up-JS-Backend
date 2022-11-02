@@ -1,21 +1,12 @@
 'use strict';
+const { AccountSchema, ACCOUNT_TABLE } = require('../models/account');
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
+  up: async (queryInterface) => {
+    await queryInterface.createTable(ACCOUNT_TABLE, AccountSchema);
   },
 
-  down: async (queryInterface, Sequelize) => {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
+  down: async (queryInterface) => {
+    await queryInterface.dropTable(ACCOUNT_TABLE);
   }
 };
