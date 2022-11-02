@@ -28,3 +28,7 @@ exports.createUser = catchAsync(async(req, res, next)=>{
 exports.updateUser = catchAsync(async(req, res, next)=>{
   endpointResponse({res, message: 'NOT IMPLEMENTED: This is an user update controller'})
 })
+
+exports.deleteUser = catchAsync(async(req, res, next)=>{
+  endpointResponse({res, message: 'NOT IMPLEMENTED: This is an user delete controller'})
+})
