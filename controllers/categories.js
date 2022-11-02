@@ -1,11 +1,12 @@
 const { Category } = require('../database/models')
 
-const createCategory = async function(name){
+const createCategory = async function(name, description){
     try{
-      const catEx = await Category.findByPk(name)
+      const catEx = await Category.findByPk(name, description)
       if(catEx){ return catEx}
     else {var cate = await Category.create({
             name: name,
+            description: description
         })
       }
       return cate}
@@ -35,11 +36,12 @@ const getCategories = async function(){
       }
   }
 
-  const modifyCategory = async function(id, name){
+  const modifyCategory = async function(id, name, description){
     try{
         await Category.update(
             {
             name: name,
+            description: description
             },
             {
             where: { id: id },

@@ -6,9 +6,9 @@ const {
 const router = express.Router()
 
 router.post("/categories", async function(req, res){
-    let {name} = req.body
+    let {name, description} = req.body
     try{
-        var cat = await createCategory(name )
+        var cat = await createCategory(name, description )
         res.send("Category created")
     }
     catch(e){
@@ -39,9 +39,9 @@ router.get("/categories/:id", async function(req, res){
 
 router.put("/categories/:id", async function(req,res){
     let{id}=req.params
-    let {name} = req.body
+    let {name, description} = req.body
     try{
-        var cat = await modifyCategory(id, name)
+        var cat = await modifyCategory(id, name, description)
         res.send("Category updated")
     }
     catch(e){
