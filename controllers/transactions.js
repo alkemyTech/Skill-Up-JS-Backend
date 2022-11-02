@@ -5,7 +5,7 @@ const { catchAsync } = require('../helpers/catchAsync')
 
 // example of a controller. First call the service, then build the controller method
 module.exports = {
-  get: catchAsync(async (req, res, next) => {
+  getTransaction: catchAsync(async (req, res, next) => {
     try {
       const response = await Transaction.findAll()
       endpointResponse({
@@ -21,7 +21,7 @@ module.exports = {
       next(httpError)
     }
   }),
-  post: createAsync(async (req, res, next) => {
+  createTransaction: createAsync(async (req, res, next) => {
     const { amount, description, userId, categoryId, date, type } = req.body;
     if (!amount || !description || !userId || !categoryId || !date || !type) {
       const httpError = createHttpError(
@@ -52,7 +52,7 @@ module.exports = {
       next(httpError)
     }
   }),
-  put: createAsync(async (req, res, next) => {
+  updateTransaction: createAsync(async (req, res, next) => {
     const { userId, categoryId, amount, date } = req.body
     const { id } = req.params;
     if (!amount || !userId || !categoryId || !date) {
@@ -84,7 +84,7 @@ module.exports = {
       next(httpError)
     }
   }),
-  delete: createAsync(async (req, res, next) => {
+  deleteTransaction: createAsync(async (req, res, next) => {
     const { id } = req.params;
 
     try {
