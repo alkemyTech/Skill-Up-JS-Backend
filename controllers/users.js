@@ -22,5 +22,9 @@ exports.get = catchAsync(async (req, res, next) => {
 })
 
 exports.createUser = catchAsync(async(req, res, next)=>{
+  endpointResponse({res, message: 'NOT IMPLEMENTED: This is an user create controller'})
+})
+
+exports.updateUser = catchAsync(async(req, res, next)=>{
   endpointResponse({res, message: 'NOT IMPLEMENTED: This is an user update controller'})
 })
