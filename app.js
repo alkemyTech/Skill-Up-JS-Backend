@@ -39,6 +39,7 @@ app.use((err, req, res) => {
 })
 
 db.sequelize.sync({ force: false })
+
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Servidor funcionando en el puerto ${port}`)
