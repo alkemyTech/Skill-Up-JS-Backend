@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.belongsTo(models.Role, { foreignKey: 'roleId' });
+      User.hasMany(models.Transaction, { foreignKey: 'userId' });
+      User.hasMany(models.Category, { foreignKey: 'categoryId' });
     }
   };
   User.init({
@@ -18,12 +20,14 @@ module.exports = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     email: DataTypes.STRING,
     avatar: DataTypes.STRING,
+    password: DataTypes.STRING,
     roleId: DataTypes.INTEGER,
     deletedAt: {
       type: DataTypes.STRING
     },
   }, {
     sequelize,
+    paranoi: true,
     timestamps: true,
     modelName: 'User',
   });
