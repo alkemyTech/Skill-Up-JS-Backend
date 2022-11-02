@@ -10,7 +10,7 @@
     "url": "https://github.com/gabodmc/nodejs-boilerplate"
   },
   "scripts": {
-    "dev": "nodemon app.js",
+    "dev": "nodemon src/app.js",
     "start": "node app.js",
     "lint": "eslint",
     "migrations:generate": "sequelize-cli migration:generate --name",
