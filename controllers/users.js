@@ -1,10 +1,11 @@
 const createHttpError = require('http-errors')
 const { User } = require('../database/models')
 const { endpointResponse } = require('../helpers/success')
-const { catchAsync } = require('../helpers/catchAsync')
+const { catchAsync } = require('../helpers/catchAsync');
+const { createUserService } = require('../services/userServices');
 
 // example of a controller. First call the service, then build the controller method
-exports.get = catchAsync(async (req, res, next) => {
+const get = catchAsync(async (req, res, next) => {
   try {
     const response = await User.findAll()
     endpointResponse({
@@ -21,14 +22,46 @@ exports.get = catchAsync(async (req, res, next) => {
   }
 })
 
-exports.createUser = catchAsync(async(req, res, next)=>{
-  endpointResponse({res, message: 'NOT IMPLEMENTED: This is an user create controller'})
-})
+const createUser = async(req, res, next)=>{
+  try{
+    const {firstName, lastName, email, password, avatar, roleId} = req.body;
+    const {user, created} = await createUserService({email: email}, {firstName: firstName, lastName: lastName, email: email, password: password, avatar: avatar, roleId: roleId});
 
-exports.updateUser = catchAsync(async(req, res, next)=>{
+    if(!created){
+      endpointResponse({
+        res,
+        message: 'The email exists',
+      });
+    }
+    else{
+      endpointResponse({
+        res,
+        message: 'The user has been created',
+        body: user
+      });
+    }
+  }
+  catch(err){
+    const httpError = createHttpError(
+      err.statusCode,
+      `[Error retrieving users] - [index - GET]: ${err.message}`,
+    );
+    next(httpError);
+  }
+}
+
+
+const updateUser = catchAsync(async(req, res, next)=>{
   endpointResponse({res, message: 'NOT IMPLEMENTED: This is an user update controller'})
 })
 
-exports.deleteUser = catchAsync(async(req, res, next)=>{
+const deleteUser = catchAsync(async(req, res, next)=>{
   endpointResponse({res, message: 'NOT IMPLEMENTED: This is an user delete controller'})
 })
+
+module.exports = {
+  get,
+  createUser,
+  updateUser,
+  deleteUser
+}
