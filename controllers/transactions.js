@@ -1,5 +1,4 @@
-// const { Transaction } = require('../database/models')
-// The transaction model has not been implemented yet.
+const { Transaction } = require('../database/models')
 const { endpointResponse } = require('../helpers/success')
 const createHttpError = require('http-errors')
 
