@@ -22,23 +22,29 @@ module.exports = {
     }
   }),
   createTransaction: catchAsync(async (req, res, next) => {
-    const { amount, description, userId, categoryId, date, type } = req.body;
-    if (!amount || !description || !userId || !categoryId || !date || !type) {
+    const { amount, description, type, userId, categoryId } = req.body;
+
+    if (!amount || !description || !userId || !categoryId || !type) {
       const httpError = createHttpError(
         400,
-        `[Error creating transactions] - [index - POST]: All fields are required`,
+        `[Error creating transactions] - [index - POST]: All fields are required`
+
       )
       next(httpError)
     }
     if (amount <= 0) {
       const httpError = createHttpError(
         403,
-        `[Error creating transactions] - [index - POST]: Amount must be greater than 0`,
+        'apllication/json'
+          `[Error creating transactions] - [index - POST]: Amount must be greater than 0`,
       )
       next(httpError)
     }
+    const date = new Date()
     try {
-      const response = await Transaction.create({ amount, description, userId, categoryId, date })
+
+      const response = await Transaction.create({ amount, description, date, type, userId, categoryId })
+
       endpointResponse({
         res,
         message: 'Transaction created successfully',
@@ -53,9 +59,9 @@ module.exports = {
     }
   }),
   updateTransaction: catchAsync(async (req, res, next) => {
-    const { userId, categoryId, amount, date } = req.body
+    const { userId, categoryId, amount } = req.body
     const { id } = req.params;
-    if (!amount || !userId || !categoryId || !date) {
+    if (!amount || !userId || !categoryId) {
       const httpError = createHttpError(
         400,
         `[Error updating transactions] - [index - PUT]: amount, userId, categoryId and date are required`,
@@ -69,8 +75,17 @@ module.exports = {
       )
       next(httpError)
     }
+    const foundTransaction = await Operation.findByPk(id)
+    if (!foundTransaction) {
+      const httpError = createHttpError(
+        401,
+        `[Error updating transactions] - [index - PUT]: Couldn't find a transaction with the ID ${id}`,
+      )
+      next(httpError)
+    }
+    const date = new Date()
     try {
-      const response = await Transaction.update({ amount, userId, categoryId, date })
+      const response = await foundTransaction.update({ amount, userId, categoryId, date })
       endpointResponse({
         res,
         message: 'Transaction updated successfully',
