@@ -1,11 +1,14 @@
 const express = require('express')
-const {
-   get,
-} = require('../controllers/users')
+
+
+const { models } = require('../libs/sequelize')
 
 const router = express.Router()
 
-router.get('/', get)
+router.get('/', async (req, res) => {
+   const rta = 'hola mundo';
+   res.send(rta);
+ })
 
 
 module.exports = router
