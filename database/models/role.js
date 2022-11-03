@@ -13,21 +13,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Role.init(
     {
-      id: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-      },
-      rol: {
-        type: DataTypes.STRING,
-        defaultValue: "user",
-        validate: {
-          customValidator: (value) => {
-            const enums = ["superadmin", "admin", "user"];
-            if (!enums.includes(value)) {
-              throw new Error("not a valid option");
-            }
-          },
-        },
+      name: DataTypes.STRING,
+      description: DataTypes.STRING,
+      deletedAt: {
+        type: DataTypes.STRING
       },
     },
     {
