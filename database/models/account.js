@@ -35,6 +35,14 @@ const AccountSchema = {
 class Account extends Model {
   static associate(models) {
     this.belongsTo(models.User, {as: 'user'});
+    this.hasMany(models.Transaction, {
+      as: 'transaction',
+      foreignKey: 'accountId'
+    })
+    this.hasOne(models.Transaction, {
+      as: 'incomingTransaction',
+      foreignKey: 'toAccountId'
+    });
   }
 
   static config(sequelize) {
