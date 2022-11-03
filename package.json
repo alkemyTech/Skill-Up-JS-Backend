@@ -12,6 +12,7 @@
   "scripts": {
     "start": "nodemon node app.js",
     "test": "mocha ./test/*.js"
+
   },
   "engines": {
     "node": ">=0.14"
