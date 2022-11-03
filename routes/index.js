@@ -12,7 +12,7 @@ function routerApi(app) {
 
   router.use('/user', userRouter);
   router.use('/account', accountRouter);
-  router.use('/', roleRouter);
+  router.use('/role', roleRouter);
 }
 
 module.exports = routerApi;
