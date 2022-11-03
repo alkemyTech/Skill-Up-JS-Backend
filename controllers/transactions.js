@@ -44,7 +44,7 @@ module.exports = {
         error.statusCode,
         `[Error retrieving transaction] - [index - GET]: ${error.message}`,
       )
-      next(httpError)
+      return next(httpError)
     }
   }),
   createTransaction: catchAsync(async (req, res, next) => {
@@ -56,7 +56,7 @@ module.exports = {
         `[Error creating transactions] - [index - POST]: All fields are required`
 
       )
-      next(httpError)
+      return next(httpError)
     }
     if (amount <= 0) {
       const httpError = createHttpError(
@@ -64,7 +64,7 @@ module.exports = {
         'apllication/json'
           `[Error creating transactions] - [index - POST]: Amount must be greater than 0`,
       )
-      next(httpError)
+      return next(httpError)
     }
     const date = new Date()
     try {
@@ -92,14 +92,14 @@ module.exports = {
         400,
         `[Error updating transactions] - [index - PUT]: amount, userId, categoryId and date are required`,
       )
-      next(httpError)
+      return next(httpError)
     }
     if (amount <= 0) {
       const httpError = createHttpError(
         403,
         `[Error updating transactions] - [index - PUT]: Amount must be greater than 0`,
       )
-      next(httpError)
+      return next(httpError)
     }
     const foundTransaction = await Operation.findByPk(id)
     if (!foundTransaction) {
@@ -107,7 +107,7 @@ module.exports = {
         401,
         `[Error updating transactions] - [index - PUT]: Couldn't find a transaction with the ID ${id}`,
       )
-      next(httpError)
+      return next(httpError)
     }
     const date = new Date()
     try {
