@@ -1,34 +1,63 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class transaction extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here with user
-      transaction.belongsTo(models.User, { foreignKey: 'userId' });
+const { Model, DataTypes, Sequelize } = require('sequelize');
+const { ACCOUNT_TABLE } = require('./account')
 
-      // define association here with CATEGORYId
-      transaction.belongsTo(models.Category, { foreignKey: 'categoryId' });
-       
+const TRANSACTION_TABLE = 'transactions';
+
+const TransactionSchema = {
+  id: {
+    type: Sequelize.UUID,
+    defaultValue: Sequelize.UUIDV4,
+    primaryKey: true,
+  },
+  amount: {
+    allowNull: false,
+    type: DataTypes.FLOAT,
+  },
+  concept: {
+    allowNull: true,
+    type: DataTypes.STRING,
+  },
+  type: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  accountId: {
+    field: 'account_id',
+    type: Sequelize.UUID,
+    references: {
+      model: ACCOUNT_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  toAccountId: {
+    allowNull: true,
+    field: 'to_account_id',
+    type: Sequelize.UUID,
+    references: {
+      model: ACCOUNT_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  }
+}
+
+class Transaction extends Model {
+  static associate(models) {
+    this.belongsTo(models.Account, {as: 'account'});
+    this.belongsTo(models.Account, {as: 'toAccount'});
+  }
+
+  static config(sequelize) {
+    return {
+      sequelize,
+      tableName: TRANSACTION_TABLE,
+      modelName: 'Transaction',
+      timestamps: true
     }
-  };
-  transaction.init({
-    id: DataTypes.INTEGER,
-    description: DataTypes.STRING,
-    amount: DataTypes.INTEGER,
-    date: DataTypes.DATE,
-    isDeleted: DataTypes.Boolean
-  }, {
-    sequelize,
-    modelName: 'transaction',
-  });
-  return transaction;
-};
+  }
+}
 
- 
+module.exports = { TRANSACTION_TABLE, TransactionSchema, Transaction }
