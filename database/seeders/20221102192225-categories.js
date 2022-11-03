@@ -7,8 +7,12 @@ module.exports = {
       "Categories",
       [
         {
-          name: DataTypes.STRING,
-          description: DataTypes.STRING,
+          name: "Incomes",
+          description: "Ingreso",
+        },
+        {
+          name: "Outcomes",
+          description: "Egreso",
         },
       ],
       {}
