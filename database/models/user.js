@@ -22,12 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     password: DataTypes.STRING,
     roleId: DataTypes.INTEGER,
-    deletedAt: {
-      type: DataTypes.STRING
-    },
+    categoryId: DataTypes.INTEGER,
   }, {
     sequelize,
-    paranoi: true,
+    paranoid: true,
     timestamps: true,
     modelName: 'User',
   });
