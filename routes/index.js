@@ -1,13 +1,15 @@
-const express = require('express')
-//const usersRouter = require('./users')
+const express = require('express');
+const userRouter = require('./users')
+const accountRouter = require('./accounts')
+// const roleRouter = require('./roles');
 
-const router = express.Router()
+function routerApi(app) {
+  const router = express.Router();
+  app.use('', router);
 
-// example of a route with index controller get function
+  router.use('/user', userRouter);
+  router.use('/account', accountRouter);
+  // router.use('/role', roleRouter);
+}
 
-router.get('/', async (req, res) => {
-    const rta = 'hola mundo';
-    res.send(rta);
-  })
-
-module.exports = router
+module.exports = routerApi;
