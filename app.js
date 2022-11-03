@@ -38,7 +38,7 @@ app.use((err, req, res) => {
   res.render('error')
 })
 
-db.sequelize.sync({ force: true })
+db.sequelize.sync({ force: false })
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

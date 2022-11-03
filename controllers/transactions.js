@@ -5,7 +5,7 @@ const { catchAsync } = require('../helpers/catchAsync')
 
 // example of a controller. First call the service, then build the controller method
 module.exports = {
-  getTransaction: catchAsync(async (req, res, next) => {
+  getTransactions: catchAsync(async (req, res, next) => {
     try {
       const response = await Transaction.findAll()
       endpointResponse({
@@ -17,6 +17,32 @@ module.exports = {
       const httpError = createHttpError(
         error.statusCode,
         `[Error retrieving transactions] - [index - GET]: ${error.message}`,
+      )
+      next(httpError)
+    }
+  }),
+  getTransactionById: catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const response = await Transaction.findByPk(id)
+
+      if (!response) {
+        const httpError = createHttpError(
+          401,
+          `[Error retrieving transaction] - [index - GET]: Couldn't find a transaction with the ID ${id}`,
+        )
+        return next(httpError)
+
+      }
+      endpointResponse({
+        res,
+        message: 'Transaction retrieved successfully',
+        body: response,
+      })
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving transaction] - [index - GET]: ${error.message}`,
       )
       next(httpError)
     }
