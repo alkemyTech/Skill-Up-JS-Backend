@@ -2,19 +2,26 @@ const createHttpError = require("http-errors");
 const { Transaction } = require("../database/models");
 const { endpointResponse } = require("../helpers/success");
 const { catchAsync } = require("../helpers/catchAsync");
-
+const { getPagination, paginateData } = require("../helpers/pagination");
 // example of a controller. First call the service, then build the controller method
 module.exports = {
   getTransactions: catchAsync(async (req, res, next) => {
-    const { type, description } = req.query;
+    const { type, description, page, size } = req.query;
     const filterCondition = {};
     if (type) {
       filterCondition[type] = type;
     } else if (description) {
       filterCondition[description] = description;
     }
+    const { limit, offset } = getPagination(page, size);
     try {
-      const response = await Transaction.findAll({ where: filterCondition });
+      const data = await Transaction.findAndCountAll({
+        where: filterCondition,
+        limit,
+        offset,
+      });
+
+      const response = paginateData(data, page, limit);
       endpointResponse({
         res,
         message: "Transactions retrieved successfully",
