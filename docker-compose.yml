@@ -2,16 +2,16 @@ version: '3.3'
 
 services:
 
-  front: 
-      container_name: react
-      image: node:14.18.0
-      ports:
-        - 5173:5173
-      working_dir: /src/app/      
-      volumes:
-        - './views:/src/app'
-        - './views/node_modules:/app/node_modules'
-      command: npm run dev     
+  # front: 
+  #     container_name: react
+  #     image: node:14.18.0
+  #     ports:
+  #       - 5173:5173
+  #     working_dir: /src/app/      
+  #     volumes:
+  #       - './views:/src/app'
+  #       - './views/node_modules:/app/node_modules'
+  #     command: npm run dev
 
   back: 
       container_name: nodeJS
