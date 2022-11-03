@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     amount: DataTypes.DECIMAL,
     userId: DataTypes.INTEGER,
-    date:DataTypes.DATE,
+    categoryId: DataTypes.INTEGER,
+    date: DataTypes.DATE,
     type: {
       type: DataTypes.ENUM,
       values: ['income', 'outcome']
