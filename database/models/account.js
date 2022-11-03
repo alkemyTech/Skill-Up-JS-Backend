@@ -21,14 +21,24 @@ const AccountSchema = {
     defaultValue: false
   },
   userId: {
+    allowNull: false,
     field: 'user_id',
     type: Sequelize.UUID,
     references: {
       model: USER_TABLE,
       key: 'id'
     },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onUpdate: 'CASCADE'
+  },
+  createdAt: {
+    field: 'created_at',
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW
+  },
+  updatedAt: {
+    field: 'updated_at',
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW
   }
 }
 
@@ -50,7 +60,7 @@ class Account extends Model {
       sequelize,
       tableName: ACCOUNT_TABLE,
       modelName: 'Account',
-      timestamps: true
+      timestamps: false
     }
   }
 }
