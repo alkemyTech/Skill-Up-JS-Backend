@@ -28,8 +28,8 @@ module.exports = {
         },
       },
       type: {
-        allowNull: false,
-        type: sequelize.ENUM,
+        type: Sequelize.ENUM,
+        values: ["income", "outcome"],
       },
       createdAt: {
         allowNull: false,

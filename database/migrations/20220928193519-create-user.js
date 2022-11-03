@@ -23,15 +23,9 @@ module.exports = {
       },
       roleId: {
         type: Sequelize.INTEGER,
+        defaultValue: 2,
         references: {
           model: "Roles",
-          key: "id",
-        },
-      },
-      categoryId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Categories",
           key: "id",
         },
       },
