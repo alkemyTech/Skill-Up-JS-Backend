@@ -1,17 +1,17 @@
 version: '3.3'
 
 services:
-  main: 
+  main:
       container_name: nodeJS
       image: node:14.18.0
       ports:
         - 3000:3000
-        - 9229:9229      
+        - 9229:9229
       working_dir: /src/app/
       volumes:
         - './:/src/app'
         - './node_modules:/app/node_modules'
-      command: npm start     
+      command: npm run dev
       depends_on:
         - mysql
 
