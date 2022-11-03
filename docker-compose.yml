@@ -33,7 +33,7 @@ services:
     environment:
       - MYSQL_DATABASE=my_wallet
       # - MYSQL_USER=root
-      - :MYSQL_ROOT_PASSWORD=team2
+      - MYSQL_ROOT_PASSWORD=team2
       - MYSQL_PORT=3306
     ports:
       - 3306:3306
