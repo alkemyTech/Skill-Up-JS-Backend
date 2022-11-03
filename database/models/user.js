@@ -43,6 +43,10 @@ const UserSchema = {
 class User extends Model {
   static associate(models) {
     this.belongsTo(models.Role, {as: 'role'});
+    this.hasOne(models.Account, {
+      as: 'account',
+      foreignKey: 'userId'
+    })
   }
 
   static config(sequelize) {
