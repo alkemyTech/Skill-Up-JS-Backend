@@ -1,7 +1,7 @@
 import React from 'react';
-import { FormLogin } from 'Components/Forms/formLogin';
+import { FormLogin } from '../../Components/Forms/formLogin.jsx';
 
-export const LoginPage = () => {
+const LoginPage = () => {
   
   return (
     <>
@@ -14,3 +14,5 @@ export const LoginPage = () => {
     </>
   );
 };
+
+export default LoginPage
