@@ -22,14 +22,10 @@ module.exports = {
       },
       userId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Users",
-          key: "id",
-        },
       },
       type: {
-        allowNull: false,
-        type: sequelize.ENUM,
+        type: Sequelize.ENUM,
+        values: ["income", "outcome"],
       },
       createdAt: {
         allowNull: false,

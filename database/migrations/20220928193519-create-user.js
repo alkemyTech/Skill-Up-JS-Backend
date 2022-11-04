@@ -15,24 +15,15 @@ module.exports = {
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       avatar: {
         type: Sequelize.STRING
       },
       roleId: {
         type: Sequelize.INTEGER,
-        references: {
-          model: "Roles",
-          key: "id",
-        },
-      },
-      categoryId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Categories",
-          key: "id",
-        },
+        defaultValue: 2,
       },
       password: {
         allowNull: false,
