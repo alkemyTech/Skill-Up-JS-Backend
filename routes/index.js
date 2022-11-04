@@ -8,5 +8,4 @@ const router = express.Router()
 router.use('/users', usersRouter)
 router.use('/transactions', transactionsRouter)
 
-
 module.exports = router

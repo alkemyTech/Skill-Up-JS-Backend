@@ -8,11 +8,27 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
-      firstName: Sequelize.STRING,
-      lastName: Sequelize.STRING,
-      email: Sequelize.STRING,
+      firstName: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      lastName: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      password: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      email: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       avatar: Sequelize.STRING,
-      roleId: Sequelize.INTEGER,
+      roleId: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
       deletedAt: {
         type: Sequelize.STRING
       },

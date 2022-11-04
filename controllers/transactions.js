@@ -2,7 +2,6 @@ const { Transaction } = require("../database/models");
 const { endpointResponse } = require("../helpers/success");
 const createHttpError = require("http-errors");
 
-
 //Validation middleware is needed.
 
 const getTransactions = async (req, res, next) => {
