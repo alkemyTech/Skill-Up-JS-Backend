@@ -1,23 +1,25 @@
-
-const express = require('express')
+const express = require("express");
 const {
-   get,
-   getById,
-   createUser,
-   deleteById,
-   editById
-} = require('../controllers/users')
-
+  get,
+  getById,
+  createUser,
+  deleteById,
+  editById,
+} = require("../controllers/users");
 
 const router = express.Router();
 
+router.get("/", get);
+router.get("/:id", getById);
+router.post("/", createUser);
+router.delete("/:id", deleteById);
+router.put("/:id", editById);
 
-router.get('/', get)
-router.get('/:id', getById)
-router.post('/', createUser)
-router.delete('/:id',deleteById)
-router.put('/:id',editById)
-
+router.get("/api", (req, res) => {
+  res.json({
+    asd: "jhg",
+  });
+});
 
 router.get("/login", (req, res) => {
   res.send(
