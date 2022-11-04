@@ -6,12 +6,12 @@ const { getPagination, paginateData } = require("../helpers/pagination");
 // example of a controller. First call the service, then build the controller method
 module.exports = {
   getTransactions: catchAsync(async (req, res, next) => {
-    const { type, description, page, size } = req.query;
+    const { categoryId, description, page, size } = req.query;
     const filterCondition = {};
-    if (type) {
-      filterCondition[type] = type;
+    if (categoryId) {
+      filterCondition['categpryId'] = categoryId;
     } else if (description) {
-      filterCondition[description] = description;
+      filterCondition['description'] = description;
     }
     const { limit, offset } = getPagination(page, size);
     try {
@@ -61,9 +61,9 @@ module.exports = {
     }
   }),
   createTransaction: catchAsync(async (req, res, next) => {
-    const { amount, description, type, userId, categoryId } = req.body;
+    const { amount, description, userId, categoryId } = req.body;
 
-    if (!amount || !description || !userId || !categoryId || !type) {
+    if (!amount || !description || !userId || !categoryId) {
       const httpError = createHttpError(
         400,
         `[Error creating transactions] - [index - POST]: All fields are required`
@@ -83,7 +83,6 @@ module.exports = {
         amount,
         description,
         date,
-        type,
         userId,
         categoryId,
       });
