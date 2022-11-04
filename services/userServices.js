@@ -7,6 +7,19 @@ const hashPassword = async(password, saltRound)=>{
   return await bcrypt.hash(password, salt);    
 }
 
+const getUser = async(conditions)=>{
+  try{
+    const user = await User.findOne({
+      where: conditions
+    });
+
+    return user;
+  }
+  catch(err){
+    return new ErrorObject(err.message, 500, err);
+  }
+}
+
 const createUserService = async(conditions, body)=>{
   const passwordHashed = await hashPassword(body.password, 10);    
 
@@ -43,21 +56,38 @@ const checkUserExistence = async(conditions)=>{
   }
 }
 
+const updatePasswordService = async(conditions, password, newPassword)=>{
+  try{
+    const user = await getUser(conditions);
+    if(user === null){
+      return null;
+    }
+  
+    const checkPassword = await bcrypt.compare(password, user.password)
+  
+    if(checkPassword){
+      const hashedPassword = await hashPassword(newPassword, 10)
+  
+      User.update({password: hashedPassword}, {
+        where: conditions,
+      });
+    }
+   
+    return checkPassword
+  }
+  catch(err){
+    return new ErrorObject(err.message, 500, err);
+  }
+}
+
 const userUpdateService = async(conditions, body)=>{
   try{
-    const checkUser = await checkUserExistence(conditions);
-    if(!checkUser){
+    const useridExist = await checkUserExistence(conditions);
+    if(!useridExist){
       return null;
     }
 
-    const passwordHashed = await hashPassword(body.password, 10);    
-
-    const userBody = {
-      ...body,
-      password: passwordHashed
-    }
-
-    User.update(userBody, {
+    User.update(body, {
       where: conditions,
     });
 
@@ -90,5 +120,6 @@ const userDeleteService = async(conditions)=>{
 module.exports = {
   createUserService,
   userUpdateService,
-  userDeleteService
+  userDeleteService,
+  updatePasswordService
 }
