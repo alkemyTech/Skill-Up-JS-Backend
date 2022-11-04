@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Roles', {
@@ -14,6 +15,9 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
+      deletedAt: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -24,6 +28,14 @@ module.exports = {
       }
     });
   },
+
+  /**
+   * Add altering commands here.
+   *
+   * Example:
+   * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
+   */
+
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Roles');
   }
