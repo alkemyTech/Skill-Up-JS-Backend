@@ -2,7 +2,7 @@ const createHttpError = require('http-errors')
 const { User } = require('../database/models')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync');
-const { createUserService, userUpdateService, userDeleteService } = require('../services/userServices');
+const { createUserService, userUpdateService, userDeleteService, updatePasswordService } = require('../services/userServices');
 
 // example of a controller. First call the service, then build the controller method
 const get = catchAsync(async (req, res, next) => {
@@ -52,18 +52,18 @@ const createUser = async(req, res, next)=>{
 
 const updateUser = async(req, res, next)=>{
   try{
-    const {firstName, lastName, password, avatar, roleId} = req.body;
+    const {firstName, lastName, email, avatar, roleId} = req.body;
     const userBody = {
       firstName,
       lastName,
-      password,
+      email,
       avatar,
       roleId
     }
     
     const userUpdated = await userUpdateService({id: req.params.id}, userBody);
 
-    if(!userUpdated){
+    if(userUpdated === null){
       endpointResponse({
         res,
         message: 'The user does not exist',
@@ -81,6 +81,47 @@ const updateUser = async(req, res, next)=>{
     const httpError = createHttpError(
       err.statusCode,
       `[Error updating user] - [index - PUT]: ${err.message}`,
+    );
+    next(httpError);
+  }
+}
+
+const updateUserPassword = async(req, res, next) => {
+  try{
+    const { password, newPassword } =  req.body;
+
+    if(password === newPassword){
+      endpointResponse({
+        res,
+        message: 'The password and new password are equals',
+      });
+    }
+
+    const passwordUpdated = await updatePasswordService({id: req.params.id}, password, newPassword)
+
+    if(passwordUpdated === null){
+      endpointResponse({
+        res,
+        message: 'The user does not exist',
+      });
+    }
+    else if(passwordUpdated){
+      endpointResponse({
+        res,
+        message: 'The password has been changed',
+      });
+    }
+    else{
+      endpointResponse({
+        res,
+        message: 'Old password is incorrect',
+      });
+    }
+  }
+  catch(err){
+    const httpError = createHttpError(
+      err.statusCode,
+      `[Error updating password user] - [index - PUT]: ${err.message}`,
     );
     next(httpError);
   }
@@ -118,5 +159,6 @@ module.exports = {
   get,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  updateUserPassword
 }
