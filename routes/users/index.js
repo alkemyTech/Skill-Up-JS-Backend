@@ -29,8 +29,6 @@ router.get("/:id", async (req, res) => {
 
 })
 
-
-
 router.post('/create', async (req, res) => {
   // backlog says: - Deberá encriptar la contraseña en la base de datos con la librería bcrypt
   // so we need to implement a middleware on the DB to hash it OR a method inside the schema
@@ -39,13 +37,7 @@ router.post('/create', async (req, res) => {
   // user as a account
   // user as a roleId
   try {
-    // await models.Role.create({  // when DB drops i need to create a quick role, this will be pased on its corresponding file
-    //   id: 1,
-    //   name: "client",
-    //   description: "a client"
-    // })
     const saltRounds = 10;
-
     const pass = await bcrypt.hash(schema.password, saltRounds).then(function (hash) {
       return hash;
     });
@@ -56,14 +48,13 @@ router.post('/create', async (req, res) => {
       },
       defaults: {
         ...schema,
-        password: pass,
-        roleId: "1"
+        password: pass
       }
     })
     if (created) {
       //here the axios.post with userId to accounts.post/create to link an account in a new user
-
-      return res.status(201).send({ row, });
+      // if needed also to fetch the description of the role
+      return res.status(201).send(row);
     }
     else throw new Error('This email belongs to an existing account')
 

@@ -1,12 +1,13 @@
+import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import ExampleContainer from "./Components/ExampleComponent/ExampleContainer";
-import DashboardContainer from "./Components/Dashboard/DashboardContainer";
+import DashboardPage from "./pages/DashboardPage";
+import FooterContainer from "./Components/Footer/FooterContainer";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<ExampleContainer />} />
-      <Route path="/dashboard" element={<DashboardContainer />} />
+      <Route path="/" element={<FooterContainer />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
     </Routes>
   );
 }
