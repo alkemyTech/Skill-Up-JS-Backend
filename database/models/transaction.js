@@ -41,6 +41,16 @@ const TransactionSchema = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
+  },
+  createdAt: {
+    field: 'created_at',
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW
+  },
+  updatedAt: {
+    field: 'updated_at',
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW
   }
 }
 
