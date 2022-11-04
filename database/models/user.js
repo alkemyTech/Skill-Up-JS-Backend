@@ -8,9 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsTo(models.Role, { foreignKey: "roleId" });
-      User.hasMany(models.Transaction, { foreignKey: "userId" });
-      User.hasMany(models.Category, { foreignKey: "categoryId" });
+      User.belongsTo(models.Role, { foreignKey: "roleId", onDelete: 'cascade', onUpdate: 'cascade' });
+      User.hasMany(models.Transaction, { foreignKey: "userId", onDelete: 'cascade', onUpdate: 'cascade' });
     }
   }
   User.init(
@@ -24,8 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       avatar: DataTypes.STRING,
       password: DataTypes.STRING,
-      roleId: DataTypes.ENUM("1", "2"),
-      categoryId: DataTypes.INTEGER,
+      roleId: { type: DataTypes.INTEGER, defaultValue: 2 },
     },
     {
       sequelize,
