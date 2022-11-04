@@ -7,14 +7,14 @@ const {
    deleteById,
    editById
 } = require('../controllers/users')
-
+const {validateUser} = require("../middlewares/userValidators")
 
 const router = express.Router();
 
 
 router.get('/', get)
 router.get('/:id', getById)
-router.post('/', createUser)
+router.post('/', validateUser ,createUser)
 router.delete('/:id',deleteById)
 router.put('/:id',editById)
 

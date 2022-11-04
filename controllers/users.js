@@ -51,13 +51,13 @@ module.exports = {
     const hashPass = await bcrypt.hash(password,10).then(function(hash){
       return hash
     })
-    if(!firstName || !lastName || !email || !password){
-      const httpError = createHttpError(
-        404,
-        `[Error retrieving info] - [index - POST]: 'Missing fields to fill'`
-      );
-      next(httpError);
-    }
+    // if(!firstName || !lastName || !email || !password){
+    //   const httpError = createHttpError(
+    //     404,
+    //     `[Error retrieving info] - [index - POST]: 'Missing fields to fill'`
+    //   );
+    //   next(httpError);
+    // }
     try {
       const user = await User.findOne({
         where:{
@@ -76,7 +76,8 @@ module.exports = {
           message: "User created successfully",
           body: response
         })
-      }else{
+      }
+      else{
         const httpError = createHttpError(
           404,
           `[Error email already exist] - [index - POST]: 'Error the email: ${email} already exist`
@@ -110,11 +111,11 @@ module.exports = {
         next(httpError)
       }
     } catch (error) {
-      const httpError = createHttpError(
-        error.statusCode,
-        `[Error in delete options] - [index - DELETE]: ${error.message}`
-      );
-      next(httpError);
+      // const httpError = createHttpError(
+      //   error.statusCode,
+      //   `[Error in delete options] - [index - DELETE]: ${error.message}`
+      // );
+      // next(httpError);
     }
   }),
   editById: catchAsync(async (req, res, next) => {
