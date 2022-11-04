@@ -2,7 +2,7 @@ const createHttpError = require('http-errors')
 const { User } = require('../database/models')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync');
-const { createUserService, userUpdateService } = require('../services/userServices');
+const { createUserService, userUpdateService, userDeleteService } = require('../services/userServices');
 
 // example of a controller. First call the service, then build the controller method
 const get = catchAsync(async (req, res, next) => {
@@ -87,7 +87,31 @@ const updateUser = async(req, res, next)=>{
 }
 
 const deleteUser = catchAsync(async(req, res, next)=>{
-  endpointResponse({res, message: 'NOT IMPLEMENTED: This is an user delete controller'})
+  try{
+    const idUser = req.params.id
+
+    const userDeleted = await userDeleteService({id: idUser})
+
+    if(!userDeleted){
+      endpointResponse({
+        res,
+        message: 'The user does not exist',
+      });
+    }
+    
+    endpointResponse({
+      res,
+      message: 'The user has been deleted',
+      body: userDeleted
+    });
+  }
+  catch(err){
+    const httpError = createHttpError(
+      err.statusCode,
+      `[Error deleting user] - [index - DELETE]: ${err.message}`,
+    );
+    next(httpError);
+  }
 })
 
 module.exports = {

@@ -68,7 +68,27 @@ const userUpdateService = async(conditions, body)=>{
   }
 }
 
+const userDeleteService = async(conditions)=>{
+  try{
+    const userExist = await checkUserExistence(conditions);
+
+    if(!userExist){
+      return null;
+    }
+    
+    const userDeleted = await User.destroy({
+      where: conditions
+    });
+
+    return userDeleted;
+  }
+  catch(err){
+    return new ErrorObject(err.message, 500, err);
+  }
+}
+
 module.exports = {
   createUserService,
-  userUpdateService
+  userUpdateService,
+  userDeleteService
 }
