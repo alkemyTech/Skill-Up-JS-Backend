@@ -17,7 +17,7 @@ router.post("/create", async (req, res) => {
             }
         })
         if (created) res.status(201).send(row)
-        if (!created) res.status(200).send({ row, created })
+        if (created === false) res.status(200).send({ row, created })
         else throw new Error('this role already exist or is invalid')
     } catch (error) {
         res.status(404).send(error.message)
