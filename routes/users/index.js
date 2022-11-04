@@ -2,40 +2,33 @@ const express = require('express');
 
 const { models } = require('../../libs/sequelize');
 
-const newUser = {
-  firstName: 'Carlos',
-  lastName: 'Senger',
-  email: 'email@mail.com',
-  password: 'asdfdfdf',
-  roleId: 1
-}
-
-const newRole = {
-  name: 'client',
-  description: 'un cliente'
-}
-
-const newAccount = {
-  userId: '047c8790-40cf-4547-bf8a-97dcbd327ff7'
-}
-
-const newTransaction = {
-  amount: 50,
-  type: 'esto se borra',
-  accountId: '742d3398-db22-4ef9-a43d-2a5f23f8cc73',
-}
-
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.post('/create', async (req, res) => {
+  const { schema } = req.body; // if the body will be validate by a middleware we already expect an object with valid info.
+  // user as a account 
+  // user as a roleId
   try {
-    // const rta3 = await models.Role.create(newRole);
-    // const rta4 = await models.User.create(newUser);
-    // const rta3 = await models.Account.create(newAccount);
-    const rta3 = await models.Transaction.create(newTransaction);
-    res.send(rta3);
+
+    // backlog says: - Deberá encriptar la contraseña en la base de datos con la librería bcrypt
+    // so we need to implement a middleware on the DB to hash it OR a method inside the schema
+    // I'm gonna do it here because I've never use sequelize's inyection in class way. tomorrow in the daily I'll be commenting this.
+
+
+    const [row, created] = await models.User.findOrCreate({
+      where: {
+        email: schema.email
+      },
+      defaults: {
+        ...schema,
+        roleId: "1"
+      }
+    })
+    if (created) return res.status(201).send(row);
+    else throw new Error("This email belongs to an existing account")
+
   } catch (error) {
-    res.send(error);
+    res.status(400).send(error.message);
   }
 });
 
