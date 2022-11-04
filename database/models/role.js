@@ -8,26 +8,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Role.hasMany(models.User, { foreignKey: "roleId" });
+      Role.hasMany(models.User, { foreignKey: "roleId", onDelete: 'cascade', onUpdate: 'cascade' });
     }
   }
   Role.init(
     {
-      id: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-      },
-      rol: {
-        type: DataTypes.STRING,
-        defaultValue: "user",
-        validate: {
-          customValidator: (value) => {
-            const enums = ["superadmin", "admin", "user"];
-            if (!enums.includes(value)) {
-              throw new Error("not a valid option");
-            }
-          },
-        },
+      name: DataTypes.STRING,
+      description: DataTypes.STRING,
+      deletedAt: {
+        type: DataTypes.STRING
       },
     },
     {
