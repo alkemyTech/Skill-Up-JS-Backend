@@ -91,7 +91,7 @@ const userUpdateService = async(conditions, body)=>{
       where: conditions,
     });
 
-    return userBody;
+    return body;
   }
   catch(err){
     return new ErrorObject(err.message, 500, err);
