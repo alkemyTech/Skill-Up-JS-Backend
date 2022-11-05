@@ -9,6 +9,8 @@ module.exports = {
     port: process.env.DB_PORT,
     dialect: 'mysql',
     jwtSecret: process.env.JWT_SECRET,
+    email: process.env.EMAIL_ACCOUNT,
+    emailPass: process.env.EMAIL_PASS,
   },
 
   production: {
@@ -18,5 +20,8 @@ module.exports = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     dialect: 'mysql',
+    jwtSecret: process.env.JWT_SECRET,
+    email: process.env.EMAIL_ACCOUNT,
+    emailPass: process.env.EMAIL_PASS,
   },
 }
