@@ -101,23 +101,17 @@ module.exports = {
     }
   }),
   updateTransaction: catchAsync(async (req, res, next) => {
-    const { userId, categoryId, amount } = req.body;
+    const { description } = req.body;
     const { id } = req.params;
-    if (!amount || !userId || !categoryId) {
+    if (!description) {
       const httpError = createHttpError(
         400,
         `[Error updating transactions] - [index - PUT]: amount, userId, categoryId and date are required`
       );
       return next(httpError);
     }
-    if (amount <= 0) {
-      const httpError = createHttpError(
-        403,
-        `[Error updating transactions] - [index - PUT]: Amount must be greater than 0`
-      );
-      return next(httpError);
-    }
-    const foundTransaction = await Operation.findByPk(id);
+
+    const foundTransaction = await Transaction.findByPk(id);
     if (!foundTransaction) {
       const httpError = createHttpError(
         401,
@@ -132,13 +126,10 @@ module.exports = {
       );
       return next(httpError);
     }
-    const date = new Date();
+
     try {
       const response = await foundTransaction.update({
-        amount,
-        userId,
-        categoryId,
-        date,
+        description,
       });
       endpointResponse({
         res,

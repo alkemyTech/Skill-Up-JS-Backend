@@ -8,9 +8,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Transaction.belongsTo(models.User, { foreignKey: "userId", onDelete: 'cascade', onUpdate: 'cascade' });
-      Transaction.belongsTo(models.User, { foreignKey: "toUserId", onDelete: 'cascade', onUpdate: 'cascade' });
-      Transaction.belongsTo(models.Category, { foreignKey: "categoryId", onDelete: 'cascade', onUpdate: 'cascade' });
+      Transaction.belongsTo(models.User, {
+        foreignKey: "userId",
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      });
+      Transaction.belongsTo(models.User, {
+        foreignKey: "toUserId",
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      });
+      Transaction.belongsTo(models.Category, {
+        foreignKey: "categoryId",
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      });
     }
   }
   Transaction.init(
@@ -22,9 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       date: DataTypes.DATE,
       toUserId: DataTypes.INTEGER,
       currency: {
-        type: DataTypes.STRING, defaultValue: "pesos",
-      }
-
+        type: DataTypes.ENUM,
+        values: ["pesos", "dolares", "euros"],
+        defaultValue: "pesos",
+      },
     },
     {
       sequelize,
