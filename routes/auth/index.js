@@ -5,9 +5,9 @@ const router = express.Router()
 
 router.post('/', async(req, res, next) => {
   try {
-    const body = req.body;
-
-    res.status(201).send(body);
+    const { email, password } = req.body;
+    const rta = await auth.login(email, password)
+    res.status(201).send(rta);
   } catch (error) {
     next(error);
   }
