@@ -1,7 +1,7 @@
 const express = require('express')
 const usersRouter = require('./users')
 const transactionsRouter = require('./transactions')
-const categoriesRouter = requiere('./categories')
+const categoriesRouter = require('./categories')
 
 const router = express.Router()
 
