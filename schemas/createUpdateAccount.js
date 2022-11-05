@@ -1,12 +1,4 @@
 const createUpdateAccountSchema = {
-  creationDate: {
-    exists: { errorMessage: 'Creation date is required' },
-    trim: true,
-    isDate: {
-      format: 'YYYY-MM-DD',
-      errorMessage: 'Invalid date. Accepted format YYYYY-MM-DD',
-    },
-  },
   money: {
     exists: { errorMessage: 'Money field is required' },
     trim: true,
