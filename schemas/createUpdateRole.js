@@ -3,7 +3,7 @@ const createUpdateRoleSchema = {
     exists: { errorMessage: 'Name is required' },
     trim: true,
     isLength: {
-      errorMessage: 'Name has invalid length (min 3, max 10)',
+      errorMessage: 'Name has invalid length (min 2, max 12)',
       options: { min: 2, max: 12 },
     },
   },
