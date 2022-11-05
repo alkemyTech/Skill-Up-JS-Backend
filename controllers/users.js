@@ -40,9 +40,7 @@ module.exports = {
       let account = await ctrlAccount.post(user.id);
       return { user, account } // and account;
     }
-    else throw new Error('This email belongs to an existing account')
-
-
+    else throw boom.forbidden("Email already exists")
   }
 
 }
