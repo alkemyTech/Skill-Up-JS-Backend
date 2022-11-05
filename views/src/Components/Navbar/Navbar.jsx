@@ -41,7 +41,7 @@ const Navbar = () => {
           </div>
           <div className="hidden md:flex items-center space-x-1">
             <Link className="py-4 px-3">Login</Link>
-            <Link className="py-1 px-4 bg-teal-600 hover:bg-teal-400 text-gray-900 hover:text-white rounded shadow transition duration-300">
+            <Link className="mt-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
               Signup
             </Link>
           </div>
