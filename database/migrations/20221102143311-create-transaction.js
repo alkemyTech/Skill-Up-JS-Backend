@@ -23,9 +23,11 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
       },
-      type: {
-        type: Sequelize.ENUM,
-        values: ["income", "outcome"],
+      toUserId: {
+        type: Sequelize.INTEGER,
+      },
+      currency: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

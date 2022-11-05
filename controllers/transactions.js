@@ -1,22 +1,29 @@
 const createHttpError = require("http-errors");
-const { Transaction } = require("../database/models");
+const { Transaction, User } = require("../database/models");
 const { endpointResponse } = require("../helpers/success");
 const { catchAsync } = require("../helpers/catchAsync");
 const { getPagination, paginateData } = require("../helpers/pagination");
-// example of a controller. First call the service, then build the controller method
+const { Op } = require("sequelize");
+
 module.exports = {
   getTransactions: catchAsync(async (req, res, next) => {
-    const { categoryId, description, page, size } = req.query;
+    const { categoryId, description, page, size, currency } = req.query;
+    //TODO: helper function for filtering 
     const filterCondition = {};
     if (categoryId) {
-      filterCondition['categpryId'] = categoryId;
-    } else if (description) {
+      filterCondition['categoryId'] = +categoryId;
+    }
+    if (description) {
       filterCondition['description'] = description;
     }
+    if (currency) {
+      filterCondition['currency'] = currency
+    }
+    console.log(filterCondition)
     const { limit, offset } = getPagination(page, size);
     try {
       const data = await Transaction.findAndCountAll({
-        where: filterCondition,
+        where: { [Op.and]: [filterCondition] },
         limit,
         offset,
       });
@@ -61,44 +68,7 @@ module.exports = {
     }
   }),
   createTransaction: catchAsync(async (req, res, next) => {
-    const { amount, description, userId, categoryId } = req.body;
-
-    if (!amount || !description || !userId || !categoryId) {
-      const httpError = createHttpError(
-        400,
-        `[Error creating transactions] - [index - POST]: All fields are required`
-      );
-      return next(httpError);
-    }
-    if (amount <= 0) {
-      const httpError = createHttpError(
-        403,
-        "apllication/json"`[Error creating transactions] - [index - POST]: Amount must be greater than 0`
-      );
-      return next(httpError);
-    }
-    const date = new Date();
-    try {
-      const response = await Transaction.create({
-        amount,
-        description,
-        date,
-        userId,
-        categoryId,
-      });
-
-      endpointResponse({
-        res,
-        message: "Transaction created successfully",
-        body: response,
-      });
-    } catch (error) {
-      const httpError = createHttpError(
-        error.statusCode,
-        `[Error creating transactions] - [index - POST]: ${error.message}`
-      );
-      next(httpError);
-    }
+    await create(req, res, next)
   }),
   updateTransaction: catchAsync(async (req, res, next) => {
     const { userId, categoryId, amount } = req.body;
@@ -122,6 +92,13 @@ module.exports = {
       const httpError = createHttpError(
         401,
         `[Error updating transactions] - [index - PUT]: Couldn't find a transaction with the ID ${id}`
+      );
+      return next(httpError);
+    }
+    if (foundTransaction.toUserId) {
+      const httpError = createHttpError(
+        400,
+        `[Error updating transactions] - [index - PUT]: Cannot update this transaction`
       );
       return next(httpError);
     }
@@ -164,4 +141,81 @@ module.exports = {
       next(httpError);
     }
   }),
+  getBalance: catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    //TODO probably we shouldn't send the id at params.
+
+    try {
+      const income = await Transaction.sum('amount', { where: { userId: id, categoryId: 1 } })
+      const outcome = await Transaction.sum('amount', { where: { userId: id, categoryId: 2 } })
+      let balance = income - outcome;
+      if (balance < 0) balance = 0;
+      const response = { balance, income, outcome }
+      endpointResponse({
+        res,
+        message: "Transaction removed successfully",
+        body: response,
+      });
+
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error getting transactions] - [index - GET]: ${error.message}`
+      );
+      next(httpError);
+    }
+  }),
+  sendMoney: catchAsync(async (req, res, next) => {
+    //TODO: Think about moving this one to User controller
+    //TODO2 Add validation UserId and toUserId
+    // - UserId and toUserId should exists in DB
+    // - userId and toUserId shouldn't be the same id.
+    // - Cannot send other currency besides pesos
+
+    await create(req, res, next)
+  })
 };
+
+
+const create = async (req, res, next) => {
+  const { amount, description, userId, categoryId, toUserId } = req.body;
+
+
+  if (!amount || !description || !userId || !categoryId) {
+    const httpError = createHttpError(
+      400,
+      `[Error creating transactions] - [index - POST]: All fields are required`
+    );
+    return next(httpError);
+  }
+  if (amount <= 0) {
+    const httpError = createHttpError(
+      403,
+      "apllication/json"`[Error creating transactions] - [index - POST]: Amount must be greater than 0`
+    );
+    return next(httpError);
+  }
+  const date = new Date();
+  try {
+    const response = await Transaction.create({
+      amount,
+      description,
+      date,
+      userId,
+      categoryId,
+      toUserId
+    });
+
+    endpointResponse({
+      res,
+      message: "Transaction created successfully",
+      body: response,
+    });
+  } catch (error) {
+    const httpError = createHttpError(
+      error.statusCode,
+      `[Error creating transactions] - [index - POST]: ${error.message}`
+    );
+    next(httpError);
+  }
+}
