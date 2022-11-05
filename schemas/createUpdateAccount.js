@@ -21,9 +21,6 @@ const createUpdateAccountSchema = {
       },
     },
   },
-  userId: {
-    exists: { errorMessage: 'User id is required' },
-  },
 };
 
 module.exports = createUpdateAccountSchema;
