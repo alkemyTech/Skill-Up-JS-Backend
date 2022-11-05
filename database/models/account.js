@@ -22,7 +22,7 @@ const AccountSchema = {
   },
   userId: {
     allowNull: false,
-    field: 'user_id',
+    field: 'userId',
     type: Sequelize.UUID,
     references: {
       model: USER_TABLE,
@@ -44,7 +44,7 @@ const AccountSchema = {
 
 class Account extends Model {
   static associate(models) {
-    this.belongsTo(models.User, {as: 'user'});
+    this.belongsTo(models.User, { as: 'user' });
     this.hasMany(models.Transaction, {
       as: 'transaction',
       foreignKey: 'accountId'

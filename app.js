@@ -6,6 +6,8 @@ const logger = require('morgan')
 const cors = require('cors')
 require('dotenv').config()
 const routerApi = require('./routes/index');
+const { logErrors, errorHandler, boomErrorHandler, queryErrorHandler } = require('./middlewares/error.handler');
+
 
 
 const port = process.env.PORT || 3000
@@ -41,6 +43,11 @@ app.use((err, req, res) => {
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Servidor funcionando en el puerto ${port}`)
-})
+});
+
+app.use(logErrors);
+app.use(queryErrorHandler);
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 module.exports = app
