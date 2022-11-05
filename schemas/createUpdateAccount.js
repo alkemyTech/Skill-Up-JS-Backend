@@ -10,7 +10,7 @@ const createUpdateAccountSchema = {
   money: {
     exists: { errorMessage: 'Money field is required' },
     trim: true,
-    isDecimal: {
+    isFloat: {
       options: {
         locale: 'en-US',
       },
