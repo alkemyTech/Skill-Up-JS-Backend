@@ -2,7 +2,7 @@ const createUpdateTransaction = {
   amount: {
     exists: { errorMessage: 'Amount is required' },
     trim: true,
-    isDecimal: {
+    isFloat: {
       options: {
         locale: 'en-US',
       },
