@@ -41,6 +41,17 @@ module.exports = {
       return { user, account } // and account;
     }
     else throw boom.forbidden("Email already exists")
+  },
+  delete: async (id) => {
+    let account = await ctrlAccount.delete(id);
+
+    let user = await models.User.destroy({
+      where: {
+        id: id
+      }
+    });
+    if (user !== 0 && account !== false) return "deleted"
+    else throw boom.notImplemented("This user doesn't exists!");
   }
 
 }
