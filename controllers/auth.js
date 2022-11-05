@@ -1,20 +1,21 @@
 const { getByEmail } = require('./users')
 const boom = require('@hapi/boom');
-const { encryptPassword, comparePassword } = require('../utils/encryptPassword');
+const { comparePassword } = require('../utils/encryptPassword');
+const { createJWT } = require('../utils/createJwt');
 
 module.exports = {
 
     login: async (email, password) => {
       const user = await getByEmail(email);
-      const hash = await encryptPassword(user.password);
-      const hashedUser = {
-        ...user,
-        password: hash
-      }
-      const match = await comparePassword(password, hash);
+      const match = await comparePassword(password, user.password);
       if (match) {
-        delete user.dataValues.password
-        return user
+        const payload = {
+          sub: user.id,
+          role: user.roleId
+        }
+        const token = createJWT({payload});
+
+        return {token}
       } else {
         throw boom.unauthorized('Invalid password')
       }
