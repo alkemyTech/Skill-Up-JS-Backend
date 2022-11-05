@@ -13,6 +13,10 @@ const createUpdateTransaction = {
   concept: {
     exists: { errorMessage: 'Concept is required' },
     trim: true,
+    isLength: {
+      errorMessage: 'Concept has invalid length (max 25)',
+      options: { max: 25 },
+    },
   },
   date: {
     exists: { errorMessage: 'Date date is required' },
