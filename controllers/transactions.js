@@ -4,26 +4,18 @@ const { endpointResponse } = require("../helpers/success");
 const { catchAsync } = require("../helpers/catchAsync");
 const { getPagination, paginateData } = require("../helpers/pagination");
 const { Op } = require("sequelize");
+const { filterElements } = require("../helpers/filter");
 
 module.exports = {
   getTransactions: catchAsync(async (req, res, next) => {
     const { categoryId, description, page, size, currency } = req.query;
-    //TODO: helper function for filtering
-    const filterCondition = {};
-    if (categoryId) {
-      filterCondition["categoryId"] = +categoryId;
-    }
-    if (description) {
-      filterCondition["description"] = description;
-    }
-    if (currency) {
-      filterCondition["currency"] = currency;
-    }
-    console.log(filterCondition);
+
+    const filter = filterElements({ categoryId, description, currency });
+
     const { limit, offset } = getPagination(page, size);
     try {
       const data = await Transaction.findAndCountAll({
-        where: { [Op.and]: [filterCondition] },
+        where: { [Op.and]: [filter] },
         limit,
         offset,
       });
