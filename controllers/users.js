@@ -20,6 +20,15 @@ module.exports = {
     if (user && account) return { user, account };
     else throw boom.notFound('User not found')
   },
+  getByEmail: async (email) => {
+    const user = await models.User.findOne({
+      where: {
+        email
+      }
+    });
+    if (user) return user;
+    else throw boom.notFound('User not found')
+  },
   post: async (schema) => {
 
     const saltRounds = 10;
