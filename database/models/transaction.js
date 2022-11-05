@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Transaction.belongsTo(models.User, { foreignKey: "userId", onDelete: 'cascade', onUpdate: 'cascade' });
-      Transaction.belongsTo(models.Category, { foreignKey: "categoryId" , onDelete: 'cascade', onUpdate: 'cascade'});
+      Transaction.belongsTo(models.User, { foreignKey: "toUserId", onDelete: 'cascade', onUpdate: 'cascade' });
+      Transaction.belongsTo(models.Category, { foreignKey: "categoryId", onDelete: 'cascade', onUpdate: 'cascade' });
     }
   }
   Transaction.init(
@@ -19,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.INTEGER,
       categoryId: DataTypes.INTEGER,
       date: DataTypes.DATE,
-      type: {
-        type: DataTypes.ENUM,
-        values: ["income", "outcome"],
-      },
+      toUserId: DataTypes.INTEGER,
+      currency: {
+        type: DataTypes.STRING, defaultValue: "pesos",
+      }
 
     },
     {

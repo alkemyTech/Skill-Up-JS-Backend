@@ -4,7 +4,9 @@ const {
   getTransactionById,
   createTransaction,
   updateTransaction,
-  deleteTransaction
+  deleteTransaction,
+  getBalance,
+  sendMoney
 } = require('../controllers/transactions')
 
 const router = express.Router()
@@ -12,4 +14,6 @@ const router = express.Router()
 router.route('/').get(getTransactions).post(createTransaction)
 
 router.route('/:id').get(getTransactionById).put(updateTransaction).delete(deleteTransaction)
+router.get('/balance/:id', getBalance)
+router.post('/send', sendMoney)
 module.exports = router
