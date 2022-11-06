@@ -18,6 +18,14 @@ module.exports = {
       password: password,
       role_id: 1
     }
+    const god = {
+      id: 'b5a928fd-f1be-47d5-b9ec-e448a1b84849',
+      first_name: 'John',
+      last_name: 'Doe',
+      email: 'godAccount@cloud.com',
+      password: password,
+      role_id: 3
+    }
 
     for (let index = 0; index < 100; index++) {
       const client = {
@@ -38,7 +46,7 @@ module.exports = {
       accounts.push(account);
     }
     await queryInterface.bulkInsert(USER_TABLE, [
-      admin, ...clients
+      admin, god, ...clients
     ]);
     return queryInterface.bulkInsert(ACCOUNT_TABLE, [
       ...accounts

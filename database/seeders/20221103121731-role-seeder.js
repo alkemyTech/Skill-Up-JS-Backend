@@ -13,8 +13,13 @@ module.exports = {
       name: 'Customer',
       description: 'The customer is always right'
     }
+    const god = {
+      id: 3,
+      name: 'God',
+      description: 'I can do whatever I want'
+    }
     return queryInterface.bulkInsert(ROLE_TABLE, [
-      admin, customer
+      admin, customer, god
     ]);
   },
 
