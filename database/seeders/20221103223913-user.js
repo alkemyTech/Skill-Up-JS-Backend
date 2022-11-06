@@ -12,6 +12,7 @@ module.exports = {
         roleId: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
+        avatar: "http://www.elblogdecha.org/wp-content/uploads/2021/06/perfil-vacio.jpg"
       },
       {
         firstName: "Test2",
@@ -23,6 +24,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         roleId: 2,
+        avatar: "http://www.elblogdecha.org/wp-content/uploads/2021/06/perfil-vacio.jpg"
       },
       {
         firstName: "Test3",
@@ -34,6 +36,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         roleId: 2,
+        avatar: "http://www.elblogdecha.org/wp-content/uploads/2021/06/perfil-vacio.jpg"
       },
       {
         firstName: "Test4",
@@ -45,6 +48,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         roleId: 2,
+        avatar: "http://www.elblogdecha.org/wp-content/uploads/2021/06/perfil-vacio.jpg"
       },
       {
         firstName: "admin",
@@ -59,6 +63,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         roleId: 1,
+        avatar: "http://www.elblogdecha.org/wp-content/uploads/2021/06/perfil-vacio.jpg"
       },
     ]);
   },

@@ -12,6 +12,8 @@
   "scripts": {
     "start": "nodemon node app.js",
     "test": "mocha ./test/*.js",
+    "createdb" : "sequelize db:create alkemybank",
+    "deletedb" : "sequelize db:drop",
     "migrate" : "sequelize db:migrate",
     "seed" : "sequelize db:seed:all",
     "undomigrate" : "sequelize db:migrate:undo:all",
