@@ -34,8 +34,10 @@ module.exports = {
     if (account !== 0) return "deleted"
     else return false
   },
-  update: async (accountId, amount) => {
+  update: async (accountId, amount, toAccountId = undefined) => {
     let account = await getAccount(accountId);
+
+    if (toAccountId) await getAccount(toAccountId)
     if (account.isBlocked) throw boom.unauthorized("This account is blocked");
     let money = parseInt(account.money) + parseInt(amount)
     if (money >= 0) {

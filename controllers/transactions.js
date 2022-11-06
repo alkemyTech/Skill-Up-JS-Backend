@@ -24,42 +24,14 @@ module.exports = {
   },
   create: async (body) => {
 
-    //buscamos siempre la cuenta de origen
-    let account = await accountService.getAccount(body.accountId);
-    // traemos al usuario de la cuenta
-    let user = await userService.get(account.userId)
-    // me transfiero a mi mismo (accountID será el intermediario, de DONDE proviene esa plata nueva)
-    if (user.user.roleId === 3 && body.category === "income-transfer") {
-      //descuento el dinero de la cuenta de origen
-      await accountService.update(body.accountId, body.amount * -1);
-      //creo la transferencia
-      const newTransaction = await models.Transaction.create(body);
-      //acredito el dinero en el destino
-      await accountService.update(body.toAccountId, body.amount)
-      return (newTransaction);
-    }
-    // pago un servicio: accountID será la mia TOACCOUNT intermediary
-    if (body.category === "payment") {
-      //descuento el dinero de la cuenta de origen
-      await accountService.update(body.accountId, body.amount * -1);
-      //creo la transferencia
-      const newTransaction = await models.Transaction.create(body);
-      //acredito el dinero en el destino
-      await accountService.update(body.toAccountId, body.amount)
-      return (newTransaction);
-    }
-    // le transfiero a un usuario accuontID Sera la mia TOACCOUNT la del tercero
-    // me transfieren account ID sera la del tercero TOACCOUNT la mia.
-    if (body.category === "user-transfer") {
-      //descuento el dinero de la cuenta de origen
-      await accountService.update(body.accountId, body.amount * -1);
-      //creo la transferencia
-      const newTransaction = await models.Transaction.create(body);
-      //acredito el dinero en el destino
-      await accountService.update(body.toAccountId, body.amount)
-      return (newTransaction);
-    }
+    //descuento el dinero de la cuenta de origen
+    await accountService.update(body.accountId, body.amount * -1, body.toAccountId);
+    //acredito el dinero en el destino
+    await accountService.update(body.toAccountId, body.amount)
+    //creo la transferencia
+    const newTransaction = await models.Transaction.create(body);
 
+    return (newTransaction);
   },
   delete: async (id) => {
     const deleted = await models.Transaction.destroy({
