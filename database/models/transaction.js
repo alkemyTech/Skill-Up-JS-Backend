@@ -32,7 +32,7 @@ const TransactionSchema = {
     onDelete: 'SET NULL'
   },
   toAccountId: {
-    allowNull: false,
+    allowNull: true,
     field: 'to_account_id',
     type: Sequelize.UUID,
     references: {
@@ -53,7 +53,7 @@ const TransactionSchema = {
     defaultValue: Sequelize.NOW
   },
   deletedAt: {
-    field: "deletedAt",
+    field: "deleted_at",
     type: DataTypes.DATE
   }
 }
