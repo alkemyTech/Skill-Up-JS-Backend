@@ -3,13 +3,15 @@ const { development } = require('../../config/config')
 const { encryptPassword } = require('../../utils/encryptPassword');
 const { USER_TABLE } = require('../models/user');
 const { ACCOUNT_TABLE } = require('../models/account');
+const { TRANSACTION_TABLE } = require('../models/transaction');
 
 
 module.exports = {
   up: async (queryInterface) => {
-    const clients = []
+    const users = []
     const accounts = []
     const password = await encryptPassword(development.adminPass)
+    const usersPassword = await encryptPassword("root")
     const admin = {
       id: 'b5a928fd-f1be-47d5-b9ec-e448a1b84848',
       first_name: 'John',
@@ -26,30 +28,71 @@ module.exports = {
       password: password,
       role_id: 3
     }
+    const godAccount = {
+      id: development.godAccountId,
+      money: 0,
+      is_blocked: false,
+      userId: god.id
+    }
+    const adminAccount = {
+      id: 'b5a928fd-f1be-47d5-b9ec-e448a1b84847',
+      money: 0,
+      is_blocked: false,
+      userId: admin.id
+    }
 
     for (let index = 0; index < 100; index++) {
-      const client = {
+      const createdAt = faker.date.recent()
+      const user = {
         id: faker.datatype.uuid(),
         first_name: faker.name.firstName(),
         last_name: faker.name.lastName(),
         email: faker.internet.email(),
-        password: faker.internet.password(),
-        role_id: 2
+        password: usersPassword,
+        role_id: 2,
+        createdAt,
+        updatedAt: createdAt
       }
       const account = {
         id: faker.datatype.uuid(),
         money: faker.finance.amount(),
-        is_blocked: false,
-        userId: client.id
+        is_blocked: faker.datatype.boolean(),
+        userId: user.id,
+        created_at: createdAt,
+        updated_at: createdAt
       };
-      clients.push(client);
+      users.push(user);
       accounts.push(account);
     }
+
     await queryInterface.bulkInsert(USER_TABLE, [
-      admin, god, ...clients
+      admin, god, ...users
     ]);
-    return queryInterface.bulkInsert(ACCOUNT_TABLE, [
-      ...accounts
+    await queryInterface.bulkInsert(ACCOUNT_TABLE, [
+      godAccount, adminAccount, ...accounts
+    ])
+
+    const transactions = [];
+
+    for (const account of accounts) {
+      for (let index = 0; index < faker.random.numeric(1); index++) {
+        const createdAt = faker.date.recent()
+        const transaction = {
+          id: faker.datatype.uuid(),
+          amount: faker.finance.amount(),
+          concept: faker.lorem.word(),
+          category: faker.lorem.word(),
+          account_id: account.id,
+          to_account_id: accounts[faker.random.numeric(2)].id,
+          created_at: createdAt,
+          updated_at: createdAt
+        }
+      transactions.push(transaction);
+      }
+    }
+
+    return queryInterface.bulkInsert(TRANSACTION_TABLE, [
+      ...transactions
     ])
   },
 
