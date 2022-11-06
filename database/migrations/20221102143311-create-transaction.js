@@ -26,6 +26,9 @@ module.exports = {
       toUserId: {
         type: Sequelize.INTEGER,
       },
+      categoryId: {
+        type: Sequelize.INTEGER,
+      },
       currency: {
         type: Sequelize.STRING
       },
