@@ -27,7 +27,7 @@ module.exports = {
   },
   update: async (accountId, amount) => {
     let account = await getAccount(accountId);
-    let money = account.money + amount
+    let money = parseInt(account.money) + parseInt(amount)
     if (money > 0) {
       account = await account.update({
         ...account,
