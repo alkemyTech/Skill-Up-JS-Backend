@@ -11,7 +11,11 @@
   },
   "scripts": {
     "start": "nodemon node app.js",
-    "test": "mocha ./test/*.js"
+    "test": "mocha ./test/*.js",
+    "migrate" : "sequelize db:migrate",
+    "seed" : "sequelize db:seed:all",
+    "undomigrate" : "sequelize db:migrate:undo:all",
+    "undoseed" : "sequelize db:seed:undo:all"
   },
   "engines": {
     "node": ">=0.14"
