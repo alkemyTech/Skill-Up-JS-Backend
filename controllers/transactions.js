@@ -40,5 +40,10 @@ module.exports = {
     }
     await transaction.update(updatedTransaction);
     return(body);
+  },
+  delete: async(id) => {
+    const transaction = await this.get(id);
+    const rta = await transaction.destroy();
+    return rta;
   }
 }
