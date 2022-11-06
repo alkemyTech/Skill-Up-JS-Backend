@@ -2,7 +2,7 @@ const express = require('express');
 const transactions = require('../../controllers/transactions');
 const router = express.Router()
 
-router.get('/:id', async(req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const transaction = await transactions.get(id);
@@ -12,7 +12,7 @@ router.get('/:id', async(req, res, next) => {
   }
 })
 
-router.get('/', async(req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const transaction = await transactions.getAll();
     res.status(200).send(transaction);
@@ -21,7 +21,7 @@ router.get('/', async(req, res, next) => {
   }
 })
 
-router.post('/', async(req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const body = req.body;
     const newTransaction = await transactions.create(body);
@@ -31,7 +31,7 @@ router.post('/', async(req, res, next) => {
   }
 })
 
-router.put('/:id', async(req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const body = req.body;
@@ -42,13 +42,14 @@ router.put('/:id', async(req, res, next) => {
   }
 })
 
-router.delete('/:id', async(req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    const rta = await transactions.delete(id);
-    res.status(201).send(rta);
+    await transactions.delete(id)
+    res.status(200).send("deleted");
+
   } catch (error) {
-    next(error);
+    next(error)
   }
 })
 
