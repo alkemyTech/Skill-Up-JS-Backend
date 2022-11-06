@@ -17,6 +17,8 @@
     "migrations:run": "sequelize-cli db:migrate",
     "migrations:revert": "sequelize-cli db:migrate:undo",
     "migrations:delete": "sequelize-cli db:migrate:undo:all",
+    "seeds:generate": "npx sequelize-cli seed:generate --name",
+    "seeds:run": "npx sequelize-cli db:seed:all",
     "test": "mocha ./test/*.js"
   },
   "engines": {
@@ -41,6 +43,7 @@
     "sequelize-cli": "6.2.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "chai": "^4.3.4",
     "eslint": "^8.26.0",
     "eslint-config-prettier": "^8.5.0",
