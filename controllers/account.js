@@ -27,8 +27,9 @@ module.exports = {
   },
   update: async (accountId, amount) => {
     let account = await getAccount(accountId);
+    if (account.isBlocked) throw boom.unauthorized("This account is blocked");
     let money = parseInt(account.money) + parseInt(amount)
-    if (money > 0) {
+    if (money >= 0) {
       account = await account.update({
         ...account,
         money
