@@ -1,5 +1,4 @@
-
-const express = require('express')
+const express = require("express");
 const {
    get,
    getById,
@@ -9,7 +8,14 @@ const {
 } = require('../controllers/users')
 const {validateUser} = require("../middlewares/userValidators")
 
+
 const router = express.Router();
+
+router.get("/", get);
+router.get("/:id", getById);
+router.post("/", createUser);
+router.delete("/:id", deleteById);
+router.put("/:id", editById);
 
 
 router.get('/', get)
@@ -17,6 +23,7 @@ router.get('/:id', getById)
 router.post('/', validateUser ,createUser)
 router.delete('/:id',deleteById)
 router.put('/:id',editById)
+
 
 
 router.get("/login", (req, res) => {
