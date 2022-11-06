@@ -24,10 +24,11 @@ module.exports = {
   },
   create: async (body) => {
 
-    //me transfiero a mi mismo - accountID será del intermediario, TOACCOUNT la mia
+    //buscamos siempre la cuenta de origen
     let account = await accountService.getAccount(body.accountId);
-    let user = await userService.get(account.userId) // intermediary
-
+    // traemos al usuario de la cuenta
+    let user = await userService.get(account.userId)
+    // me transfiero a mi mismo (accountID será el intermediario, de DONDE proviene esa plata nueva)
     if (user.user.roleId === 3 && body.category === "income-transfer") {
       //descuento el dinero de la cuenta de origen
       await accountService.update(body.accountId, body.amount * -1);
@@ -70,12 +71,13 @@ module.exports = {
     else throw boom.conflict("This transactions doesn't exists")
   },
   update: async (id, body) => {
-    const transaction = await this.get(id);
+    const transaction = await models.Transaction.findByPk(id);
+
     const updatedTransaction = {
       ...transaction,
       concept: body.concept
     }
     await transaction.update(updatedTransaction);
-    return (body);
+    return ("Updated");
   }
 }

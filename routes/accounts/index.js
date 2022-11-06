@@ -38,4 +38,15 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+router.get("/userId/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    let account = await ctrlAccount.getByUser(id)
+    res.status(200).send(account)
+  } catch (error) {
+    next(error)
+  }
+
+})
+
 module.exports = router
