@@ -3,8 +3,10 @@ const { signUp, signIn } = require("../controllers/login");
 
 const router = express.Router();
 
-const authCtrl = require("../controllers/login");
-const userVal = require("../middlewares/userValidations");
+router.route("/").post(signUp).post(signIn);
 
-router.post("/signUp", userVal.checkUser, authCtrl.signUp);
-router.post("/signIn", authCtrl.signIn);
+// const authCtrl = require("../controllers/login");
+
+router.route("/signUp").post(signUp);
+router.route("/signIn").get(signIn);
+module.exports = router;

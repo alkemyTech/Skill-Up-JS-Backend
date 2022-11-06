@@ -1,6 +1,6 @@
 const express = require("express");
 const usersRouter = require("./users");
-const authRouter = require("./auth");
+const authRouter = require("./login");
 const transactionsRouter = require("./transactions");
 //const rolesRouter = require('./role')
 const categoriesRouter = require("./category");

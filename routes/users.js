@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/", get);
 router.get("/:id", getById);
-router.post("/", createUser);
+// router.post("/", createUser); deprecated, use route /auth/signUp
 router.delete("/:id", deleteById);
 router.put("/:id", editById);
 

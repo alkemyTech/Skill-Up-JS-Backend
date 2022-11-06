@@ -1,8 +1,6 @@
 const createHttpError = require("http-errors");
 const { endpointResponse } = require("../helpers/success");
 const { catchAsync } = require("../helpers/catchAsync");
-const { createUser } = require("./users");
-const db = require("../db");
 const config = require("../config/config");
 const jwt = require("jsonwebtoken");
 const { User } = require("../database/models");
@@ -43,7 +41,7 @@ module.exports = {
         endpointResponse({
           res,
           message: "User created successfully",
-          body: { token, user },
+          body: { token, user: user },
         });
       } else {
         const httpError = createHttpError(
@@ -65,17 +63,17 @@ module.exports = {
     const { email, password } = req.body;
     try {
       const userFound = await User.findOne({ where: { email } });
-      if (!userFound)
-        return res.json({ error: "Incorrect password or email." });
-      const token = jwt.sign({ id: userFound.id }, config.SECRET, {
-        expiresIn: 86400,
-      });
+      if (!userFound) return res.json({ error: "Incorrect email" });
       const validPassword = await User.prototype.comparePassword(
         password,
         userFound.password
       );
-      if (!validPassword)
-        return res.json({ error: "Incorrect password or email." });
+      if (!validPassword) return res.json({ error: "Incorrect password" });
+
+      const token = jwt.sign({ id: userFound.id }, config.SECRET, {
+        expiresIn: 86400,
+      });
+
       res.json({
         token,
         user: userFound,
