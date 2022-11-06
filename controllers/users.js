@@ -46,51 +46,51 @@ module.exports = {
       next(httpError);
     }
   }),
-  createUser: catchAsync(async (req, res, next) => {
-    const { firstName, lastName, email, password } = req.body;
-    const hashPass = await bcrypt.hash(password, 10).then(function (hash) {
-      return hash;
-    });
-    if (!firstName || !lastName || !email || !password) {
-      const httpError = createHttpError(
-        404,
-        `[Error retrieving info] - [index - POST]: 'Missing fields to fill'`
-      );
-      next(httpError);
-    }
-    try {
-      const user = await User.findOne({
-        where: {
-          email,
-        },
-      });
-      if (!user) {
-        const response = await User.create({
-          firstName,
-          lastName,
-          email,
-          password: hashPass,
-        });
-        endpointResponse({
-          res,
-          message: "User created successfully",
-          body: response,
-        });
-      } else {
-        const httpError = createHttpError(
-          404,
-          `[Error email already exist] - [index - POST]: 'Error the email: ${email} already exist`
-        );
-        next(httpError);
-      }
-    } catch (error) {
-      const httpError = createHttpError(
-        error.statusCode,
-        `[Error retrieving users] - [index - POST]: ${error.message}`
-      );
-      next(httpError);
-    }
-  }),
+  // createUser: catchAsync(async (req, res, next) => {                        deprecated, use route /auth/signUp
+  //   const { firstName, lastName, email, password } = req.body;
+  //   const hashPass = await bcrypt.hash(password, 10).then(function (hash) {
+  //     return hash;
+  //   });
+  //   if (!firstName || !lastName || !email || !password) {
+  //     const httpError = createHttpError(
+  //       404,
+  //       `[Error retrieving info] - [index - POST]: 'Missing fields to fill'`
+  //     );
+  //     next(httpError);
+  //   }
+  //   try {
+  //     const user = await User.findOne({
+  //       where: {
+  //         email,
+  //       },
+  //     });
+  //     if (!user) {
+  //       const response = await User.create({
+  //         firstName,
+  //         lastName,
+  //         email,
+  //         password: hashPass,
+  //       });
+  //       endpointResponse({
+  //         res,
+  //         message: "User created successfully",
+  //         body: response,
+  //       });
+  //     } else {
+  //       const httpError = createHttpError(
+  //         404,
+  //         `[Error email already exist] - [index - POST]: 'Error the email: ${email} already exist`
+  //       );
+  //       next(httpError);
+  //     }
+  //   } catch (error) {
+  //     const httpError = createHttpError(
+  //       error.statusCode,
+  //       `[Error retrieving users] - [index - POST]: ${error.message}`
+  //     );
+  //     next(httpError);
+  //   }
+  // }),
   deleteById: catchAsync(async (req, res, next) => {
     const { id } = req.params;
     try {

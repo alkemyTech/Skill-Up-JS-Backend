@@ -62,22 +62,44 @@ module.exports = {
   signIn: catchAsync(async (req, res, next) => {
     const { email, password } = req.body;
     try {
+      if (!email || !password) {
+        const httpError = createHttpError(
+          404,
+          `[Error retrieving info] - [index - GET]: 'Missing fields to fill'`
+        );
+        next(httpError);
+      }
+
       const userFound = await User.findOne({ where: { email } });
-      if (!userFound) return res.json({ error: "Incorrect email" });
+      if (!userFound) {
+        const httpError = createHttpError(
+          404,
+          `[Error retrieving info] - [index - GET]: 'The email does not exist'`
+        );
+        next(httpError);
+      }
       const validPassword = await User.prototype.comparePassword(
         password,
-        userFound.password
+        userFound?.dataValues.password
       );
-      if (!validPassword) return res.json({ error: "Incorrect password" });
+      // console.log(validPassword);
+      if (!validPassword) {
+        const httpError = createHttpError(
+          404,
+          `[Error retrieving info] - [index - GET]: 'Incorrect password'`
+        );
+        next(httpError);
+      } else {
+        const token = jwt.sign({ id: userFound.id }, config.SECRET, {
+          expiresIn: 86400,
+        });
 
-      const token = jwt.sign({ id: userFound.id }, config.SECRET, {
-        expiresIn: 86400,
-      });
-
-      res.json({
-        token,
-        user: userFound,
-      });
+        endpointResponse({
+          res,
+          message: "Users logged",
+          body: { token, user: userFound },
+        });
+      }
     } catch (err) {
       next(err);
     }
