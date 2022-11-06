@@ -62,21 +62,25 @@ module.exports = {
   createTransaction: catchAsync(async (req, res, next) => {
     const { amount, description, userId, categoryId, toUserId } = req.body;
 
-    if (!amount || !description || !userId || !categoryId) {
-      const httpError = createHttpError(
-        400,
-        `[Error creating transactions] - [index - POST]: All fields are required`
-      );
-      return next(httpError);
-    }
-    if (amount <= 0) {
-      const httpError = createHttpError(
-        403,
-        "apllication/json"`[Error creating transactions] - [index - POST]: Amount must be greater than 0`
-      );
-      return next(httpError);
-    }
-    const date = new Date();
+
+    // if (!amount || !description || !userId || !categoryId || !type) {
+    //   const httpError = createHttpError(
+    //     400,
+    //     `[Error creating transactions] - [index - POST]: All fields are required`
+
+    //   )
+    //   return next(httpError)
+    // }
+    // if (amount <= 0) {
+    //   const httpError = createHttpError(
+    //     403,
+    //     'apllication/json'
+    //       `[Error creating transactions] - [index - POST]: Amount must be greater than 0`,
+    //   )
+    //   return next(httpError)
+    // }
+    const date = new Date()
+
     try {
       const response = await Transaction.create({
         amount,

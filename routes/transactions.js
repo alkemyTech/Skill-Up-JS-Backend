@@ -4,14 +4,17 @@ const {
   getTransactionById,
   createTransaction,
   updateTransaction,
-  deleteTransaction,
+  deleteTransaction
   getBalance,
-  sendMoney,
-} = require("../controllers/transactions");
+  sendMoney,  
+} = require('../controllers/transactions')
+const {validateTransaction} = require("../middlewares/transactionValidators")
 
 const router = express.Router();
 
-router.route("/").get(getTransactions).post(createTransaction);
+
+router.route('/').get(getTransactions).post(validateTransaction, createTransaction)
+
 
 router
   .route("/:id")
