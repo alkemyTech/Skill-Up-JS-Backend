@@ -1,5 +1,6 @@
 const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom')
+const accountService = require('./account');
 
 module.exports = {
   get: async(id) => {
@@ -22,7 +23,12 @@ module.exports = {
     return transaction;
   },
   create: async(body) => {
+    //descuento el dinero de la cuenta de origen
+    await accountService.update(body.accountId, body.amount*-1);
+    //creo la transferencia
     const newTransaction = await models.Transaction.create(body);
+    //acredito el dinero en el destino
+    await accountService.update(body.toAccountId, body.amount)
     return(newTransaction);
   },
   update: async(id, body) => {

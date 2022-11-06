@@ -1,8 +1,8 @@
 const { models } = require('../libs/sequelize');
 const ctrlAccount = require("./account");
 const boom = require('@hapi/boom');
-const bcrypt = require('bcrypt')
-// example of a controller. First call the service, then build the controller method
+const { encryptPassword, comparePassword } = require("../utils/encryptPassword");
+
 module.exports = {
   get: async (id) => {
     const user = await models.User.findOne({
@@ -20,12 +20,17 @@ module.exports = {
     if (user && account) return { user, account };
     else throw boom.notFound('User not found')
   },
-  post: async (schema) => {
-
-    const saltRounds = 10;
-    const pass = await bcrypt.hash(schema.password, saltRounds).then(function (hash) {
-      return hash;
+  getByEmail: async (email) => {
+    const user = await models.User.findOne({
+      where: {
+        email
+      }
     });
+    if (user) return user;
+    else throw boom.notFound('User not found')
+  },
+  post: async (schema) => {
+    const pass = await encryptPassword(schema.password)
     const [user, created] = await models.User.findOrCreate({
       where: {
         email: schema.email
