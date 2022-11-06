@@ -1,5 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
+const bcrypt = require("bcrypt");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -8,10 +10,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsTo(models.Role, { foreignKey: "roleId", onDelete: 'cascade', onUpdate: 'cascade' });
-      User.hasMany(models.Transaction, { foreignKey: "userId", onDelete: 'cascade', onUpdate: 'cascade' });
+      User.belongsTo(models.Role, {
+        foreignKey: "roleId",
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      });
+      User.hasMany(models.Transaction, {
+        foreignKey: "userId",
+        onDelete: "cascade",
+        onUpdate: "cascade",
+      });
     }
   }
+  User.prototype.comparePassword = async (inputPassword, password) => {
+    return await bcrypt.compare(inputPassword, password);
+  };
   User.init(
     {
       firstName: DataTypes.STRING,
