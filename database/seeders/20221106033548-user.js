@@ -56,7 +56,7 @@ module.exports = {
       const account = {
         id: faker.datatype.uuid(),
         money: faker.finance.amount(),
-        is_blocked: false,
+        is_blocked: faker.datatype.boolean(),
         userId: user.id,
         created_at: createdAt,
         updated_at: createdAt
