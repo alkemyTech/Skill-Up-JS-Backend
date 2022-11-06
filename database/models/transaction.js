@@ -32,7 +32,7 @@ const TransactionSchema = {
     onDelete: 'SET NULL'
   },
   toAccountId: {
-    allowNull: true,
+    allowNull: false,
     field: 'to_account_id',
     type: Sequelize.UUID,
     references: {

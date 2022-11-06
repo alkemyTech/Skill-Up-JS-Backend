@@ -3,11 +3,11 @@ const ctrlAccount = require("../../controllers/account");
 const router = express.Router()
 
 
-router.put('/:id', async (req, res, next) => {
-  const { id } = req.params;
+router.put('/:id/:mount', async (req, res, next) => {
+  const { id, mount } = req.params;
 
   try {
-    let updated = await ctrlAccount.update(id, 500)
+    let updated = await ctrlAccount.update(id, mount)
     res.status(200).send(updated)
   } catch (error) {
     next(error)
