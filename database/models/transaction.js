@@ -17,9 +17,9 @@ const TransactionSchema = {
     allowNull: true,
     type: DataTypes.STRING,
   },
-  type: {
+  category: {
     allowNull: false,
-    type: DataTypes.STRING,
+    type: DataTypes.STRING
   },
   accountId: {
     field: 'account_id',
@@ -51,18 +51,23 @@ const TransactionSchema = {
     field: 'updated_at',
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW
+  },
+  deletedAt: {
+    field: "deletedAt",
+    type: DataTypes.DATE
   }
 }
 
 class Transaction extends Model {
   static associate(models) {
-    this.belongsTo(models.Account, {as: 'account'});
-    this.belongsTo(models.Account, {as: 'toAccount'});
+    this.belongsTo(models.Account, { as: 'account' });
+    this.belongsTo(models.Account, { as: 'toAccount' });
   }
 
   static config(sequelize) {
     return {
       sequelize,
+      paranoid: true,
       tableName: TRANSACTION_TABLE,
       modelName: 'Transaction',
       timestamps: true
