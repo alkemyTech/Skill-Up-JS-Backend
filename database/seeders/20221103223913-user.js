@@ -20,7 +20,6 @@ module.exports = {
         password:
           "$2b$10$2Z.Ntn9732JiiYse27ZL9OeO669Yni4n1gOtHh1NqoWWpHt8bOMva",
         roleId: 2,
-        password: "123456",
         createdAt: new Date(),
         updatedAt: new Date(),
         roleId: 2,
@@ -34,7 +33,6 @@ module.exports = {
         roleId: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
-        password: "123456",
         roleId: 2,
       },
       {
@@ -44,7 +42,6 @@ module.exports = {
         password:
           "$2b$10$2Z.Ntn9732JiiYse27ZL9OeO669Yni4n1gOtHh1NqoWWpHt8bOMva",
         roleId: 2,
-        password: "123456",
         createdAt: new Date(),
         updatedAt: new Date(),
         roleId: 2,
@@ -61,7 +58,6 @@ module.exports = {
         email: "test5@test.com",
         createdAt: new Date(),
         updatedAt: new Date(),
-        password: "123456",
         roleId: 1,
       },
     ]);
