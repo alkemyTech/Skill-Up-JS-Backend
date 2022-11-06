@@ -10,6 +10,15 @@ const getAccount = async (id) => {
 module.exports = {
 
   getAccount,
+  getByUser: async (userId) => {
+    let account = await models.Account.findOne({
+      where: {
+        userId
+      }
+    })
+    if (account) return account
+    else throw boom.notFound("The account don't belong to this user")
+  },
   post: async (userId) => {
     let account = await models.Account.create({
       userId
