@@ -71,12 +71,13 @@ module.exports = {
     else throw boom.conflict("This transactions doesn't exists")
   },
   update: async (id, body) => {
-    const transaction = await this.get(id);
+    const transaction = await models.Transaction.findByPk(id);
+
     const updatedTransaction = {
       ...transaction,
       concept: body.concept
     }
     await transaction.update(updatedTransaction);
-    return (body);
+    return ("Updated");
   }
 }

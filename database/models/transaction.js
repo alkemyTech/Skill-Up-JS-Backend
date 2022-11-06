@@ -32,15 +32,14 @@ const TransactionSchema = {
     onDelete: 'SET NULL'
   },
   toAccountId: {
-    allowNull: true,
+    allowNull: false,
     field: 'to_account_id',
     type: Sequelize.UUID,
     references: {
       model: ACCOUNT_TABLE,
       key: 'id'
     },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onUpdate: 'CASCADE'
   },
   createdAt: {
     field: 'created_at',
