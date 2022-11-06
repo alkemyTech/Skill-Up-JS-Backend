@@ -22,7 +22,6 @@ const UserSchema = {
   email: {
     allowNull: false,
     type: DataTypes.STRING,
-    unique: true
   },
   password: {
     allowNull: false,
@@ -37,12 +36,24 @@ const UserSchema = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
+  },
+  createdAt: {
+    field: "createdAt",
+    type: DataTypes.DATE
+  },
+  updatedAt: {
+    field: "updatedAt",
+    type: DataTypes.DATE
+  },
+  deletedAt: {
+    field: "deletedAt",
+    type: DataTypes.DATE
   }
 }
 
 class User extends Model {
   static associate(models) {
-    this.belongsTo(models.Role, {as: 'role'});
+    this.belongsTo(models.Role, { as: 'role' });
     this.hasOne(models.Account, {
       as: 'account',
       foreignKey: 'userId'
@@ -52,9 +63,10 @@ class User extends Model {
   static config(sequelize) {
     return {
       sequelize,
+      paranoid: true,
       tableName: USER_TABLE,
       modelName: 'User',
-      timestamps: false
+      timestamps: true
     }
   }
 }
