@@ -11,6 +11,8 @@ module.exports = {
     jwtSecret: process.env.JWT_SECRET,
     email: process.env.EMAIL_ACCOUNT,
     emailPass: process.env.EMAIL_PASS,
+    adminEmail: process.env.ADMIN_EMAIL,
+    adminPass: process.env.PASSWORD_EMAIL
   },
 
   production: {
@@ -23,5 +25,7 @@ module.exports = {
     jwtSecret: process.env.JWT_SECRET,
     email: process.env.EMAIL_ACCOUNT,
     emailPass: process.env.EMAIL_PASS,
+    adminEmail: process.env.ADMIN_EMAIL,
+    adminPass: process.env.PASSWORD_EMAIL
   },
 }

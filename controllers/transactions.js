@@ -15,7 +15,7 @@ module.exports = {
     if (transaction) {
       return transaction
     } else {
-      throw boom.notFound('Wallet not found');
+      throw boom.notFound('Transaction not found');
     }
   },
   getAll: async () => {
@@ -31,11 +31,6 @@ module.exports = {
     await accountService.update(body.toAccountId, body.amount)
     return (newTransaction);
   },
-  update: async (id, body) => {
-    const transaction = await models.Transaction.findByPk(id);
-    const updatedTransaction = await transaction.update(body);
-    return (updatedTransaction);
-  },
   delete: async (id) => {
     const deleted = await models.Transaction.destroy({
       where: {
@@ -44,5 +39,14 @@ module.exports = {
     });
     if (deleted !== 0) return true;
     else throw boom.conflict("This transactions doesn't exists")
+  },
+  update: async (id, body) => {
+    const transaction = await this.get(id);
+    const updatedTransaction = {
+      ...transaction,
+      concept: body.concept
+    }
+    await transaction.update(updatedTransaction);
+    return (body);
   }
 }
