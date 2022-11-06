@@ -7,6 +7,6 @@ router.route("/").post(signUp).post(signIn);
 
 // const authCtrl = require("../controllers/login");
 
-router.route("/signUp").post(signUp);
-router.route("/signIn").get(signIn);
+// router.route("/signUp").post(signUp);
+router.route("/").get(signIn);
 module.exports = router;

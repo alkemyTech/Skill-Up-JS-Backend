@@ -14,13 +14,13 @@ module.exports = {
       const hashPass = await bcrypt.hash(password, 10).then(function (hash) {
         return hash;
       });
-      if (!firstName || !lastName || !email || !password) {
-        const httpError = createHttpError(
-          404,
-          `[Error retrieving info] - [index - POST]: 'Missing fields to fill'`
-        );
-        next(httpError);
-      }
+      // if (!firstName || !lastName || !email || !password) {
+      //   const httpError = createHttpError(
+      //     404,
+      //     `[Error retrieving info] - [index - POST]: 'Missing fields to fill'`
+      //   );
+      //   next(httpError);
+      // }
 
       const user = await User.findOne({
         where: {
