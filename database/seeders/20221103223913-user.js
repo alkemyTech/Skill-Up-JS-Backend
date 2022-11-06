@@ -10,6 +10,8 @@ module.exports = {
         password:
           "$2b$10$2Z.Ntn9732JiiYse27ZL9OeO669Yni4n1gOtHh1NqoWWpHt8bOMva",
         roleId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         firstName: "Test2",
@@ -17,6 +19,10 @@ module.exports = {
         email: "test2@test.com",
         password:
           "$2b$10$2Z.Ntn9732JiiYse27ZL9OeO669Yni4n1gOtHh1NqoWWpHt8bOMva",
+        roleId: 2,
+        password: "123456",
+        createdAt: new Date(),
+        updatedAt: new Date(),
         roleId: 2,
       },
       {
@@ -26,6 +32,10 @@ module.exports = {
         password:
           "$2b$10$2Z.Ntn9732JiiYse27ZL9OeO669Yni4n1gOtHh1NqoWWpHt8bOMva",
         roleId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        password: "123456",
+        roleId: 2,
       },
       {
         firstName: "Test4",
@@ -34,6 +44,10 @@ module.exports = {
         password:
           "$2b$10$2Z.Ntn9732JiiYse27ZL9OeO669Yni4n1gOtHh1NqoWWpHt8bOMva",
         roleId: 2,
+        password: "123456",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        roleId: 2,
       },
       {
         firstName: "admin",
@@ -41,6 +55,13 @@ module.exports = {
         email: "admin@admin.com",
         password:
           "$2b$10$2Z.Ntn9732JiiYse27ZL9OeO669Yni4n1gOtHh1NqoWWpHt8bOMva",
+        roleId: 1,
+        firstName: "Test5",
+        lastName: "Test5",
+        email: "test5@test.com",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        password: "123456",
         roleId: 1,
       },
     ]);

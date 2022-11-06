@@ -110,11 +110,11 @@ module.exports = {
         next(httpError);
       }
     } catch (error) {
-      const httpError = createHttpError(
-        error.statusCode,
-        `[Error in delete options] - [index - DELETE]: ${error.message}`
-      );
-      next(httpError);
+      // const httpError = createHttpError(
+      //   error.statusCode,
+      //   `[Error in delete options] - [index - DELETE]: ${error.message}`
+      // );
+      // next(httpError);
     }
   }),
   editById: catchAsync(async (req, res, next) => {
