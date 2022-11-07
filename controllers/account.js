@@ -10,6 +10,15 @@ const getAccount = async (id) => {
 module.exports = {
 
   getAccount,
+  getByUser: async (userId) => {
+    let account = await models.Account.findOne({
+      where: {
+        userId
+      }
+    })
+    if (account) return account
+    else throw boom.notFound("The account don't belong to this user")
+  },
   post: async (userId) => {
     let account = await models.Account.create({
       userId
@@ -25,10 +34,13 @@ module.exports = {
     if (account !== 0) return "deleted"
     else return false
   },
-  update: async (accountId, amount) => {
+  update: async (accountId, amount, toAccountId = undefined) => {
     let account = await getAccount(accountId);
-    let money = account.money + amount
-    if (money > 0) {
+
+    if (toAccountId) await getAccount(toAccountId)
+    if (account.isBlocked) throw boom.unauthorized("This account is blocked");
+    let money = parseInt(account.money) + parseInt(amount)
+    if (money >= 0) {
       account = await account.update({
         ...account,
         money

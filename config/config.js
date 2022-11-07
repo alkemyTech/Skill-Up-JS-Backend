@@ -12,7 +12,8 @@ module.exports = {
     email: process.env.EMAIL_ACCOUNT,
     emailPass: process.env.EMAIL_PASS,
     adminEmail: process.env.ADMIN_EMAIL,
-    adminPass: process.env.PASSWORD_EMAIL
+    adminPass: process.env.PASSWORD_EMAIL,
+    godAccountId: process.env.GOD_ACCOUNT_ID
   },
 
   production: {
@@ -26,6 +27,7 @@ module.exports = {
     email: process.env.EMAIL_ACCOUNT,
     emailPass: process.env.EMAIL_PASS,
     adminEmail: process.env.ADMIN_EMAIL,
-    adminPass: process.env.PASSWORD_EMAIL
+    adminPass: process.env.PASSWORD_EMAIL,
+    godAccountId: process.env.GOD_ACCOUNT_ID
   },
 }

@@ -1,31 +1,33 @@
 # Backend Node Template
 
-## ✅ Primero lo primero: instalar las dependencias iniciales del proyecto antes de trabajar:
+## ✅ Primero lo primero: instalar docker-compose y las dependencias iniciales del proyecto antes de trabajar:
 ```
 npm install
 ```
+### Levantar el servicio MySQL y el cliente gráfico
+```
+docker-compose up -d
+```
+## Levantar el servidor con nodemon
+```
+npm run dev
+```
+## 
 ## 🚩 Recomendaciones:
 Utilizar la versión de Node v14.x
 
 ## 💡 El proyecto utliza Sequelize como ORM. Comandos utiles del CLI:
 
-### Como generar un modelo desde cero
+### Crear la base de datos y correr las migraciones
 ```
-npx sequelize model:generate --name Ejemplo --attributes ejemplo:string
+npm run migrations:run
 ```
-### Crear la base de datos
+### Popular la base de datos con datos aletorios
 ```
-npx sequelize db:create
-```
-### Migrar modelos creados previamente
-```
-npx sequelize db:migrate
-```
-### Borrar la base de datos que creamos
-```
-npx sequelize db:drop
+npm run seeds:run
 ``` 
 
+-------------------------------------------------------------------------------------------------------
 ## 🏗 Algunos datos del proyecto:
 - La estructura de carpetas es del patron MVC
 - Las respuestas positivas las devuelve como un objecto. Las negativas las gestiona como un HTML
