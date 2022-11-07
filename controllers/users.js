@@ -1,7 +1,7 @@
 const { models } = require('../libs/sequelize');
 const ctrlAccount = require("./account");
 const boom = require('@hapi/boom');
-const { encryptPassword, comparePassword } = require("../utils/encryptPassword");
+const { encryptPassword } = require("../utils/encryptPassword");
 
 module.exports = {
   get: async (id) => {

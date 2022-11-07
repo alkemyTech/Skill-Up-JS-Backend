@@ -22,14 +22,14 @@ const TransactionSchema = {
     type: DataTypes.STRING
   },
   accountId: {
+    allowNull: false,
     field: 'account_id',
     type: Sequelize.UUID,
     references: {
       model: ACCOUNT_TABLE,
       key: 'id'
     },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onUpdate: 'CASCADE'
   },
   toAccountId: {
     allowNull: false,
@@ -53,7 +53,8 @@ const TransactionSchema = {
   },
   deletedAt: {
     field: "deleted_at",
-    type: DataTypes.DATE
+    type: DataTypes.DATE,
+    defaultValue: null
   }
 }
 
