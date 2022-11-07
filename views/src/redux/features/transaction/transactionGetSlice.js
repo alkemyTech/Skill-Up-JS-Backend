@@ -6,7 +6,7 @@ export const getTransactions = () => {
     return async(dispatch) => {
         dispatch(getTransactionsStart());
         try {
-            const res = await axios.get('http://localhost:3000/transaction');
+            const res = await axios.get('http://localhost:3001/transaction');
             dispatch(getTransactionsSuccess(res.data));
         } catch (err) {
             dispatch(getTransactionsFailed(err))
@@ -20,7 +20,7 @@ export const getTransactionsById = (id) => {
     return async(dispatch) => {
         dispatch(getTransactionsStart());
     try {
-        const res = await axios.get(`http://localhost:3000/transaction/${id}`);
+        const res = await axios.get(`http://localhost:3001/transaction/${id}`);
         dispatch(transactionId(res.data));
     } catch (err) {
         dispatch(getTransactionsFailed(err))
@@ -32,7 +32,7 @@ export const createTransactions = (value) => {
     return async(dispatch) => {
         dispatch(getTransactionsStart());
         try {
-            const res = await axios.post('http://localhost:3000/transaction', value);
+            const res = await axios.post('http://localhost:3001/transaction', value);
             dispatch(getTransactions());
         } catch (err) {
             dispatch(getTransactionsFailed(err))

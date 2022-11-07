@@ -4,7 +4,7 @@ import { addRoles } from "./rolesSlice";
 export const createRoles = (value) => {
  return async(dispatch) => {
   try {
-    const res = await axios.post('http://localhost:3000/roles', value)
+    const res = await axios.post('http://localhost:3001/roles', value)
     dispatch(addRoles(res.data));
     dispatch(getUsers);
   } catch (err) {

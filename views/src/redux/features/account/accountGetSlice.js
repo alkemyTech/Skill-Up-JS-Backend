@@ -6,7 +6,7 @@ import { getUserById, getUsers } from '../users/usersGetSlice';
 export const getUpdateAccount = (id) => {
     return async (dispatch) => {      
         try {
-          const res = await axios.put(`http://localhost:3000/account/${id}`);
+          const res = await axios.put(`http://localhost:3001/account/${id}`);
           if(res){
               dispatch(updateAccount(res.data));  
               dispatch(getUserById())
@@ -20,7 +20,7 @@ export const getUpdateAccount = (id) => {
 export const createAccount = (value) => {
     return async (dispatch) => {      
         try {
-          const res = await axios.post('http://localhost:3000/account', value);
+          const res = await axios.post('http://localhost:3001/account', value);
           dispatch(addAccount(res.data));
           dispatch(getUsers());
         } catch (err) {
@@ -33,7 +33,7 @@ export const createAccount = (value) => {
 export const getAccountById = (id) => {
     return async (dispatch) => {      
         try {
-          const res = await axios.put(`http://localhost:3000/account/${id}`);
+          const res = await axios.put(`http://localhost:3001/account/${id}`);
               dispatch(accountId(res.data));  
         } catch (err) {
             console.log(err)
