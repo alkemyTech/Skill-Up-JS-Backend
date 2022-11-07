@@ -32,17 +32,17 @@ module.exports = {
       id: development.godAccountId,
       money: 0,
       is_blocked: false,
-      userId: god.id
+      user_id: god.id
     }
     const adminAccount = {
       id: 'b5a928fd-f1be-47d5-b9ec-e448a1b84847',
       money: 0,
       is_blocked: false,
-      userId: admin.id
+      user_id: admin.id
     }
 
     for (let index = 0; index < 100; index++) {
-      const createdAt = faker.date.recent()
+      const created_at = faker.date.recent()
       const user = {
         id: faker.datatype.uuid(),
         first_name: faker.name.firstName(),
@@ -50,16 +50,16 @@ module.exports = {
         email: faker.internet.email(),
         password: usersPassword,
         role_id: 2,
-        createdAt,
-        updatedAt: createdAt
+        created_at,
+        updated_at: created_at
       }
       const account = {
         id: faker.datatype.uuid(),
         money: faker.finance.amount(),
         is_blocked: faker.datatype.boolean(),
-        userId: user.id,
-        created_at: createdAt,
-        updated_at: createdAt
+        user_id: user.id,
+        created_at: created_at,
+        updated_at: created_at
       };
       users.push(user);
       accounts.push(account);

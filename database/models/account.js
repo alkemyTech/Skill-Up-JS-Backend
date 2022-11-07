@@ -22,7 +22,7 @@ const AccountSchema = {
   },
   userId: {
     allowNull: false,
-    field: 'userId',
+    field: 'user_id',
     type: Sequelize.UUID,
     references: {
       model: USER_TABLE,
@@ -41,8 +41,9 @@ const AccountSchema = {
     defaultValue: Sequelize.NOW
   },
   deletedAt: {
-    field: 'deletedAt',
-    type: DataTypes.DATE
+    field: 'deleted_at',
+    type: DataTypes.DATE,
+    defaultValue: null
   }
 }
 

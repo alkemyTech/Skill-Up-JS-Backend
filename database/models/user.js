@@ -28,6 +28,7 @@ const UserSchema = {
     type: DataTypes.STRING,
   },
   roleId: {
+    allowNull: false,
     field: 'role_id',
     type: DataTypes.INTEGER,
     references: {
@@ -35,19 +36,19 @@ const UserSchema = {
       key: 'id'
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
   },
   createdAt: {
-    field: "createdAt",
+    field: "created_at",
     type: DataTypes.DATE
   },
   updatedAt: {
-    field: "updatedAt",
+    field: "updated_at",
     type: DataTypes.DATE
   },
   deletedAt: {
-    field: "deletedAt",
-    type: DataTypes.DATE
+    field: "deleted_at",
+    type: DataTypes.DATE,
+    defaultValue: null
   }
 }
 
