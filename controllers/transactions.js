@@ -6,7 +6,7 @@ const createHttpError = require("http-errors");
 
 const getTransactions = async (req, res, next) => {
   try {
-      const response = await Transaction.findAll({where:{userId: decodedUserId}})
+      const response = await Transaction.findAll({where:{deletedAt: null}})
       endpointResponse({
           res,
           message: 'Operacion Exitosa',
