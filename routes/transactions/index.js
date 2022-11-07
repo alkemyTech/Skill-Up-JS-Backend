@@ -1,8 +1,9 @@
 const express = require('express');
 const transactions = require('../../controllers/transactions');
-const router = express.Router()
+const router = express.Router();
+const authenticateUser = require('../../middlewares/authentication.middleware');
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', authenticateUser, async (req, res, next) => {
   try {
     const { id } = req.params;
     const transaction = await transactions.get(id);
@@ -10,16 +11,16 @@ router.get('/:id', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 router.get('/', async (req, res, next) => {
   try {
     const transaction = await transactions.getAll();
     res.status(200).send(transaction);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 router.post('/', async (req, res, next) => {
   try {
@@ -29,7 +30,7 @@ router.post('/', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 router.put('/:id', async (req, res, next) => {
   try {
@@ -40,17 +41,16 @@ router.put('/:id', async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 router.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
-    await transactions.delete(id)
-    res.status(200).send("deleted");
-
+    await transactions.delete(id);
+    res.status(200).send('deleted');
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
-module.exports = router
+module.exports = router;
