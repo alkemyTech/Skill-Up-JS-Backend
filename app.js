@@ -45,6 +45,7 @@ app.listen(port, () => {
   console.log(`Servidor funcionando en el puerto ${port}`)
 });
 
+
 app.use(logErrors);
 app.use(queryErrorHandler);
 app.use(boomErrorHandler);
