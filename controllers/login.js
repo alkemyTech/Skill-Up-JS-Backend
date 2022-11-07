@@ -6,14 +6,12 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../database/models");
 const bcrypt = require("bcrypt");
 
-// example of a controller. First call the service, then build the controller method
 module.exports = {
   signUp: catchAsync(async (req, res, next) => {
+    const { firstName, lastName, email, password } = req.body;
+    const hashPass = await bcrypt.hash(password, 10);
+
     try {
-      const { firstName, lastName, email, password } = req.body;
-      const hashPass = await bcrypt.hash(password, 10).then(function (hash) {
-        return hash;
-      });
       // if (!firstName || !lastName || !email || !password) {
       //   const httpError = createHttpError(
       //     404,
@@ -34,6 +32,7 @@ module.exports = {
           lastName,
           email,
           password: hashPass,
+          avatar: req.file.path,
         });
         const token = jwt.sign({ id: user.id }, config.SECRET, {
           expiresIn: 86400,
