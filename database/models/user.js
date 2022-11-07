@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 
-const { hash } = ('bcrypt');
+const { hash }=  require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {

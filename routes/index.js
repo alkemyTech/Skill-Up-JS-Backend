@@ -10,4 +10,6 @@ router.use('/users', usersRouter)
 router.use('/transactions', transactionsRouter)
 router.use('/categories', categoriesRouter)
 
+router.get('/', (_req, res) => res.json('OK'))
+
 module.exports = router
