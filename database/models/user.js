@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
       },
-      avatar: DataTypes.STRING,
+      avatar: {type:DataTypes.STRING,defaultValue:"http://www.elblogdecha.org/wp-content/uploads/2021/06/perfil-vacio.jpg"},
       password: DataTypes.STRING,
       roleId: { type: DataTypes.INTEGER, defaultValue: 2 },
     },
