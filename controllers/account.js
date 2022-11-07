@@ -1,5 +1,5 @@
 const { models } = require('../libs/sequelize');
-const boom = require('@hapi/boom')
+const boom = require('@hapi/boom');
 
 
 const getAccount = async (id) => {
@@ -15,6 +15,7 @@ module.exports = {
       where: {
         userId
       }
+      , include: ['transaction']
     })
     if (account) return account
     else throw boom.notFound("The account don't belong to this user")
@@ -34,20 +35,24 @@ module.exports = {
     if (account !== 0) return "deleted"
     else return false
   },
-  update: async (accountId, amount, toAccountId = undefined) => {
+  update: async (userId, accountId, amount, toAccountId = undefined) => {
     let account = await getAccount(accountId);
 
-    if (toAccountId) await getAccount(toAccountId)
-    if (account.isBlocked) throw boom.unauthorized("This account is blocked");
-    let money = parseInt(account.money) + parseInt(amount)
-    if (money >= 0) {
-      account = await account.update({
-        ...account,
-        money
-      });
-      return account
+    if (account.dataValues.userId === userId) {
+      if (toAccountId) await getAccount(toAccountId)
+      if (account.isBlocked) throw boom.unauthorized("This account is blocked");
+      let money = Number(account.money) + Number(amount)
+      if (money >= 0) {
+        account = await account.update({
+          ...account,
+          money
+        });
+        return account
+      } else {
+        throw boom.conflict('You do not have enough money')
+      }
     } else {
-      throw boom.conflict('You do not have enough money')
+      throw boom.unauthorized('It is not your account :P')
     }
   },
 

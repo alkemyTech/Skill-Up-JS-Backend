@@ -17,4 +17,14 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-module.exports = authenticateUser;
+const checkRole = (roles) => {
+  return (req, res, next) => {
+    if (roles.includes(req.user.role)) {
+      next();
+    } else {
+      next(boom.unauthorized());
+    }
+  }
+}
+
+module.exports = { authenticateUser, checkRole };
