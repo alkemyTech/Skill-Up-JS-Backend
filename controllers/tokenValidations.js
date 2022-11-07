@@ -7,7 +7,6 @@ const createHttpError = require("http-errors");
 module.exports = {
   checkToken: catchAsync(async (req, res, next) => {
     const token = req.headers["x-access-token"];
-    console.log("asd");
     try {
       if (!token) {
         const httpError = createHttpError(
