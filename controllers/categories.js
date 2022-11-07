@@ -2,13 +2,10 @@ const { Category } = require('../database/models')
 
 const createCategory = async function(name, description){
     try{
-      const catEx = await Category.findByPk(name, description)
-      if(catEx){ return catEx}
-    else {var cate = await Category.create({
+    var cate = await Category.create({
             name: name,
             description: description
         })
-      }
       return cate}
     catch(e){
         console.log(e.message)
