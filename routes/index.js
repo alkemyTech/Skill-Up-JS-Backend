@@ -8,4 +8,6 @@ const router = express.Router()
 router.use('/users', usersRouter)
 router.use('/transactions', transactionsRouter)
 
+router.get('/', (_req, res) => res.json('OK'))
+
 module.exports = router
