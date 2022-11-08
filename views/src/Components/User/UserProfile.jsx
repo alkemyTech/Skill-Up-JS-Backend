@@ -1,15 +1,23 @@
 import {React, useState, useEffect, } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../../redux/features/users/usersGetSlice";
 import image from "../../../public/wallet.png";
-import Button from "../Buttons/Button"
+import Button from "../Buttons/Button";
+
 const UserProfile = () => {
+
+  const person= useSelector(state=> state.users.usersList) // ya va a estar el usuario porque esta loggeado
+  const dispatch = useDispatch(); // getUser -> userGetSlice // dispatch para editar el usuario (para guardar los cambios)
 
   let { id } = useParams();
   id && console.log(id)
+  useEffect(() => {
+    
+    dispatch(getUsers());
 
-  const person= useSelector(state=> state.users.userList) // ya va a estar el usuario porque esta loggeado
-  const dispatch = useDispatch(); // getUser -> userGetSlice // dispatch para editar el usuario (para guardar los cambios)
+  },[])
+
   const user = {
     firstName: "juan manuel 'el ricky' ",
     lastName: "fernandefuseral",
@@ -37,7 +45,7 @@ const UserProfile = () => {
     })
       
   } 
-
+  console.log(person.firstName)
   return (
     <div className="h-[80vh] flex justify-center ">
       <form className="h-full w-[80vw]  flex flex-col  items-center border-2">
@@ -62,13 +70,18 @@ const UserProfile = () => {
           <label className="pr-10  w-60" htmlFor="name">
             Name:
           </label>
-          <input
+          { person? (   <input
             type="text"
             className="  w-80 " 
-           value={user.firstName}
+           value={person.firstName}
             name="name"
             disabled={true}
-          />
+          />)
+            :
+            null
+
+          }
+       
         </div>
         <div className="mb-0 border-2 px-10 w-full h-1/6 flex items-center ">
           <label className="pr-10   w-60" htmlFor="LastName">
