@@ -8,6 +8,7 @@ const {
   getBalance,
 } = require("../controllers/transactions");
 const { validateTransaction } = require("../middlewares/transactionValidators");
+const { authMiddleware } = require("../helpers/tokensFunctions");
 
 const router = express.Router();
 
