@@ -1,7 +1,12 @@
 const express = require('express');
 const transactions = require('../../controllers/transactions');
 const router = express.Router();
-const { authenticateUser, checkRole } = require('../../middlewares/authentication.middleware');
+const {
+  authenticateUser,
+  checkRole,
+} = require('../../middlewares/authentication.middleware');
+
+router.get('/paginate', authenticateUser, transactions.paginate);
 
 router.get('/:id', authenticateUser, async (req, res, next) => {
   try {
@@ -25,7 +30,7 @@ router.get('/', authenticateUser, checkRole([1, 3]), async (req, res, next) => {
 router.post('/', authenticateUser, async (req, res, next) => {
   try {
     const body = req.body;
-    const userId = req.user.sub
+    const userId = req.user.sub;
     const newTransaction = await transactions.create(userId, body);
     res.status(201).send(newTransaction);
   } catch (error) {
@@ -37,8 +42,12 @@ router.put('/:id', authenticateUser, async (req, res, next) => {
   try {
     const { id: transactionId } = req.params;
     const body = req.body;
-    const userId = req.user.sub
-    const updatedTransaction = await transactions.update(userId, transactionId, body);
+    const userId = req.user.sub;
+    const updatedTransaction = await transactions.update(
+      userId,
+      transactionId,
+      body
+    );
     res.status(201).send(updatedTransaction);
   } catch (error) {
     next(error);
@@ -48,7 +57,7 @@ router.put('/:id', authenticateUser, async (req, res, next) => {
 router.delete('/:id', authenticateUser, async (req, res, next) => {
   try {
     const { id: transactionId } = req.params;
-    const userId = req.user.sub
+    const userId = req.user.sub;
     const rta = await transactions.delete(userId, transactionId);
     res.status(200).send(rta);
   } catch (error) {
