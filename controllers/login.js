@@ -1,42 +1,44 @@
 const createHttpError = require("http-errors");
 const { endpointResponse } = require("../helpers/success");
 const { catchAsync } = require("../helpers/catchAsync");
-const config = require("../config/config");
-const jwt = require("jsonwebtoken");
 const { User } = require("../database/models");
 const bcrypt = require("bcrypt");
+const { generateToken } = require("../helpers/tokensFunctions");
 
 module.exports = {
   signUp: catchAsync(async (req, res, next) => {
-    const { firstName, lastName, email, password, avatar } = req.body;
-    console.log(req.body);
-    const hashPass = await bcrypt.hash(password, 10);
-
+    const { firstName, lastName, email, password , avatar } = req.body;
+    if(!firstName || !lastName || !email || !password){
+      const httpError = createHttpError(
+        404,
+        `[Error missing fields] - [index - POST]: 'Required fields`
+      );
+      next(httpError);
+    }
+    const hashPass = await bcrypt.hash(password, 10).then(function (hash) {
+      return hash;
+    });
     try {
-
-      const { firstName, lastName, email, password } = req.body;
-      const hashPass = await bcrypt.hash(password, 10).then(function (hash) {
-        return hash;
-      });
-
-
-      const user = await User.findOne({
+      const searchUser = await User.findOne({
         where: {
           email,
         },
       });
 
-      if (!user) {
+      if (!searchUser) {
         const user = await User.create({
           firstName,
           lastName,
           email,
           password: hashPass,
-          avatar: avatar ?? avatar,
+          avatar: avatar && avatar,
         });
-        const token = jwt.sign({ id: user.id }, config.SECRET, {
-          expiresIn: 86400,
-        });
+        const token = await generateToken({
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+        })
         endpointResponse({
           res,
           message: "User created successfully",
@@ -89,9 +91,12 @@ module.exports = {
         );
         next(httpError);
       } else {
-        const token = jwt.sign({ id: userFound.id }, config.SECRET, {
-          expiresIn: 86400,
-        });
+        const token = await generateToken({
+          id: userFound.id,
+          firstName: userFound.firstName,
+          lastName: userFound.lastName,
+          email: userFound.email,
+        })
 
         endpointResponse({
           res,
