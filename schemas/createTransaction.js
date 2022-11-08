@@ -1,4 +1,4 @@
-const createUpdateTransaction = {
+const createTransaction = {
   amount: {
     exists: { bail: true, errorMessage: 'Amount is required' },
     trim: true,
@@ -42,4 +42,4 @@ const createUpdateTransaction = {
   },
 };
 
-module.exports = createUpdateTransaction;
+module.exports = createTransaction;
