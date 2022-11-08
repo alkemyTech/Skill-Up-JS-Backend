@@ -1,14 +1,17 @@
 import React from "react";
 import FormItem from "./components/FormItem";
-//ejemplo de component
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
-export const FormLoginRegister = () => {
+const FormLoginRegister = () => {
   const [userValues, setUserValues] = useState({
     name: "",
     email: "",
     password: "",
     isLogin: true,
   });
+
+  const auth = useAuth();
 
   const handleChange = (e) => {
     setUserValues({ ...userValues, [e.target.name]: e.target.value });
@@ -20,6 +23,12 @@ export const FormLoginRegister = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    auth
+      .signIn(userValues.email, userValues.password)
+      .then(console.log("logueado"))
+      .catch((error) => {
+        console.log(error)
+      })
   };
 
   return (
@@ -67,3 +76,5 @@ export const FormLoginRegister = () => {
     </section>
   );
 };
+
+export default FormLoginRegister;

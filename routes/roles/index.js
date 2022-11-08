@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const ctrlRole = require("../../controllers/role");
+const { authenticateUser, checkRole } = require('../../middlewares/authentication.middleware');
 
-router.post("/create", async (req, res) => {
+router.post("/create", authenticateUser, checkRole([1, 3]), async (req, res) => {
     const { schema } = req.body;
     try {
         let role = await ctrlRole.post(schema);

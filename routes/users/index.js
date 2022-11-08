@@ -1,11 +1,47 @@
 const express = require('express');
 const ctrlUser = require('../../controllers/users');
 const router = express.Router();
+const {
+  authenticateUser,
+  checkRole,
+} = require('../../middlewares/authentication.middleware');
 
-router.get('/:id', async (req, res, next) => {
-  const { id } = req.params;
+router.get(
+  '/all',
+  authenticateUser,
+  checkRole([1, 3]),
+  async (req, res, next) => {
+    const query = req.query;
+    try {
+      let users = await ctrlUser.getAll(query);
+      return res.status(201).send(users);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get(
+  '/:id',
+  authenticateUser,
+  checkRole([1, 3]),
+  async (req, res, next) => {
+    const { id } = req.params;
+    const query = req.query;
+    try {
+      let user = await ctrlUser.get(id, query);
+      return res.status(201).send(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.get('/', authenticateUser, async (req, res, next) => {
+  const query = req.query;
+  const id = req.user.sub;
   try {
-    let user = await ctrlUser.get(id);
+    let user = await ctrlUser.get(id, query);
     return res.status(201).send(user);
   } catch (error) {
     next(error);
@@ -13,7 +49,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 router.post('/create', async (req, res, next) => {
-  let schema = req.body; // if the body will be validate by a middleware we already expect an object with valid info.
+  let { schema } = req.body; // if the body will be validate by a middleware we already expect an object with valid info.
   // user as a account
   // user as a roleId
   try {
@@ -24,8 +60,24 @@ router.post('/create', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
-  const { id } = req.params;
+router.delete(
+  '/:id',
+  authenticateUser,
+  checkRole([1, 3]),
+  async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+      await ctrlUser.delete(id);
+      res.status(200).send('deleted');
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.delete('/', authenticateUser, async (req, res, next) => {
+  const id = req.user.sub;
 
   try {
     await ctrlUser.delete(id);

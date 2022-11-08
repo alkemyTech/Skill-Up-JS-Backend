@@ -1,23 +1,30 @@
-const { ErrorObject } = require('../helpers/error');
-const { StatusCodes } = require('http-status-codes');
 const { isTokenValid } = require('../utils/createJwt');
+const boom = require('@hapi/boom');
 
 const authenticateUser = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    throw new ErrorObject('No hay un token presente', StatusCodes.UNAUTHORIZED);
+    return next(boom.unauthorized('No hay un token presente'));
   }
-
   const token = authHeader.split(' ')[1];
-
   try {
-    const payloadDecoded = isTokenValid({ token });
+    const payloadDecoded = isTokenValid(token);
     req.user = { ...payloadDecoded };
     next();
   } catch (error) {
-    throw new ErrorObject('El token no es valido', StatusCodes.UNAUTHORIZED);
+    next(boom.unauthorized('El token no es valido'));
   }
 };
 
-module.exports = authenticateUser;
+const checkRole = (roles) => {
+  return (req, res, next) => {
+    if (roles.includes(req.user.role)) {
+      next();
+    } else {
+      next(boom.unauthorized());
+    }
+  };
+};
+
+module.exports = { authenticateUser, checkRole };
