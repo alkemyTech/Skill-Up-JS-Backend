@@ -155,10 +155,16 @@ const deleteUser = catchAsync(async(req, res, next)=>{
   }
 })
 
+/** test method for check upload img */
+const testImg = async(req, res, next)=>{
+    res.json(req.file)
+}  
+
 module.exports = {
   get,
   createUser,
   updateUser,
   deleteUser,
-  updateUserPassword
+  updateUserPassword,
+  testImg
 }
