@@ -8,7 +8,7 @@ const ownership = async (req, res, next) => {
     if (roleId === 1 || Number(paramId) === id) {
       return next();
     } else {
-      res.status(403).send('[Restricted - You do not have the necessary permissions] - [Access - Denied]');
+      res.status(403).send('You do not have the necessary permissions');
       throw new ErrorObject('Restricted', 403);
     }
   } catch (error) {
