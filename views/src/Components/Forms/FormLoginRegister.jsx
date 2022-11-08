@@ -2,6 +2,7 @@ import React from "react";
 import FormItem from "./components/FormItem";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+import { inputSchema } from "./components/validateSchema";
 
 const FormLoginRegister = () => {
   const [isLogin, setIsLogin] = useState(true);
