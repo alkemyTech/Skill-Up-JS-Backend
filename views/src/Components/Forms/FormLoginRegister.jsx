@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import FormItem from "./components/FormItem";
+
 //ejemplo de component
 
 export const FormLoginRegister = () => {
