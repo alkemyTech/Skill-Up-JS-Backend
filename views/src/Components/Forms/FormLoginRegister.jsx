@@ -1,8 +1,9 @@
 import React from "react";
 import FormItem from "./components/FormItem";
-//ejemplo de component
+import { useState } from "react";
 
-export const FormLoginRegister = () => {
+
+const FormLoginRegister = () => {
   const [userValues, setUserValues] = useState({
     name: "",
     email: "",
@@ -20,6 +21,7 @@ export const FormLoginRegister = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log({userValues})
   };
 
   return (
@@ -67,3 +69,5 @@ export const FormLoginRegister = () => {
     </section>
   );
 };
+
+export default FormLoginRegister
