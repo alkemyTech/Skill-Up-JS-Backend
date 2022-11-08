@@ -12,13 +12,12 @@ module.exports = {
     const hashPass = await bcrypt.hash(password, 10);
 
     try {
-      // if (!firstName || !lastName || !email || !password) {
-      //   const httpError = createHttpError(
-      //     404,
-      //     `[Error retrieving info] - [index - POST]: 'Missing fields to fill'`
-      //   );
-      //   next(httpError);
-      // }
+
+      const { firstName, lastName, email, password } = req.body;
+      const hashPass = await bcrypt.hash(password, 10).then(function (hash) {
+        return hash;
+      });
+
 
       const user = await User.findOne({
         where: {
