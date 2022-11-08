@@ -6,8 +6,6 @@ const HeaderContainer = () => {
   const [handleToggle, setHandleToggle] = useState(false);
 
   const navs = [
-    { text: "Login", url: "/api/login" },
-    { text: "Register", url: "/api/register" },
     { text: "Balance charge", url: "/balance/charge" },
     { text: "Expenses", url: "/expenses" },
     { text: "Balance", url: "/balance" },
