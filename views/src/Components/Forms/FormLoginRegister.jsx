@@ -1,7 +1,7 @@
 import React from "react";
 import FormItem from "./components/FormItem";
 import { useState } from "react";
-
+import { useAuth } from "../../hooks/useAuth";
 
 const FormLoginRegister = () => {
   const [userValues, setUserValues] = useState({
@@ -10,6 +10,8 @@ const FormLoginRegister = () => {
     password: "",
     isLogin: true,
   });
+
+  const auth = useAuth();
 
   const handleChange = (e) => {
     setUserValues({ ...userValues, [e.target.name]: e.target.value });
@@ -21,7 +23,12 @@ const FormLoginRegister = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log({userValues})
+    auth
+      .signIn(userValues.email, userValues.password)
+      .then(console.log("logueado"))
+      .catch((error) => {
+        console.log(error)
+      })
   };
 
   return (
@@ -70,4 +77,4 @@ const FormLoginRegister = () => {
   );
 };
 
-export default FormLoginRegister
+export default FormLoginRegister;

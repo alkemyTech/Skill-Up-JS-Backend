@@ -1,6 +1,6 @@
 const endPoints = {
   auth: {
-    login: `http://localhost:3000/auth`,
+    login: `http://localhost:3001/auth`,
   },
 };
 
