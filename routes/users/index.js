@@ -3,14 +3,29 @@ const ctrlUser = require('../../controllers/users');
 const router = express.Router();
 const { authenticateUser, checkRole } = require('../../middlewares/authentication.middleware');
 
+router.get('/all',
+  authenticateUser,
+  checkRole([1, 3]),
+  async (req, res, next) => {
+    const query = req.query
+    try {
+      let users = await ctrlUser.getAll(query);
+      return res.status(201).send(users);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 router.get(
   '/:id',
   authenticateUser,
   checkRole([1, 3]),
   async (req, res, next) => {
     const { id } = req.params;
+    const query = req.query;
     try {
-      let user = await ctrlUser.get(id);
+      let user = await ctrlUser.get(id, query);
       return res.status(201).send(user);
     } catch (error) {
       next(error);
@@ -21,9 +36,10 @@ router.get(
 router.get('/',
   authenticateUser,
   async (req, res, next) => {
+    const query = req.query
     const id = req.user.sub;
     try {
-      let user = await ctrlUser.get(id);
+      let user = await ctrlUser.get(id, query);
       return res.status(201).send(user);
     } catch (error) {
       next(error);

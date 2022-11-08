@@ -4,21 +4,39 @@ const boom = require('@hapi/boom');
 const { encryptPassword } = require("../utils/encryptPassword");
 
 module.exports = {
-  get: async (id) => {
-    const user = await models.User.findOne({
-      where: {
-        id
-      },
-      include: ["role"]
-    });
-    const account = await models.Account.findOne({
-      where: {
-        userId: id
-      }
+  get: async (id, query) => {
+    const options = {
+      association: 'transaction'
+    };
+    const { limit, offset } = query;
+    if (limit && offset) {
+      options.limit= parseInt(limit);
+      options.offset= parseInt(offset);
+    };
+    const user = await models.User.findByPk(id, {
+      include: [
+        {
+          association: 'account',
+          include: [
+            options
+          ]
+        }
+      ]
     });
 
-    if (user && account) return { user, account };
-    else throw boom.notFound('User not found')
+    return user;
+  },
+  getAll: async (query) => {
+    const options = {
+      include: ['account']
+    };
+    const { limit, offset } = query;
+    if (limit && offset) {
+      options.limit= parseInt(limit);
+      options.offset= parseInt(offset);
+    };
+    const users = await models.User.findAll(options);
+    return users;
   },
   getByEmail: async (email) => {
     const user = await models.User.findOne({
