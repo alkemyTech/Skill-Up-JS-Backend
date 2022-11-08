@@ -8,7 +8,8 @@ const bcrypt = require("bcrypt");
 
 module.exports = {
   signUp: catchAsync(async (req, res, next) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, avatar } = req.body;
+    console.log(req.body);
     const hashPass = await bcrypt.hash(password, 10);
 
     try {
@@ -32,7 +33,7 @@ module.exports = {
           lastName,
           email,
           password: hashPass,
-          avatar: req.file.path,
+          avatar: avatar ?? avatar,
         });
         const token = jwt.sign({ id: user.id }, config.SECRET, {
           expiresIn: 86400,
