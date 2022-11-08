@@ -8,11 +8,12 @@ require("dotenv").config();
 
 const indexRouter = require("./routes/index");
 const db = require("./database/models");
+const { corsOptions } = require("./helpers/corsOptions");
 
 const port = process.env.PORT || 3000;
 
 const app = express();
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(logger("dev"));
 app.use(express.json());

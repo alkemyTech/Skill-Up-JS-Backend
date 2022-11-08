@@ -181,7 +181,7 @@ module.exports = {
       const response = { balance, income, outcome };
       endpointResponse({
         res,
-        message: "Transaction removed successfully",
+        message: "Get balance successfully",
         body: response,
       });
     } catch (error) {
