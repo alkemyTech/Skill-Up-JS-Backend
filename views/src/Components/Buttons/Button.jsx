@@ -10,7 +10,12 @@ const Botons= ({ event, preset, value, type, payload}) => {
     // in parent component we can set an useEffect to await for the results of the action or the updated store to re-render a specific DOM section with the request
     return (
         <> 
-            <button type={ type || null} className={preset || null} onClick={event? ()=> event(payload) : console.log("not passing a funcion on 'event' prop ")} > {value || "need a value here"}</button>
+            <button type={type || null} className={preset || null} onClick={event ? (e) => {
+                e.preventDefault()
+                event()
+            } : (e) => {
+                e.preventDefault()
+            }} > {value || "need a value here"}</button>
         </>
     )
 }
