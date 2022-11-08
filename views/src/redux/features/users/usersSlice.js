@@ -17,7 +17,7 @@ const usersSlice = createSlice({
             loading: true,
         }
       },
-      getUsersSucces: (state, action) => {
+      getUsersSuccess: (state, action) => {
         return {
             ...state,
             loading: false,
@@ -50,6 +50,6 @@ const usersSlice = createSlice({
     }
 })
 
-export const { getUsersFailed, getUsersStart, getUsersSucces, getById, addUsers, deleteUsers  } = usersSlice.actions;
+export const { getUsersFailed, getUsersStart, getUsersSuccess, getById, addUsers, deleteUsers  } = usersSlice.actions;
 
 export default usersSlice.reducer;
