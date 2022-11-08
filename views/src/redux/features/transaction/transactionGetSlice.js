@@ -1,12 +1,12 @@
 import { getTransactionsFailed, getTransactionsStart, getTransactionsSuccess, transactionId, addTransaction, updateTransaction  } from './transactionSlice';
-import axios from 'axios';
+import { instance } from '../../instance';
 
 
 export const getTransactions = () => {
     return async(dispatch) => {
         dispatch(getTransactionsStart());
         try {
-            const res = await axios.get('http://localhost:3001/transaction');
+            const res = await instance.get('/transaction');
             dispatch(getTransactionsSuccess(res.data));
         } catch (err) {
             dispatch(getTransactionsFailed(err))
@@ -20,7 +20,7 @@ export const getTransactionsById = (id) => {
     return async(dispatch) => {
         dispatch(getTransactionsStart());
     try {
-        const res = await axios.get(`http://localhost:3001/transaction/${id}`);
+        const res = await instance.get(`/transaction/${id}`);
         dispatch(transactionId(res.data));
     } catch (err) {
         dispatch(getTransactionsFailed(err))
@@ -32,7 +32,7 @@ export const createTransactions = (value) => {
     return async(dispatch) => {
         dispatch(getTransactionsStart());
         try {
-            const res = await axios.post('http://localhost:3001/transaction', value);
+             await instance.post('/transaction', value);
             dispatch(getTransactions());
         } catch (err) {
             dispatch(getTransactionsFailed(err))
@@ -44,7 +44,7 @@ export const getUpdateTransactions = (id) => {
     return async(dispatch) => {
         dispatch(getTransactionsStart());
         try {
-            const res = await axios.put(`http://localhost:3000/transaction/${id}`)
+            const res = await instance.put(`/transaction/${id}`)
             dispatch(addTransaction(res.data));
             dispatch(getTransactions());
         } catch (err) {
