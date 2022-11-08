@@ -1,5 +1,6 @@
 import {React, useState, useEffect, } from "react";
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 import image from "../../../public/wallet.png";
 import Button from "../Buttons/Button"
 const UserProfile = () => {
@@ -7,6 +8,8 @@ const UserProfile = () => {
   let { id } = useParams();
   id && console.log(id)
 
+  const person= useSelector(state=> state.users.userList) // ya va a estar el usuario porque esta loggeado
+  const dispatch = useDispatch(); // getUser -> userGetSlice // dispatch para editar el usuario (para guardar los cambios)
   const user = {
     firstName: "juan manuel 'el ricky' ",
     lastName: "fernandefuseral",
@@ -19,6 +22,7 @@ const UserProfile = () => {
     transactions: 10,
   };
 
+  // get user (id)
   
   const editProfile = () => {
     let inputs = document.querySelectorAll("input");
@@ -117,7 +121,7 @@ const UserProfile = () => {
           />
         </div>
         <Button preset="mt-2 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm  text-center  px-5 py-1.5 "
-                    type="submit" value="Save changes"  />
+                    type="submit" value="Save changes"  /> {/* distpatch to save changes */}
       </form>
     </div>
   );

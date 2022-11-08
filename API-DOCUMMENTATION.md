@@ -12,7 +12,7 @@ USER:
 
 ROLE: 
 
-    -post       -> returns role created if created or boom error with some description of the values of role(1 client 2 admin 3 intermediary)
+    -post       -> returns role created if created or boom error with some description of the values of role(1 admin 2 client 3 intermediary)
 
     ** if we do the seeder then no need for this endpoint to exist.
 
