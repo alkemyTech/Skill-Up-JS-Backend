@@ -3,7 +3,9 @@ import TransferCard from "./components/TransferCard";
 import Table from "../Table/Table";
 import { Link } from "react-router-dom";
 
+
 const Dashboard = ({ transactions, transactionsLength }) => {
+ 
   return (
     <main className="flex flex-col px-6 lg:px-16 py-8 gap-6">
       <h1 className="text-4xl font-bold">My Dashboard</h1>
