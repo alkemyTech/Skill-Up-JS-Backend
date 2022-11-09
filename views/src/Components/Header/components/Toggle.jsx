@@ -1,4 +1,5 @@
-import { HiBars3, HiXMark } from "react-icons/hi2";
+import { AiOutlineClose } from "react-icons/ai";
+import { BiMenuAltLeft} from "react-icons/bi";
 
 const Toggle = ({ handleToggle, setHandleToggle }) => {
   return (
@@ -7,9 +8,9 @@ const Toggle = ({ handleToggle, setHandleToggle }) => {
       onClick={() => setHandleToggle(!handleToggle)}
     >
       {!handleToggle ? (
-        <HiBars3 className="w-8 h-8"/>
+        <BiMenuAltLeft className="w-8 h-8"/>
       ) : (
-        <HiXMark className="w-8 h-8" />
+        <AiOutlineClose className="w-8 h-8" />
       )}
     </button>
   );
