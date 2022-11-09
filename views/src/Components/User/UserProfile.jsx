@@ -1,35 +1,37 @@
 import {React, useState, useEffect, } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../../redux/features/users/usersGetSlice";
 import image from "../../../public/wallet.png";
-import Button from "../Buttons/Button"
+import Button from "../Buttons/Button";
+
 const UserProfile = () => {
 
-  let { id } = useParams();
-  id && console.log(id)
-
-  const person= useSelector(state=> state.users.userList) // ya va a estar el usuario porque esta loggeado
+  
+  const user= useSelector(state=> state.users.usersList) // ya va a estar el usuario porque esta loggeado
   const dispatch = useDispatch(); // getUser -> userGetSlice // dispatch para editar el usuario (para guardar los cambios)
-  const user = {
-    firstName: "juan manuel 'el ricky' ",
-    lastName: "fernandefuseral",
-    email: "fernandefuseral@test.test",
-    password: "************",
-    account: {
-      money: 9000,
-      isBlocked: false,
-    },
-    transactions: 10,
-  };
+  const [stat, setStat] = useState();
+  
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
 
-  // get user (id)
+  useEffect(() => {
+    console.log(user)
+    setStat({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      password: user.password,
+    })
+  },[user])
   
   const editProfile = () => {
+      console.log(stat)
     let inputs = document.querySelectorAll("input");
     let arrInputs = [...inputs]
     let str = "border-2 w-fit rounded p-2";
     arrInputs.map((e, i) => {
-      console.log(e.name)
       if (e.name === "file") return e.classList.remove("hidden");
       e.disabled = false
       if (e.name === "account") return e.disabled = true; 
@@ -37,10 +39,16 @@ const UserProfile = () => {
     })
       
   } 
-
+  const handleChange = (e) => {
+    setStat({
+      ...stat,
+      [e.target.name]: e.target.value
+    }) 
+  }
+ 
   return (
     <div className="h-[80vh] flex justify-center ">
-      <form className="h-full w-[80vw]  flex flex-col  items-center border-2">
+      <form className="h-full w-[80vw]  flex flex-col  items-center border-2" onChange={(e)=> handleChange(e)}>
         <div className="pt-8 w-9/12 flex flex-row items-center justify-between">
           <div className="sm:ml-20"></div>
                   <h1 className="text-2xl "> Your profile</h1>
@@ -59,40 +67,40 @@ const UserProfile = () => {
           <div className=" md:ml-20"></div>
         </div>
         <div className="mb-0 border-2 px-10 w-full h-1/6 flex items-center">
-          <label className="pr-10  w-60" htmlFor="name">
+          <label className="pr-10  w-60" htmlFor="firstName">
             Name:
           </label>
-          <input
+        <input
             type="text"
             className="  w-80 " 
-           value={user.firstName}
-            name="name"
+           value={stat?.firstName}
+            name="firstName"
             disabled={true}
           />
         </div>
         <div className="mb-0 border-2 px-10 w-full h-1/6 flex items-center ">
-          <label className="pr-10   w-60" htmlFor="LastName">
+          <label className="pr-10   w-60" htmlFor="lastName">
             Last name:
           </label>
           <input
             
             type="text"
             className=" w-80"
-            value={user.lastName}
-            name="LastName"
+            value={stat?.lastName}
+            name="lastName"
             disabled={true}
           />
         </div>
 
         <div className="mb-0 border-2 px-10 w-full h-1/6 flex items-center">
-          <label className="pr-10   w-60" htmlFor="Email">
+          <label className="pr-10   w-60" htmlFor="email">
             Email:
           </label>
           <input
             type="text"
             className=" w-80 "
-            value={user.email}
-            name="Email"
+            value={stat?.email}
+            name="email"
             disabled={true}
           />
         </div>
@@ -101,9 +109,9 @@ const UserProfile = () => {
             Password:
           </label>
           <input
-            type="text"
+            type="password"
             className=" w-80 "
-            value={user.password}
+            value={stat?.password}
             name="password"
             disabled={true}
           />
@@ -115,13 +123,13 @@ const UserProfile = () => {
           <input
             type="text"
             className=" w-80 "
-            value={user.account.money}
+            value={user?.account?.money}
             name="account"
             disabled={true}
           />
         </div>
         <Button preset="mt-2 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm  text-center  px-5 py-1.5 "
-                    type="submit" value="Save changes"  /> {/* distpatch to save changes */}
+                    type="submit" value="Save changes" event={()=> console.log(stat)} /> {/* distpatch to save changes */}
       </form>
     </div>
   );

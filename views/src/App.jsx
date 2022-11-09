@@ -10,7 +10,7 @@ function App() {
     <Routes>
       <Route path="/" index element={<LandingPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="/user/profile/:id" element={<UserProfile />} />
+      <Route path="/user/profile" element={<UserProfile />} />
       <Route path="/login" element={<FormLoginRegister />} />
     </Routes>
   );

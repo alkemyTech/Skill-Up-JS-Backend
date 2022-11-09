@@ -76,6 +76,17 @@ router.delete(
   }
 );
 
+
+router.put('/', authenticateUser, async (req, res, next) => {
+
+  try {
+    const { schema } = req.body;
+    const updated = await ctrlUser.put(schema, req.user.sub)
+    res.status(200).send(updated)
+  } catch (error) {
+    next(error)
+  }
+})
 router.delete('/', authenticateUser, async (req, res, next) => {
   const id = req.user.sub;
 
