@@ -1,7 +1,7 @@
 import {React, useState, useEffect, } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../redux/features/users/usersGetSlice";
+import { getUsers,updateUser } from "../../redux/features/users/usersGetSlice";
 import image from "../../../public/wallet.png";
 import Button from "../Buttons/Button";
 
@@ -129,7 +129,7 @@ const UserProfile = () => {
           />
         </div>
         <Button preset="mt-2 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm  text-center  px-5 py-1.5 "
-                    type="submit" value="Save changes" event={()=> console.log(stat)} /> {/* distpatch to save changes */}
+                    type="submit" value="Save changes" event={()=> dispatch(updateUser(stat))} /> {/* distpatch to save changes */}
       </form>
     </div>
   );
