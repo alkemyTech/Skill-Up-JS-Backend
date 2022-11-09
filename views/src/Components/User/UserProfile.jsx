@@ -11,7 +11,7 @@ const UserProfile = () => {
   const dispatch = useDispatch(); 
   const [stat, setStat] = useState();
   const [editPass, setEditPass] = useState("Password: ");
-
+  const[isEdited,setIsEdited]= useState(false)
   useEffect(() => {
     dispatch(getUsers());
   }, []);
@@ -43,6 +43,7 @@ const UserProfile = () => {
     });
   } 
   const handleChange = (e) => {
+    setIsEdited(true)
     setStat({
       ...stat,
       [e.target.name]: e.target.value
@@ -135,6 +136,7 @@ const UserProfile = () => {
             name="password"
             disabled={true}
           />
+          <h2 className="md: ml-6 md:block hidden">We value your safety. It is and will be encrypted!</h2>
         </div>
         <div className="mb-0 border-2 px-10 w-full h-1/6 flex items-center">
           <label className="pr-4 md:pr-10 w-60" htmlFor="account">
@@ -150,8 +152,9 @@ const UserProfile = () => {
         </div>
         <Button preset="mt-2 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm  text-center  px-5 py-1.5 "
           type="submit" value="Save changes" event={() => {
-            if(stat.password.length < 1) return fireSwal("warning","Password won't be changed",true,true,3500)
-           return fireSwal("success", "Great! Your changes as been saved.")
+            if (stat.password.length < 1) return fireSwal("warning", "Password won't be changed", true, true, 3500)
+            if (isEdited) return fireSwal("success", "Great! Your changes as been saved.")
+            return fireSwal("warning", "Nothing to change over here...", false,false, 3000)
           }} /> 
       </form>
     </div>
