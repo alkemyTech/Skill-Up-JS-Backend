@@ -1,5 +1,5 @@
 const express = require('express')
-const { get, createUser, updateUser, deleteUser, updateUserPassword, testImg, loginUser} = require('../controllers/users');
+const { get, createUser, updateUser, deleteUser, updateUserPassword, testImg, loginUser, getUser} = require('../controllers/users');
 
 const { upload } = require('../services/uploadImgServices');
 const { schemaValidator } = require('../middlewares/validator');
@@ -27,5 +27,6 @@ router.post('/login', schemaValidator(login), loginUser)
 * router.post('/upload', upload, schemaValidator(user), schemaValidator(image), testImg);
 * route + multer + schemas + controller method, use in that order
 */
+router.get('/:id', getUser)
 
 module.exports = router

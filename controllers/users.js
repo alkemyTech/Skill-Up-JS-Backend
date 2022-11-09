@@ -188,6 +188,24 @@ const loginUser = async(req, res, next) => {
 
   }
 }
+const getUser = catchAsync(async (req, res ,next) => {
+  try {
+    const response = await User.findOne({where:{userId: req.params.id}})
+    if(response){
+      endpointResponse({
+        res,
+        message:'Operacion exitosa',
+        body: response
+      })
+    }
+    else {
+      res.status(404).json({error: 'User not found.', status: 404})
+    }
+  } catch(error){
+    const httpError = createHttpEror(error.statusCode, `Error retrieving user - ${error.message}`)
+    next(httpError)  
+  }
+})
 
 module.exports = {
   get,
@@ -196,5 +214,6 @@ module.exports = {
   deleteUser,
   updateUserPassword,
   testImg,
-  loginUser
+  loginUser,
+  getUser
 }
