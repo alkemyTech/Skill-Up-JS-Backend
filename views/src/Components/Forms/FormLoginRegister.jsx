@@ -67,7 +67,7 @@ const FormLoginRegister = () => {
             )}
             <FormItem
               labelText="Email:"
-              name="email".
+              name="email"
               type="email"
               placeholder="email"
             />
