@@ -43,6 +43,11 @@ const UserProfile = () => {
     });
   } 
   const handleChange = (e) => {
+    if (e.target.name === "file") {
+      let supported = ["image/jpeg", "image/jpg", "image/svg+xml", "image/webp", "image/png"].map(img=> img=== e.target.files[0].type );
+      if (supported.includes(true)) console.log(e.target.files[0]) // add to stat to send the image for an update
+      else return // not send and include msg error of not supported
+    }
     setIsEdited(true)
     setStat({
       ...stat,
@@ -59,9 +64,17 @@ const UserProfile = () => {
       showConfirmButton: `${confirm}`, 
       timer: `${time}`,
    });
-    if (popup.isConfirmed) return dispatch(updateUser(stat))
-    if (popup.dismiss === "cancel") return
-    if (popup.dismiss === "timer") return
+    if (popup.isConfirmed) {
+      if (!isEdited) {
+        setStat({ ...stat, password: user.password })
+        return
+      }
+      return dispatch(updateUser(stat))
+    }
+    if (popup.dismiss === "cancel") {
+      return 
+    }
+    if (popup.dismiss === "timer") return 
     window.location.reload()
     return dispatch(updateUser(stat))
   };
