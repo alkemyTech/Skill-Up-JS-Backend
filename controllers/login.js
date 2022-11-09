@@ -1,14 +1,14 @@
 const createHttpError = require("http-errors");
 const { endpointResponse } = require("../helpers/success");
 const { catchAsync } = require("../helpers/catchAsync");
-const { User } = require("../database/models");
+const { User, Role } = require("../database/models");
 const bcrypt = require("bcrypt");
 const { generateToken } = require("../helpers/tokensFunctions");
 
 module.exports = {
   signUp: catchAsync(async (req, res, next) => {
-    const { firstName, lastName, email, password , avatar } = req.body;
-    if(!firstName || !lastName || !email || !password){
+    const { firstName, lastName, email, password, avatar } = req.body;
+    if (!firstName || !lastName || !email || !password) {
       const httpError = createHttpError(
         404,
         `[Error missing fields] - [index - POST]: 'Required fields`
@@ -38,11 +38,11 @@ module.exports = {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-        })
+        });
         endpointResponse({
           res,
           message: "User created successfully",
-          body: { token, user: user },
+          body: { token },
         });
       } else {
         const httpError = createHttpError(
@@ -71,7 +71,8 @@ module.exports = {
         next(httpError);
       }
 
-      const userFound = await User.findOne({ where: { email } });
+      const userFound = await User.findOne({ where: { email }, include: Role });
+      console.log(userFound);
       if (!userFound) {
         const httpError = createHttpError(
           404,
@@ -96,12 +97,13 @@ module.exports = {
           firstName: userFound.firstName,
           lastName: userFound.lastName,
           email: userFound.email,
-        })
+          role: userFound.Role.name,
+        });
 
         endpointResponse({
           res,
           message: "Users logged",
-          body: { token, user: userFound },
+          body: { token },
         });
       }
     } catch (err) {
