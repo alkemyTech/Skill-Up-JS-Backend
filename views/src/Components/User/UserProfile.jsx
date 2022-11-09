@@ -1,23 +1,22 @@
 import {React, useState, useEffect, } from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "../../redux/features/users/usersGetSlice";
+import { getUsers,updateUser } from "../../redux/features/users/usersGetSlice";
 import image from "../../../public/wallet.png";
 import Button from "../Buttons/Button";
 
 const UserProfile = () => {
 
   
-  const user= useSelector(state=> state.users.usersList) // ya va a estar el usuario porque esta loggeado
-  const dispatch = useDispatch(); // getUser -> userGetSlice // dispatch para editar el usuario (para guardar los cambios)
+  const user = useSelector(state => state.users.usersList);
+  const dispatch = useDispatch(); 
   const [stat, setStat] = useState();
-  
+  const [editPass, setEditPass] = useState(  "Password: ")
   useEffect(() => {
     dispatch(getUsers());
   }, []);
 
   useEffect(() => {
-    console.log(user)
     setStat({
       firstName: user.firstName,
       lastName: user.lastName,
@@ -27,11 +26,17 @@ const UserProfile = () => {
   },[user])
   
   const editProfile = () => {
-      console.log(stat)
     let inputs = document.querySelectorAll("input");
+    setEditPass("New password: ")
+    setStat({
+      ...stat,
+      password: ""
+    })
+    
     let arrInputs = [...inputs]
     let str = "border-2 w-fit rounded p-2";
     arrInputs.map((e, i) => {
+      if (e.name === "password") e.type = "text";
       if (e.name === "file") return e.classList.remove("hidden");
       e.disabled = false
       if (e.name === "account") return e.disabled = true; 
@@ -40,6 +45,7 @@ const UserProfile = () => {
       
   } 
   const handleChange = (e) => {
+    
     setStat({
       ...stat,
       [e.target.name]: e.target.value
@@ -105,8 +111,8 @@ const UserProfile = () => {
           />
         </div>
         <div className="mb-0 border-2 px-10 w-full h-1/6 flex items-center">
-          <label className="pr-3 w-60" htmlFor="password">
-            Password:
+          <label className="pr-3 w-60" htmlFor="password" name="pass">
+           {editPass}
           </label>
           <input
             type="password"
@@ -129,7 +135,7 @@ const UserProfile = () => {
           />
         </div>
         <Button preset="mt-2 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm  text-center  px-5 py-1.5 "
-                    type="submit" value="Save changes" event={()=> console.log(stat)} /> {/* distpatch to save changes */}
+          type="submit" value="Save changes" event={() =>dispatch(updateUser(stat))} /> 
       </form>
     </div>
   );
