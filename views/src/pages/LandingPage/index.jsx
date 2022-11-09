@@ -1,15 +1,15 @@
-import DashboardContainer from "../../Components/Dashboard/DashboardContainer.jsx";
+import Landing from "../../Components/Landing/Landing.jsx";
 import FooterContainer from "../../Components/Footer/FooterContainer.jsx";
 import HeaderContainer from "../../Components/Header/HeaderContainer.jsx";
 
-const DashboardPage = () => {
+const LandingPage = () => {
   return (
     <>
       <HeaderContainer />
-      <DashboardContainer />
+      <Landing />
       <FooterContainer />
     </>
   );
 };
 
-export default DashboardPage;
+export default LandingPage;

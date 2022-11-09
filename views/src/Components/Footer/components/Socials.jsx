@@ -9,7 +9,7 @@ const Socials = ({ socials }) => {
             target="_blank"
           >
             <i>{icon}</i>
-            <p className="group-hover:text-blue-500 duration-200">{label}</p>
+            <p className="group-hover:text-teal-600 duration-200">{label}</p>
           </a>
         </li>
       ))}
