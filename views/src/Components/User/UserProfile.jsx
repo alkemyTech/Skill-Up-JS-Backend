@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUsers,updateUser } from "../../redux/features/users/usersGetSlice";
 import image from "../../../public/wallet.png";
 import Button from "../Buttons/Button";
-
+import Swal from "sweetalert2";
 const UserProfile = () => {
 
   
@@ -51,7 +51,17 @@ const UserProfile = () => {
       [e.target.name]: e.target.value
     }) 
   }
- 
+  const fireSwal = () => {
+    console.log(user, "USER")
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Great! Changes has been saved",
+      showConfirmButton: false,
+      timer: 1500,
+      
+    });
+  };
   return (
     <div className="h-[80vh] flex justify-center ">
       <form className="h-full w-[80vw]  flex flex-col  items-center border-2" onChange={(e)=> handleChange(e)}>
@@ -135,7 +145,10 @@ const UserProfile = () => {
           />
         </div>
         <Button preset="mt-2 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm  text-center  px-5 py-1.5 "
-          type="submit" value="Save changes" event={() =>dispatch(updateUser(stat))} /> 
+          type="submit" value="Save changes" event={() => {
+            dispatch(updateUser(stat))
+            fireSwal()
+          }} /> 
       </form>
     </div>
   );
