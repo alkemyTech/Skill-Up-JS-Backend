@@ -15,6 +15,17 @@ export const inputSchema = yup.object().shape({
     .required('Campo requerido'),
   password: yup
     .string()
-    .min(5, 'Debe tener al menos 5 caracteres')
+    .min(4, 'Debe tener al menos 4 caracteres')
+    .required('Campo requerido'),
+});
+
+export const inputLogin = yup.object().shape({
+  email: yup
+    .string()
+    .email('Por favor ingrese un email valido')
+    .required('Campo requerido'),
+  password: yup
+    .string()
+    .min(4, 'Debe tener al menos 4 caracteres')
     .required('Campo requerido'),
 });

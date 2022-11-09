@@ -2,8 +2,20 @@ import BalanceCard from "./components/BalanceCard";
 import TransferCard from "./components/TransferCard";
 import Table from "../Table/Table";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import {useDispatch, useSelector} from 'react-redux';
+import { getUsers } from "../../redux/features/users/usersGetSlice";
+
 
 const Dashboard = ({ transactions, transactionsLength }) => {
+  const user = useSelector(state => state.users.usersList)
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    dispatch(getUsers())
+  },[]);
+
+
   return (
     <main className="flex flex-col px-6 lg:px-16 py-8 gap-6">
       <h1 className="text-4xl font-bold">My Dashboard</h1>
@@ -17,8 +29,9 @@ const Dashboard = ({ transactions, transactionsLength }) => {
             <p className="text-2xl font-bold opacity-80 pb-6">
               Last transactions
             </p>
+            
             <p className="text-lg opacity-80 pb-6">
-              Total transactions: {transactionsLength}
+              Total transactions: {user?.account?.transaction?.length}
             </p>
           </div>
           <Table transactions={transactions} />

@@ -1,13 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import FormItem from "./components/FormItem";
-import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { inputSchema } from "./components/validateSchema";
+import { inputLogin, inputSchema } from "./components/validateSchema";
 import { Form, Formik } from "formik";
+import { useNavigate } from "react-router-dom";
+
 
 const FormLoginRegister = () => {
   const [isLogin, setIsLogin] = useState(true);
   const auth = useAuth();
+  const navigate = useNavigate();
 
   const toggleLogin = () => {
     setIsLogin(!isLogin);
@@ -22,6 +24,8 @@ const FormLoginRegister = () => {
         .catch((error) => {
           console.log(error);
         });
+         navigate("/dashboard")
+
     } else {
       createUser(values);
     }
@@ -32,7 +36,7 @@ const FormLoginRegister = () => {
   return (
     <Formik
       initialValues={{ name: "", email: "", password: "" }}
-      validationSchema={inputSchema}
+      validationSchema={ isLogin ? inputLogin : inputSchema}
       onSubmit={onSubmit}
     >
       {(props) => (
@@ -66,7 +70,7 @@ const FormLoginRegister = () => {
             type="password"
             placeholder="password"
           />
-          <button type="submit" disabled={props.isSubmitting}>
+          <button  type="submit" disabled={props.isSubmitting}>
             {isLogin ? "Ingresar" : "Crear cuenta"}
           </button>
           <p>
