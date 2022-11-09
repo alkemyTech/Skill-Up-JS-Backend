@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { BsTrash, BsPencil } from "react-icons/bs";
+import {useDispatch, useSelector} from 'react-redux';
 
-const Table = ({ transactions }) => {
+const Table = ({ transactions}) => {
+  const user = useSelector(state => state.users.usersList)
+  console.log(user)
   return (
     <div className="overflow-auto">
       <table className="w-full">
@@ -26,7 +29,7 @@ const Table = ({ transactions }) => {
           </tr>
         </thead>
         <tbody>
-          {transactions
+          {user?.account?.transaction
             .map(
               ({ id, amount, concept, category, userFrom, userTo, date }) => {
                 return (
