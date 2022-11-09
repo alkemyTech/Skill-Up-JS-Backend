@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import FormItem from "./components/FormItem";
 import { useAuth } from "../../hooks/useAuth";
 import { inputSchema } from "./components/validateSchema";
+import { Form, Formik } from "formik";
 
 
 const FormLoginRegister = () => {
