@@ -38,6 +38,7 @@ export const getUserById = (id) => {
 };
 
 export const createUser = (value) => {
+
     return async (dispatch) => {
         dispatch(getUsersStart);
         try {
@@ -52,11 +53,11 @@ export const createUser = (value) => {
 };
 
 export const updateUser = (value) => {
-    console.log("HOLAAA")
+
     return async (dispatch) => {
         dispatch(getUsersStart);
         try {
-            const res = await axios.put('http://localhost:3001/user', value)
+            const res = await instance.put('http://localhost:3001/user', { value })
             //  dispatch(addUsers(res.data)); assuming that getUsers() makes a query on the db, should return the modified user
             dispatch(getUsers());
         } catch (err) {
