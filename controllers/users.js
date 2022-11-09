@@ -2,7 +2,8 @@ const createHttpError = require('http-errors')
 const { User } = require('../database/models')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync');
-const { createUserService, userUpdateService, userDeleteService, updatePasswordService } = require('../services/userServices');
+const { createUserService, userUpdateService, userDeleteService, updatePasswordService, loginUserService } = require('../services/userServices');
+const { encodeToken } = require('../../../Challenge Alkemy/src/middlewares/jwtvalidator');
 
 // example of a controller. First call the service, then build the controller method
 const get = catchAsync(async (req, res, next) => {
@@ -155,6 +156,38 @@ const deleteUser = catchAsync(async(req, res, next)=>{
   }
 })
 
+/** test method for check upload img */
+const testImg = async(req, res, next)=>{
+    res.json(req.file)
+} 
+
+const loginUser = async(req, res, next) => {
+  try {
+
+    const { email, password } =  req.body;
+    const loginUser = await loginUserService(email, password)
+
+    if (!loginUser || loginUser.Error) {
+      throw new Error('Invalid e-mail or password');
+    }
+
+    let encodedData = encodeToken(loginUser)
+    endpointResponse({
+      res,
+      message: 'Successful authentication',
+      body: {userData: loginUser, token: encodedData}
+    });
+
+  } catch (error) {
+
+    const httpError = createHttpError(
+      error.statusCode = 400,
+      `[Error login user] - [index - LOGIN]: ${error.message}`,
+    );
+    next(httpError);
+
+  }
+}
 const getUser = catchAsync(async (req, res ,next) => {
   try {
     const response = await User.findOne({where:{userId: req.params.id}})
@@ -180,5 +213,7 @@ module.exports = {
   updateUser,
   deleteUser,
   updateUserPassword,
+  testImg,
+  loginUser,
   getUser
 }

@@ -1,14 +1,14 @@
 exports.user = {
     firstName: {
       exists: {
-        errorMessage: 'User name is required',
+        errorMessage: 'First Name is required',
         options: { checkFalsy: true },
       },
-      isString: { errorMessage: 'User name should be a string' },
+      isString: { errorMessage: 'First Name should be a string' },
     },
     lastName: {
       exists: {
-        errorMessage: 'User name is required',
+        errorMessage: 'Last Name name is required',
         options: { checkFalsy: true },
       },
       isString: { errorMessage: 'Last name should be a string' },
@@ -22,6 +22,6 @@ exports.user = {
       },
     },
     email: {
-      isEmail: { errorMessage: 'Please provide valid email' },
+      isEmail: { errorMessage: 'Please provide a valid e-mail' },
     },
   };
