@@ -8,15 +8,9 @@ export const getUsers = () => {
     return async (dispatch) => {
         dispatch(getUsersStart);
         try {
-            // const options = {
-            //     Headers: {
-            //         accept: "/", //acá le digo que acepte todas las solicitudes
-            //         "Content-Type": "application/json", //que acepte json
-            //     },
-            // };
-            const res = await instance.get('/user', options)
+            const res = await instance.get('/user')
             dispatch(getUsersSuccess(res.data));
-            localStorage.setItem("access_token")
+            
         } catch (err) {
             dispatch(getUsersFailed(err));
         };
