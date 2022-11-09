@@ -79,8 +79,10 @@ module.exports = {
       }
     })
     if (existingEmail) throw boom.unauthorized("This email already exists");
-    let encryptedPass = schema.password && await encryptPassword(schema.password)
-    schema.password = encryptedPass;
+    if (schema.password.length) {
+      let encryptedPass = schema.password && await encryptPassword(schema.password)
+      schema.password = encryptedPass;
+    } else schema.password = user.password;
 
     await user.update(schema)
     return user
