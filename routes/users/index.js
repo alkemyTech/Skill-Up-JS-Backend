@@ -80,8 +80,8 @@ router.delete(
 router.put('/', authenticateUser, async (req, res, next) => {
 
   try {
-    const { schema } = req.body;
-    const updated = await ctrlUser.put(schema, req.user.sub)
+    const { value } = req.body;
+    const updated = await ctrlUser.put(value, req.user.sub)
     res.status(200).send(updated)
   } catch (error) {
     next(error)
