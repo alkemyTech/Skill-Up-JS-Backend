@@ -1,0 +1,21 @@
+const createHttpError = require('http-errors');
+const { ErrorObject } = require('../helpers/error');
+
+const userAuthenticated = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { id: userId } = req.user;
+
+    if (Number(id) === userId) {
+      return next();
+    } else {
+      res.status(403).send('You do not have authorization to perform this action')
+      throw new ErrorObject('Unauthorized', 403);
+    }
+  } catch (error) {
+    const httpError = createHttpError(error.statusCode, `[Error] : ${error.message}`);
+    return next(httpError);
+  }
+};
+
+module.exports = { userAuthenticated };
