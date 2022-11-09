@@ -1,13 +1,17 @@
 const express = require('express');
 const ctrlUser = require('../../controllers/users');
 const router = express.Router();
-const { authenticateUser, checkRole } = require('../../middlewares/authentication.middleware');
+const {
+  authenticateUser,
+  checkRole,
+} = require('../../middlewares/authentication.middleware');
 
-router.get('/all',
+router.get(
+  '/all',
   authenticateUser,
   checkRole([1, 3]),
   async (req, res, next) => {
-    const query = req.query
+    const query = req.query;
     try {
       let users = await ctrlUser.getAll(query);
       return res.status(201).send(users);
@@ -33,22 +37,19 @@ router.get(
   }
 );
 
-router.get('/',
-  authenticateUser,
-  async (req, res, next) => {
-    const query = req.query
-    const id = req.user.sub;
-    try {
-      let user = await ctrlUser.get(id, query);
-      return res.status(201).send(user);
-    } catch (error) {
-      next(error);
-    }
+router.get('/', authenticateUser, async (req, res, next) => {
+  const query = req.query;
+  const id = req.user.sub;
+  try {
+    let user = await ctrlUser.get(id, query);
+    return res.status(201).send(user);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 router.post('/create', async (req, res, next) => {
-  let { schema } = req.body; // if the body will be validate by a middleware we already expect an object with valid info.
+  let schema = req.body; // if the body will be validate by a middleware we already expect an object with valid info.
   // user as a account
   // user as a roleId
   try {
@@ -75,19 +76,15 @@ router.delete(
   }
 );
 
-router.delete(
-  '/',
-  authenticateUser,
-  async (req, res, next) => {
-    const id = req.user.sub;
+router.delete('/', authenticateUser, async (req, res, next) => {
+  const id = req.user.sub;
 
-    try {
-      await ctrlUser.delete(id);
-      res.status(200).send('deleted');
-    } catch (error) {
-      next(error);
-    }
+  try {
+    await ctrlUser.delete(id);
+    res.status(200).send('deleted');
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 module.exports = router;

@@ -1,26 +1,23 @@
 import React from "react";
+import {useField} from "formik";
 
-const FormItem = ({
-  type,
-  name,
-  placeholder,
-  value,
-  handleChange,
-  labelText,
-}) => {
+const FormItem = ({ labelText, ...props }) => {
+  // hook de formik para usar sus propiedades
+  const [field, meta] = useField(props);
   return (
-    <div>
+    <>
       <div>
-        <label htmlFor={name}>{labelText || name}</label>
+        <label>{labelText}</label>
       </div>
       <input
-        type={type}
-        value={value}
-        name={name}
-        placeholder={placeholder}
-        onChange={handleChange}
+        // propiedades onBlur, onChange, value
+        {...field}
+        // propiedades propias del input name, type, placeholder
+        {...props}
+        className={meta.touched && meta.error ? "input-error" : ""}
       />
-    </div>
+      {meta.touched && meta.error && <div className="error">{meta.error}</div>}
+    </>
   );
 };
 

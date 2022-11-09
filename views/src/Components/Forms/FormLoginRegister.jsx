@@ -1,70 +1,83 @@
 import React, {useState} from "react";
 import FormItem from "./components/FormItem";
+import { useAuth } from "../../hooks/useAuth";
+import { inputSchema } from "./components/validateSchema";
 
-//ejemplo de component
 
-export const FormLoginRegister = () => {
-  const [userValues, setUserValues] = useState({
-    name: "",
-    email: "",
-    password: "",
-    isLogin: true,
-  });
-
-  const handleChange = (e) => {
-    setUserValues({ ...userValues, [e.target.name]: e.target.value });
-  };
+const FormLoginRegister = () => {
+  const [isLogin, setIsLogin] = useState(true);
+  const auth = useAuth();
 
   const toggleLogin = () => {
-    setUserValues({ ...userValues, isLogin: !userValues.isLogin });
+    setIsLogin(!isLogin);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = (values, actions) => {
+    // logica para consumir los endpoints register y login
+    if (isLogin) {
+      auth
+        .signIn(values.email, values.password)
+        .then(console.log("logueado"))
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      createUser(values);
+    }
+
+    actions.resetForm();
   };
 
   return (
-    <section>
-      <form onSubmit={onSubmit}>
-        <h3>{userValues.isLogin ? "Ingresar" : "Registrarse"}</h3>
-        {!userValues.isLogin && (
+    <Formik
+      initialValues={{ name: "", email: "", password: "" }}
+      validationSchema={inputSchema}
+      onSubmit={onSubmit}
+    >
+      {(props) => (
+        <Form>
+          <h3>{isLogin ? "Ingresar" : "Registrarse"}</h3>
+          {!isLogin && (
+            <>
+              <FormItem
+                labelText="Nombre:"
+                type="text"
+                name="name"
+                placeholder="Nombre"
+              />
+              <FormItem
+                labelText="Apellido:"
+                type="text"
+                name="lastName"
+                placeholder="Apellido"
+              />
+            </>
+          )}
           <FormItem
-            type="text"
-            values={userValues.name}
-            name="name"
-            labelText="Nombre"
-            placeholder="Nombre"
-            handleChange={handleChange}
+            labelText="Email:"
+            name="email"
+            type="email"
+            placeholder="email"
           />
-        )}
-        <FormItem
-          type="email"
-          values={userValues.email}
-          name="email"
-          labelText="Email"
-          placeholder="Email"
-          handleChange={handleChange}
-        />
-        <FormItem
-          type="password"
-          values={userValues.password}
-          name="password"
-          labelText="Password"
-          placeholder="Password"
-          handleChange={handleChange}
-        />
-        <button type="submit">
-          {userValues.isLogin ? "Ingresar" : "Crear cuenta"}
-        </button>
-        <p>
-          {userValues.isLogin
-            ? "¿No estas registrado?"
-            : "Ya tienes una cuenta"}
-          <button type="button" onClick={toggleLogin}>
-            {userValues.isLogin ? " Crear cuenta" : " Ingresar"}
+          <FormItem
+            labelText="Pasword:"
+            name="password"
+            type="password"
+            placeholder="password"
+          />
+          <button type="submit" disabled={props.isSubmitting}>
+            {isLogin ? "Ingresar" : "Crear cuenta"}
           </button>
-        </p>
-      </form>
-    </section>
+          <p>
+            {isLogin ? "¿No estas registrado? " : "Ya tienes una cuenta "}
+            <button type="button" className="login-btn" onClick={toggleLogin}>
+              {isLogin ? " Crear cuenta" : " Ingresar"}
+            </button>
+          </p>
+        </Form>
+      )}
+    </Formik>
   );
 };
+
+export default FormLoginRegister;
