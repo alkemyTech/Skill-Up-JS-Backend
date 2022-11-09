@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import Landing from "./Components/Landing/Landing";
-import Layout from "./Components/Layout/Layout";
+import LandingPage from "./pages/LandingPage";
+import DashboardPage from "./pages/DashboardPage";
 import UserProfile from "./Components/User/UserProfile";
 import FormLoginRegister from "./Components/Forms/FormLoginRegister";
 
@@ -9,11 +9,10 @@ import FormLoginRegister from "./Components/Forms/FormLoginRegister";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Landing />} />
-        <Route path="/user/profile/:id" element={<UserProfile />} />
-        <Route path="/login" element={<FormLoginRegister />} />
-      </Route>
+      <Route path="/" index element={<LandingPage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/user/profile/:id" element={<UserProfile />} />
+      <Route path="/login" element={<FormLoginRegister />} />
     </Routes>
   );
 }
