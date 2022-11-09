@@ -21,7 +21,7 @@ const Navbar = ({ navs, handleToggle }) => {
       <div className="flex justify-end w-full lg:w-fit gap-4">
         <Link
           className="py-4 px-3 hover:text-teal-500 duration-200"
-          to="/api/login"
+          to="/login"
         >
           Login
         </Link>

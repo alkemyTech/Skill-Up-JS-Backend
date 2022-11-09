@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { BsTrash, BsPencil } from "react-icons/bs";
 import {useDispatch, useSelector} from 'react-redux';
 
-const Table = ({ transactions}) => {
+const Table = ({ transactions }) => {
   const user = useSelector(state => state.users.usersList)
   console.log(user)
   return (
@@ -29,7 +29,8 @@ const Table = ({ transactions}) => {
           </tr>
         </thead>
         <tbody>
-          {user?.account?.transaction
+          {/* user?.account?.transaction */}
+          {transactions
             .map(
               ({ id, amount, concept, category, userFrom, userTo, date }) => {
                 return (

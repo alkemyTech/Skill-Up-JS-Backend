@@ -3,7 +3,7 @@ import { BsArrowUpCircleFill, BsArrowDownCircleFill } from "react-icons/bs";
 const BalanceCard = () => {
   return (
     <div className="flex flex-col flex-wrap w-full gap-10">
-      <div className="flex items-center border px-6 lg:px-10 py-16 gap-12 rounded-lg bg-gradient-to-b from-teal-50 to-white">
+      <div className="flex h-full items-center border px-6 lg:px-10 py-16 gap-12 rounded-lg bg-gradient-to-b from-teal-50 to-white">
         <div className="flex flex-col 2xl:w-2/4 gap-6 z-10">
           <div className="flex flex-col gap-2">
             <p className="text-xl font-semibold gap-4 opacity-80">
@@ -33,7 +33,7 @@ const BalanceCard = () => {
           </div>
         </div>
         <picture className="w-2/4 h-full hidden 2xl:flex">
-          <img src="3d-credit-card.png" className="object-contain w-4/6 lg:w-full h-full"/>
+          <img src="3d-credit-card.png" className="object-contain w-4/6 h-full"/>
         </picture>
       </div>
     </div>

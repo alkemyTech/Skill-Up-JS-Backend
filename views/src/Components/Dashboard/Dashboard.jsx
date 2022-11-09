@@ -19,12 +19,12 @@ const Dashboard = ({ transactions, transactionsLength }) => {
   return (
     <main className="flex flex-col px-6 lg:px-16 py-8 gap-6">
       <h1 className="text-4xl font-bold">My Dashboard</h1>
-      <section className="flex flex-col lg:flex-row gap-16">
-        <div className="flex flex-col flex-wrap lg:w-1/3 justify-between gap-16">
+      <section className="flex flex-col gap-16">
+        <div className="flex flex-col lg:flex-row justify-between gap-16">
           <BalanceCard />
           <TransferCard />
         </div>
-        <div className="lg:w-2/3 flex flex-col h-fit border rounded-lg p-6">
+        <div className=" flex flex-col h-fit border rounded-lg p-6">
           <div className="flex flex-col lg:flex-row justify-between lg:items-end gap-6">
             <p className="text-2xl font-bold opacity-80 pb-6">
               Last transactions

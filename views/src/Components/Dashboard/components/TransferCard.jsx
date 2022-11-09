@@ -21,7 +21,7 @@ const TransferCard = () => {
   ];
 
   return (
-    <div className="flex items-center border p-6 lg:p-10 gap-12 rounded-lg bg-gradient-to-b from-teal-50 to-white">
+    <div className="flex w-full items-center border p-6 lg:p-10 gap-12 rounded-lg bg-gradient-to-b from-teal-50 to-white">
       <div className="flex flex-col w-full">
         <p className="text-2xl font-bold opacity-80 pb-6">New transaction</p>
         <p className="opacity-80 pb-4">Select an option</p>
