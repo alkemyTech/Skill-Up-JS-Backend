@@ -2,7 +2,7 @@ const { models } = require('../libs/sequelize');
 const ctrlAccount = require("./account");
 const boom = require('@hapi/boom');
 const { encryptPassword } = require("../utils/encryptPassword");
-
+const { Op } = require("sequelize");
 module.exports = {
   get: async (id, query) => {
     const options = {
@@ -10,8 +10,8 @@ module.exports = {
     };
     const { limit, offset } = query;
     if (limit && offset) {
-      options.limit= parseInt(limit);
-      options.offset= parseInt(offset);
+      options.limit = parseInt(limit);
+      options.offset = parseInt(offset);
     };
     const user = await models.User.findByPk(id, {
       include: [
@@ -32,8 +32,8 @@ module.exports = {
     };
     const { limit, offset } = query;
     if (limit && offset) {
-      options.limit= parseInt(limit);
-      options.offset= parseInt(offset);
+      options.limit = parseInt(limit);
+      options.offset = parseInt(offset);
     };
     const users = await models.User.findAll(options);
     return users;
@@ -64,6 +64,26 @@ module.exports = {
       return { user, account } // and account;
     }
     else throw boom.forbidden("Email already exists")
+  },
+  put: async (schema, userId) => {
+    // traigo el user
+    // verifico que si el email es distinto al que estaba y YA EXISTE en la base de datos, error.
+    // si no, modifico y devuelvo lo modificado
+    let user = await models.User.findByPk(userId);
+    let existingEmail = await models.User.findOne({
+      where: {
+        email: schema.email,
+        id: {
+          [Op.notLike]: userId
+        }
+      }
+    })
+    if (existingEmail) throw boom.unauthorized("This email already exists");
+    let encryptedPass = schema.password && await encryptPassword(schema.password)
+    schema.password = encryptedPass;
+
+    await user.update(schema)
+    return user
   },
   delete: async (id) => {
     let account = await ctrlAccount.delete(id);
