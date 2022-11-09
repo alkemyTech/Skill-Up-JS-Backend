@@ -117,9 +117,29 @@ const userDeleteService = async(conditions)=>{
   }
 }
 
+const loginUserService = async(email, password)=>{
+  try{
+    let userToLogin
+    try {
+      userToLogin = await getUser({ email: email })
+    } catch (err) {
+      return new ErrorObject(err.message, 500, err);
+    }
+    
+    if (userToLogin && await bcrypt.compare(password, userToLogin.password)) {
+      await delete userToLogin.dataValues.password;
+      return userToLogin;
+    }
+    return false
+  }
+  catch(err){
+    return new ErrorObject(err.message, 401, err);
+  }
+}
 module.exports = {
   createUserService,
   userUpdateService,
   userDeleteService,
-  updatePasswordService
+  updatePasswordService,
+  loginUserService
 }
