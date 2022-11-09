@@ -3,6 +3,7 @@ import FormItem from "./components/FormItem";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { inputSchema } from "./components/validateSchema";
+import { Form, Formik } from "formik";
 
 const FormLoginRegister = () => {
   const [isLogin, setIsLogin] = useState(true);
