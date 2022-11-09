@@ -1,5 +1,5 @@
 const createHttpError = require("http-errors");
-const { Transaction, User } = require("../database/models");
+const { Transaction, Category } = require("../database/models");
 const { endpointResponse } = require("../helpers/success");
 const { catchAsync } = require("../helpers/catchAsync");
 const { getPagination, paginateData } = require("../helpers/pagination");
@@ -16,6 +16,7 @@ module.exports = {
     try {
       const data = await Transaction.findAndCountAll({
         where: { [Op.and]: [filter] },
+        include: Category,
         limit,
         offset,
       });
