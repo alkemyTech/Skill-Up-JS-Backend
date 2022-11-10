@@ -22,7 +22,7 @@ const UserProfile = () => {
       lastName: user.lastName,
       email: user.email,
       password: user.password,
-      image: user.image
+      image: ""
     })
   },[user])
   

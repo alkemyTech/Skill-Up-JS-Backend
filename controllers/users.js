@@ -79,6 +79,7 @@ module.exports = {
       }
     })
     if (existingEmail) throw boom.unauthorized("This email already exists");
+    if (schema.image.length < 2) schema.image = user.image;
     if (schema.password.length) {
       if (schema.password === user.password) schema.password = user.password
       else {
