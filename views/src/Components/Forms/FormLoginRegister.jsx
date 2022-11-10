@@ -19,7 +19,6 @@ const FormLoginRegister = () => {
 
   const onSubmit = (values, actions) => {
     // logica para consumir los endpoints register y login
-    console.log(values);
     if (isLogin) {
       auth
         .signIn(values.email, values.password)
@@ -38,7 +37,7 @@ const FormLoginRegister = () => {
   return (
     <section className="flex items-center justify-center min-h-[80vh] bg-gray-100">
       <Formik
-        initialValues={{ name: "", lastName: "", email: "", password: "" }}
+        initialValues={{ firstName: "", lastName: "", email: "", password: "" }}
         validationSchema={isLogin ? inputLogin : inputSchema}
         onSubmit={onSubmit}
         className="flex flex-row items-center justify-center lg:justify-start"
@@ -51,13 +50,17 @@ const FormLoginRegister = () => {
             {!isLogin && (
               <>
                 <FormItem
+                  classLabel="block mt-3"
                   labelText="Nombre:"
+                  classInput="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                   type="text"
-                  name="name"
+                  name="firstName"
                   placeholder="Nombre"
                 />
                 <FormItem
+                  classLabel="block mt-3"
                   labelText="Apellido:"
+                  classInput="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                   type="text"
                   name="lastName"
                   placeholder="Apellido"
@@ -65,13 +68,17 @@ const FormLoginRegister = () => {
               </>
             )}
             <FormItem
+              classLabel="block mt-3"
               labelText="Email:"
+              classInput="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
               name="email"
               type="email"
               placeholder="email"
             />
             <FormItem
+              classLabel="block mt-3"
               labelText="Pasword:"
+              classInput="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
               name="password"
               type="password"
               placeholder="password"

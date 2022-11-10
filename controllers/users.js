@@ -55,7 +55,8 @@ module.exports = {
       },
       defaults: {
         ...schema,
-        password: pass
+        password: pass,
+        roleId: 2
       }
     })
     if (created) {
@@ -79,9 +80,14 @@ module.exports = {
       }
     })
     if (existingEmail) throw boom.unauthorized("This email already exists");
+    if (schema.image.length < 2) schema.image = user.image;
     if (schema.password.length) {
-      let encryptedPass = schema.password && await encryptPassword(schema.password)
-      schema.password = encryptedPass;
+      if (schema.password === user.password) schema.password = user.password
+      else {
+        let encryptedPass = schema.password && await encryptPassword(schema.password)
+        schema.password = encryptedPass;
+      }
+
     } else schema.password = user.password;
 
     await user.update(schema)
