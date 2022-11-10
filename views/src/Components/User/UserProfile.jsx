@@ -6,7 +6,7 @@ import Button from "../Buttons/Button";
 import Swal from "sweetalert2";
 
 const UserProfile = () => {
-  
+
   const user = useSelector(state => state.users.usersList);
   const dispatch = useDispatch(); 
   const [stat, setStat] = useState();
@@ -22,39 +22,49 @@ const UserProfile = () => {
       lastName: user.lastName,
       email: user.email,
       password: user.password,
+      image: user.image
     })
   },[user])
   
   const editProfile = () => {
     let inputs = document.querySelectorAll("input");
-    setEditPass("New password: ");
+     setEditPass("New password: ");
     setStat({
       ...stat,
       password: ""
-    });
+    }); 
     let arrInputs = [...inputs]
     let str = "border-2 w-fit rounded p-2";
     arrInputs.map((e, i) => {
       if (e.name === "password") e.type = "text";
       if (e.name === "file") return e.classList.remove("hidden");
       e.disabled = false
-      if (e.name === "account") return e.disabled = true;
+      if (e.name === "account") return e.disabled = true; 
       e.classList.add(...str.split(" "));
     });
   } 
   const handleChange = (e) => {
+    setIsEdited(true)
     if (e.target.name === "file") {
       let supported = ["image/jpeg", "image/jpg", "image/svg+xml", "image/webp", "image/png"].map(img=> img=== e.target.files[0].type );
-      if (supported.includes(true)) console.log(e.target.files[0]) // add to stat to send the image for an update
+      if (supported.includes(true)) {
+        let file = e.target.files[0];
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "zcgk2l4m");
+       return setStat({
+          ...stat,
+          image: formData
+        });
+      } // add to stat to send the image for an update
       else return // not send and include msg error of not supported
     }
-    setIsEdited(true)
     setStat({
       ...stat,
       [e.target.name]: e.target.value
     }) 
   }
-  const fireSwal =async (type, payload, confirm= null,cancel, time=1500) => {
+/*   const fireSwal = async (type, payload, confirm = null, cancel, time = 1500) => {
     document.getElementById("pass").type="password"
    let popup= await Swal.fire({
       position: "center",
@@ -77,7 +87,7 @@ const UserProfile = () => {
     if (popup.dismiss === "timer") return 
     window.location.reload()
     return dispatch(updateUser(stat))
-  };
+  }; */
   return (
     <div className="h-[80vh] flex justify-center ">
       <form className="h-full w-[80vw]  flex flex-col  items-center border-2" onChange={(e)=> handleChange(e)}>
@@ -91,7 +101,7 @@ const UserProfile = () => {
           <div className="h-full w-48 bg-gray-100 flex flex-col">
             <img
               className="w-full object-contain min-h-0"
-              src={image}
+              src={user.image}
               alt="Profile_image"
             />
           </div>
@@ -164,10 +174,10 @@ const UserProfile = () => {
           />
         </div>
         <Button preset="mt-2 mb-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm  text-center  px-5 py-1.5 "
-          type="submit" value="Save changes" event={() => {
-            if (stat.password.length < 1) return fireSwal("warning", "Password won't be changed", true, true, 3500)
+          type="submit" value="Save changes" event={() => { dispatch(updateUser(stat))
+           /*  if (stat.password.length < 1) return fireSwal("warning", "Password won't be changed", true, true, 3500)
             if (isEdited) return fireSwal("success", "Great! Your changes as been saved.")
-            return fireSwal("warning", "Nothing to change over here...", false,false, 3000)
+            return fireSwal("warning", "Nothing to change over here...", false,false, 3000) */
           }} /> 
       </form>
     </div>
