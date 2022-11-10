@@ -1,7 +1,7 @@
 import {React, useState, useEffect, } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers,updateUser } from "../../redux/features/users/usersGetSlice";
-import image from "../../../public/wallet.png";
+import image from "../../assets/wallet.png";
 import Button from "../Buttons/Button";
 import Swal from "sweetalert2";
 
