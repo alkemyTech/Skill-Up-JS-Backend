@@ -3,7 +3,9 @@ const { User } = require('../database/models')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync');
 const { createUserService, userUpdateService, userDeleteService, updatePasswordService, loginUserService } = require('../services/userServices');
-const { encodeToken } = require('../../../Challenge Alkemy/src/middlewares/jwtvalidator');
+const { encodeToken } = require('../helpers/tokenizer');
+
+
 
 // example of a controller. First call the service, then build the controller method
 const get = catchAsync(async (req, res, next) => {
