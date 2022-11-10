@@ -49,6 +49,7 @@ module.exports = {
         last_name: faker.name.lastName(),
         email: faker.internet.email(),
         password: usersPassword,
+        image: "https://res.cloudinary.com/leo-echenique/image/upload/v1668038867/wkvuim8xw0x9oez57ut5.svg",
         role_id: 2,
         created_at,
         updated_at: created_at
