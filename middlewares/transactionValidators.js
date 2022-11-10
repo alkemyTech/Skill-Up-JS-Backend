@@ -23,10 +23,6 @@ const validateTransaction = [
     .exists()
     .not()
     .isEmpty(),
-    check('type')
-    .exists()
-    .not()
-    .isEmpty(),
     (req, res, next) => {
         validateResult(req, res, next)
     }
