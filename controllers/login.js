@@ -38,6 +38,7 @@ module.exports = {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
+          avatar: user.avatar
         });
         endpointResponse({
           res,
@@ -98,6 +99,7 @@ module.exports = {
           lastName: userFound.lastName,
           email: userFound.email,
           role: userFound.Role.name,
+          avatar: userFound.avatar
         });
 
         endpointResponse({
