@@ -3,10 +3,11 @@ const { ErrorObject } = require('../helpers/error');
 
 const userAuthenticated = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    //const { id } = req.params;
     const { id: userId } = req.user;
 
-    if (Number(id) === userId) {
+    //if (Number(id) === userId) {
+    if ( userId && userId != null ) {
       return next();
     } else {
       res.status(403).send('You do not have authorization to perform this action')

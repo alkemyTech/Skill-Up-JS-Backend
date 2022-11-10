@@ -6,27 +6,26 @@ const { schemaValidator } = require('../middlewares/validator');
 const { image } = require('../schemas/image');
 const { user } = require('../schemas/users');
 const { login } = require('../schemas/login');
+const getToken = require('../helpers/getToken');
+const { userAuthenticated } = require('../middlewares/userAuthenticated');
+const ownership = require('../middlewares/ownership');
 
 
 const router = express.Router()
 
-router.get('/', get);
+router.get('/',  getToken, userAuthenticated, get);
 
-router.post('/', createUser);
+router.post('/', upload, schemaValidator(user), schemaValidator(image), createUser);
 
-router.put('/:id', updateUser);
+router.put('/:id', getToken, ownership, schemaValidator(user), updateUser);
 
-router.delete('/:id', deleteUser);
+router.delete('/:id', getToken, userAuthenticated, ownership, deleteUser);
 
-router.put('/changepassword/:id', updateUserPassword)
+router.put('/changepassword/:id', getToken, userAuthenticated, ownership, updateUserPassword)
 
 router.post('/login', schemaValidator(login), loginUser)
 
-/** Test/example route for upload with multer
-* router.post('/upload', upload, schemaValidator(image), testImg);
-* router.post('/upload', upload, schemaValidator(user), schemaValidator(image), testImg);
-* route + multer + schemas + controller method, use in that order
-*/
-router.get('/:id', getUser)
+router.get('/:id',  getToken, userAuthenticated, ownership, getUser)
+
 
 module.exports = router
