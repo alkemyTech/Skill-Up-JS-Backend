@@ -37,7 +37,7 @@ const FormLoginRegister = () => {
   return (
     <section className="flex items-center justify-center min-h-[80vh] bg-gray-100">
       <Formik
-        initialValues={{ name: "", lastName: "", email: "", password: "" }}
+        initialValues={{ firstName: "", lastName: "", email: "", password: "" }}
         validationSchema={isLogin ? inputLogin : inputSchema}
         onSubmit={onSubmit}
         className="flex flex-row items-center justify-center lg:justify-start"
@@ -54,7 +54,7 @@ const FormLoginRegister = () => {
                   labelText="Nombre:"
                   classInput="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                   type="text"
-                  name="name"
+                  name="firstName"
                   placeholder="Nombre"
                 />
                 <FormItem

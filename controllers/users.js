@@ -55,7 +55,8 @@ module.exports = {
       },
       defaults: {
         ...schema,
-        password: pass
+        password: pass,
+        roleId: 2
       }
     })
     if (created) {
