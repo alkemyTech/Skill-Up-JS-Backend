@@ -1,10 +1,6 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-const Table = () => {
-  const user = useSelector((state) => state.users.usersList);
-  console.log(user);
-
+const Table = ({ user }) => {
   return (
     <div className="overflow-auto">
       <table className="w-full">
@@ -72,7 +68,7 @@ const Table = () => {
                     <td className="px-3 py-4 flex gap-4 items-center whitespace-nowrap">
                       <Link
                         className="hover:border-black duration-200 border px-4 py-1 rounded-lg"
-                        to={`/${id}`}
+                        to={`/movements/${id}`}
                       >
                         View
                       </Link>

@@ -19,8 +19,8 @@ const HeaderContainer = () => {
       url: "/movements",
       icon: <RiArrowUpDownLine />,
     },
-    { text: "Balance charge", url: "/balance/charge", icon: <MdAttachMoney /> },
-    { text: "Expenses", url: "/expenses", icon: <MdMoneyOff /> },
+    { text: "Balance charge", url: "/charge", icon: <MdAttachMoney /> },
+    { text: "Expense", url: "/expense", icon: <MdMoneyOff /> },
     { text: "Transfer", url: "/transfer", icon: <BiTransfer /> },
   ];
 
