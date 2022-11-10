@@ -22,7 +22,9 @@ module.exports = {
         }
       ]
     });
-
+    console.log({user})
+    delete user.dataValues.password
+    console.log({user})
     return user;
   },
   getAll: async (query) => {
