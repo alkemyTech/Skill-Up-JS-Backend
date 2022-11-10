@@ -27,6 +27,10 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  image: {
+    type: DataTypes.STRING,
+    defaultValue: "https://res.cloudinary.com/leo-echenique/image/upload/v1668038867/wkvuim8xw0x9oez57ut5.svg"
+  },
   roleId: {
     allowNull: false,
     field: 'role_id',
