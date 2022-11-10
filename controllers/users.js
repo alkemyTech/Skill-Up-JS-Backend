@@ -48,7 +48,6 @@ module.exports = {
     else throw boom.notFound('User not found')
   },
   post: async (schema) => {
-    console.log({schema})
     const pass = await encryptPassword(schema.password)
     const [user, created] = await models.User.findOrCreate({
       where: {
