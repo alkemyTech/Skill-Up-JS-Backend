@@ -34,8 +34,8 @@ const checkAccount = async (transactionId, userId) => {
 module.exports = {
   get,
   getAll: async () => {
-    const transaction = await models.Transaction.findAll();
-    return transaction;
+    const transactions = await models.Transaction.findAll();
+    return transactions;
   },
   create: async (userId, body) => {
     const sender = await userService.get(userId);
