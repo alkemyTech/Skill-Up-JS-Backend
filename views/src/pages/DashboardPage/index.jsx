@@ -6,7 +6,10 @@ const DashboardPage = () => {
   return (
     <>
       <HeaderContainer />
-      <DashboardContainer />
+      <main className="flex flex-col px-6 lg:px-16 py-8 gap-6">
+        <h1 className="text-4xl font-bold">My Dashboard</h1>
+        <DashboardContainer />
+      </main>
       <FooterContainer />
     </>
   );

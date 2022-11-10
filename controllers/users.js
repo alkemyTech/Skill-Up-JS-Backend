@@ -4,11 +4,10 @@ const boom = require('@hapi/boom');
 const { encryptPassword } = require("../utils/encryptPassword");
 const { Op } = require("sequelize");
 module.exports = {
-  get: async (id, query) => {
+  get: async (id, limit, offset) => {
     const options = {
       association: 'transaction'
     };
-    const { limit, offset } = query;
     if (limit && offset) {
       options.limit = parseInt(limit);
       options.offset = parseInt(offset);
@@ -23,7 +22,9 @@ module.exports = {
         }
       ]
     });
-
+    console.log({user})
+    delete user.dataValues.password
+    console.log({user})
     return user;
   },
   getAll: async (query) => {
@@ -42,7 +43,8 @@ module.exports = {
     const user = await models.User.findOne({
       where: {
         email
-      }
+      },
+      include: ['account']
     });
     if (user) return user;
     else throw boom.notFound('User not found')

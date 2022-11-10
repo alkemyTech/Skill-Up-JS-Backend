@@ -1,6 +1,7 @@
 const { models } = require('../libs/sequelize');
 const boom = require('@hapi/boom');
-const accountService = require('./account');
+const userService = require('./users');
+const accountService = require('./account')
 
 const get = async (id) => {
   const transaction = await models.Transaction.findByPk(id, {
@@ -33,23 +34,34 @@ const checkAccount = async (transactionId, userId) => {
 module.exports = {
   get,
   getAll: async () => {
-    const transaction = await models.Transaction.findAll();
-    return transaction;
+    const transactions = await models.Transaction.findAll();
+    const transactionsByCategory = {}
+    for (const transaction of transactions) {
+      if (transactionsByCategory[transaction.category]) {
+        transactionsByCategory[transaction.category] += 1
+      } else {
+        transactionsByCategory[transaction.category] = 1
+      }
+    }
+    return {transactions, transactionsByCategory};
   },
   create: async (userId, body) => {
-    //descuento el dinero de la cuenta de origen
-    await accountService.update(
-      userId,
-      body.accountId,
-      body.amount * -1,
-      body.toAccountId
-    );
-    //acredito el dinero en el destino
-    await accountService.update(body.toAccountId, body.amount);
-    //creo la transferencia
-    const newTransaction = await models.Transaction.create(body);
+    const sender = await userService.get(userId);
+    if (sender.dataValues.account.isBlocked) throw boom.conflict('Your account is blocked');
 
-    return newTransaction;
+    const reciber = await userService.getByEmail(body.email);
+    if (sender.dataValues.account.isBlocked) throw boom.conflict(`${body.email} account is bloqued`);
+
+    await accountService.update(sender.dataValues.account.id, body.amount * -1);
+    await accountService.update(reciber.dataValues.account.id, body.amount);
+    delete body.email
+    const newTransaction = await models.Transaction.create({
+      ...body,
+      accountId: sender.dataValues.account.id,
+      toAccountId: reciber.dataValues.account.id
+    });
+
+    return newTransaction
   },
   delete: async (userId, transactionId) => {
     const transaction = await checkAccount(transactionId, userId);
