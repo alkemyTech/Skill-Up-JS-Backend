@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { BsTrash, BsPencil } from "react-icons/bs";
-import {useDispatch, useSelector} from 'react-redux';
+import { useSelector } from "react-redux";
 
-const Table = ({ transactions }) => {
-  const user = useSelector(state => state.users.usersList)
-  console.log(user)
+const Table = () => {
+  const user = useSelector((state) => state.users.usersList);
+  console.log(user);
+
   return (
     <div className="overflow-auto">
       <table className="w-full">
@@ -29,10 +29,17 @@ const Table = ({ transactions }) => {
           </tr>
         </thead>
         <tbody>
-          {/* user?.account?.transaction */}
-          {transactions
+          {user?.account?.transaction
             .map(
-              ({ id, amount, concept, category, userFrom, userTo, date }) => {
+              ({
+                id,
+                amount,
+                concept,
+                category,
+                userFrom,
+                userTo,
+                createdAt,
+              }) => {
                 return (
                   <tr className="text-left border-t border-b" key={id}>
                     <td className="px-3 py-4 text-sm whitespace-nowrap">
@@ -60,15 +67,15 @@ const Table = ({ transactions }) => {
                       {userTo}
                     </td>
                     <td className="px-3 py-4 text-sm whitespace-nowrap">
-                      {date}
+                      {createdAt.slice(0, 10)}
                     </td>
                     <td className="px-3 py-4 flex gap-4 items-center whitespace-nowrap">
-                      <Link className="hover:opacity-70 duration-200">
-                        <BsPencil className="w-5 h-5" />
+                      <Link
+                        className="hover:border-black duration-200 border px-4 py-1 rounded-lg"
+                        to={`/${id}`}
+                      >
+                        View
                       </Link>
-                      <button className="hover:opacity-70 duration-200">
-                        <BsTrash className="w-5 h-5" />
-                      </button>
                     </td>
                   </tr>
                 );
