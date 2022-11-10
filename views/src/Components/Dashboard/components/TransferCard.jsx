@@ -1,29 +1,28 @@
 import { Link } from "react-router-dom";
-import { MdAttachMoney } from "react-icons/md";
+import { MdAttachMoney, MdMoneyOff } from "react-icons/md";
 import { BiTransfer } from "react-icons/bi";
-import { GiPayMoney } from "react-icons/gi";
 
 const TransferCard = () => {
   const links = [
     {
       text: "Balance charge",
-      url: "",
+      url: "/charge",
       info: "Charge balance to your wallet.",
       icon: <MdAttachMoney />,
     },
-    { text: "Expense", url: "", info: "Make a payment.", icon: <GiPayMoney /> },
+    { text: "Expense", url: "/expense", info: "Make a payment.", icon: <MdMoneyOff /> },
     {
       text: "Transfer",
-      url: "",
+      url: "/transfer",
       info: "Transfer balance to another user.",
       icon: <BiTransfer />,
     },
   ];
 
   return (
-    <div className="flex items-center border p-6 lg:p-10 gap-12 rounded-lg bg-gradient-to-b from-teal-50 to-white">
+    <div className="flex w-full items-center border p-6 lg:p-10 gap-12 rounded-lg bg-gradient-to-b from-teal-50 to-white">
       <div className="flex flex-col w-full">
-        <p className="text-2xl font-bold opacity-80 pb-6">New transaction</p>
+        <p className="text-2xl font-bold opacity-80 pb-6">New movement</p>
         <p className="opacity-80 pb-4">Select an option</p>
         <div className="flex flex-col gap-6">
           {links.map(({ text, url, info, icon }) => (
