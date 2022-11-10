@@ -22,7 +22,7 @@ const UserProfile = () => {
       lastName: user.lastName,
       email: user.email,
       password: user.password,
-      image: ""
+      image: user.image
     })
   },[user])
   
@@ -83,7 +83,7 @@ const UserProfile = () => {
  
   return (
     <div className="h-[80vh] flex justify-center ">
-      <form className="h-full w-[80vw]  flex flex-col  items-center border-2" onChange={(e)=> handleChange(e)}>
+     <form className="h-full w-[80vw]  flex flex-col  items-center border-2" onChange={(e)=> handleChange(e)}>
         <div className="pt-8 w-9/12 flex flex-row items-center justify-between">
           <div className="sm:ml-20"></div>
                   <h1 className="text-2xl "> Your profile</h1>
