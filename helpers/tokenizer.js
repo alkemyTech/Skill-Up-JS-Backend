@@ -5,25 +5,20 @@ let verifiedToken = ""
 
 const tokenizer = {
     // Generate token
-    encodeToken: (id, firstName, lastName, roleId, res) => {
+    encodeToken: (data, res) => {
         const newToken = jwt.sign({
-            id, firstName, lastName, roleId,
+            data,
         }, secret, { expiresIn: '6000s' });
         return newToken;  
     },
     // Decode token
-    decodeToken: (token, res) =>{
+    decodeToken: (token) =>{
         const  decodeToken = jwt.decode(token)
-        return decodeToken;
+        return decodeToken.id;
     },
     // Verify token
     verifyToken: (token, res) =>{
-        try {
-            verifiedToken = jwt.verify(token, secret)
-        } catch (error) {
-            return error
-        }
-        return verifiedToken 
+        return jwt.verify(token, secret)
     }
 }
 
