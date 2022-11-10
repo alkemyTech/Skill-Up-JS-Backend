@@ -9,8 +9,14 @@ const { filterElements } = require("../helpers/filter");
 module.exports = {
   getTransactions: catchAsync(async (req, res, next) => {
     const { categoryId, description, page, size, currency } = req.query;
+    const userId = req.body.id;
 
-    const filter = filterElements({ categoryId, description, currency });
+    const filter = filterElements({
+      userId,
+      categoryId,
+      description,
+      currency,
+    });
 
     const { limit, offset } = getPagination(page, size);
     try {

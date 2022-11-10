@@ -72,7 +72,7 @@ module.exports = {
       }
 
       const userFound = await User.findOne({ where: { email }, include: Role });
-      console.log(userFound);
+
       if (!userFound) {
         const httpError = createHttpError(
           404,
