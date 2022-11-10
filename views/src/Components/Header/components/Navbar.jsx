@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RiTeamLine } from "react-icons/ri";
 
 const Navbar = ({ navs, handleToggle }) => {
+  const user = useSelector((state) => state.users.usersList);
+
   return (
     <nav
       className={`lg:flex items-center ${
@@ -8,29 +12,59 @@ const Navbar = ({ navs, handleToggle }) => {
       } gap-4 lg:flex-row lg:text-left flex-col w-full justify-between`}
     >
       <div className="flex flex-col w-full lg:flex-row gap-6">
-        {navs.map(({ text, url }) => (
+        {user.length !== 0 ? (
+          navs.map(({ text, url, icon }) => (
+            <Link
+              to={url}
+              key={text}
+              className="flex items-center gap-1 duration-200 hover:text-teal-500 border-b lg:border-none"
+            >
+              <i className="text-xl">{icon}</i>
+              {text}
+            </Link>
+          ))
+        ) : (
           <Link
-            to={url}
-            key={text}
-            className="duration-200 hover:text-teal-500 border-b lg:border-none flex"
+            className="flex items-center gap-1 duration-200 hover:text-teal-500 border-b lg:border-none"
+            to="/about"
           >
-            {text}
+            <RiTeamLine />
+            About Us
           </Link>
-        ))}
+        )}
       </div>
-      <div className="flex justify-end w-full lg:w-fit gap-4">
-        <Link
-          className="py-4 px-3 hover:text-teal-500 duration-200"
-          to="/login"
-        >
-          Login
-        </Link>
-        <Link
-          className="mt-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-          to="/login"
-        >
-          Signup
-        </Link>
+      <div className="flex justify-end w-full gap-4">
+        {user.length !== 0 ? (
+          <>
+            <Link
+              className="py-4 px-3 hover:text-teal-500 duration-200"
+              to="/login"
+            >
+              Logout
+            </Link>
+            <Link
+              className="mt-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+              to="/user/profile"
+            >
+              My Profile
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              className="py-4 px-3 hover:text-teal-500 duration-200"
+              to="/login"
+            >
+              Login
+            </Link>
+            <Link
+              className="mt-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+              to="/api/signup"
+            >
+              Signup
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );

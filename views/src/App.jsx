@@ -5,6 +5,11 @@ import DashboardPage from "./pages/DashboardPage";
 import UserProfile from "./Components/User/UserProfile";
 import FormLoginRegister from "./Components/Forms/FormLoginRegister";
 import LoginPage from "./pages/LoginPage";
+import MovementPage from "./pages/MovementPage";
+import MovementsPage from "./pages/MovementsPage";
+import BalanceChargePage from "./pages/BalanceChargePage"
+import ExpensePage from "./pages/ExpensePage";
+import TransferPage from "./pages/TransferPage";
 
 
 function App() {
@@ -14,6 +19,11 @@ function App() {
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/user/profile" element={<UserProfile />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/movements" element={<MovementsPage />} />
+      <Route path="/movements/:id" element={<MovementPage />} />
+      <Route path="/charge" element={<BalanceChargePage />}/>
+      <Route path="/expense" element={<ExpensePage />} />
+      <Route path="/transfer" element={<TransferPage />} />
     </Routes>
   );
 }

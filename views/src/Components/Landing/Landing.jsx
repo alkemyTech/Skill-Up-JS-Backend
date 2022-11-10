@@ -6,18 +6,18 @@ const Landing = () => {
   return (
     <div className="">
       <div className="">
-        <div className="flex justify-center py-24 md:px-5 bg-primary-white">
+        <section className="flex px-6 justify-center py-24 md:px-5 bg-primary-white">
           <div className="flex m-auto flex-col-reverse lg:flex-row">
             <div className="md:ml-10 mt-8">
-              <h2 className="md:text-left mb-4 mt-5 pt-4 md:mt-0 leading-[42px] md:leading-[3rem] px-4 md:px-0 text-6xl font-semibold">
+              <h2 className="text-center md:text-left mb-4 mt-5 pt-4 md:mt-0 md:px-0 text-5xl lg:text-6xl font-semibold">
                 The virtual wallet <br /> that connects your money with everything{" "}
                 <br /> what you want.{" "}
               </h2>
               <p className="text-center mt-10 md:text-left mb-8 md:mb-[35px] font-medium md:leading-8 text-[16px] md:text-[24px] leading-[31px]">
                 Your 100% digital accounts and cards.
               </p>
-              <div className="ml-10">
-                <button className="sm:ml-4 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+              <div className="flex justify-center lg:w-fit">
+                <button className=" text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                  Start using WALLET
                 </button>
               </div>
@@ -34,8 +34,8 @@ const Landing = () => {
               />
             </div>
           </div>
-        </div>
-        <div className="bg-teal-50 flex justify-center py-24 md:px-5 bg-primary-white">
+        </section>
+        <section className="bg-teal-50 flex justify-center py-24 px-6 bg-primary-white">
           <div className="flex m-auto flex-col-reverse lg:flex-row">
             <div
               className="md:ml-10 md:max-w-[92%] transition-all"
@@ -49,7 +49,7 @@ const Landing = () => {
               />
             </div>
             <div className="md:ml-10 mt-8">
-              <h2 className="md:text-left mb-4 mt-5 pt-4 md:mt-0 leading-[42px] md:leading-[3rem] px-4 md:px-0 text-6xl font-semibold">
+              <h2 className="text-center md:text-left mb-4 mt-5 pt-4 md:mt-0 md:px-0 text-5xl lg:text-6xl font-semibold">
                  Promotions with WALLET
                 <br /> are added to those of your banks!
               </h2>
@@ -58,11 +58,11 @@ const Landing = () => {
               </p>
             </div>
           </div>
-        </div>
-        <div className="flex justify-center py-24 md:px-5 bg-primary-white">
+        </section>
+        <section className="flex justify-center py-24 px-6 bg-primary-white">
           <div className="flex m-auto flex-col-reverse lg:flex-row">
             <div className="md:ml-10 mt-8">
-              <h2 className="md:text-left mb-4 mt-5 pt-4 md:mt-0 leading-[42px] md:leading-[3rem] px-4 md:px-0 text-6xl font-semibold">
+              <h2 className="text-center md:text-left mb-4 mt-5 pt-4 md:mt-0 md:px-0 text-5xl lg:text-6xl font-semibold">
                  Take control
                 <br /> of your finances
               </h2>
@@ -83,7 +83,7 @@ const Landing = () => {
               />
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
