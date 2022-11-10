@@ -22,7 +22,7 @@ module.exports = {
         }
       ]
     });
-
+    delete user.password
     return user;
   },
   getAll: async (query) => {

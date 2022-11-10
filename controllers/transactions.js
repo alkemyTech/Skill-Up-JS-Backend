@@ -35,7 +35,15 @@ module.exports = {
   get,
   getAll: async () => {
     const transactions = await models.Transaction.findAll();
-    return transactions;
+    const transactionsByCategory = {}
+    for (const transaction of transactions) {
+      if (transactionsByCategory[transaction.category]) {
+        transactionsByCategory[transaction.category] += 1
+      } else {
+        transactionsByCategory[transaction.category] = 1
+      }
+    }
+    return {transactions, transactionsByCategory};
   },
   create: async (userId, body) => {
     const sender = await userService.get(userId);
