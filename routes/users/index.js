@@ -48,7 +48,7 @@ router.get('/', authenticateUser, async (req, res, next) => {
   }
 });
 
-router.post('/create', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   let schema = req.body; // if the body will be validate by a middleware we already expect an object with valid info.
   // user as a account
   // user as a roleId
@@ -80,8 +80,8 @@ router.delete(
 router.put('/', authenticateUser, async (req, res, next) => {
 
   try {
-    const { value } = req.body;
-    const updated = await ctrlUser.put(value, req.user.sub)
+    const { newValue } = req.body;
+    const updated = await ctrlUser.put(newValue, req.user.sub)
     res.status(200).send(updated)
   } catch (error) {
     next(error)

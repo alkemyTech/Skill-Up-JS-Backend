@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage";
 import DashboardPage from "./pages/DashboardPage";
 import UserProfile from "./Components/User/UserProfile";
 import FormLoginRegister from "./Components/Forms/FormLoginRegister";
+import LoginPage from "./pages/LoginPage";
 import MovementPage from "./pages/MovementPage";
 import MovementsPage from "./pages/MovementsPage";
 import BalanceChargePage from "./pages/BalanceChargePage"
@@ -17,7 +18,7 @@ function App() {
       <Route path="/" index element={<LandingPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/user/profile" element={<UserProfile />} />
-      <Route path="/login" element={<FormLoginRegister />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/movements" element={<MovementsPage />} />
       <Route path="/movements/:id" element={<MovementPage />} />
       <Route path="/charge" element={<BalanceChargePage />}/>

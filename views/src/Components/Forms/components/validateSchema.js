@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const inputSchema = yup.object().shape({
-  name: yup
+  firstName: yup
     .string()
     .min(3, 'Debe tener al menos 3 caracteres')
     .required('Campo requerido'),
