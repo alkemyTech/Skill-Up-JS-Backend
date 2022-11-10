@@ -38,10 +38,10 @@ router.get(
 );
 
 router.get('/', authenticateUser, async (req, res, next) => {
-  const query = req.query;
+  const { limit, offset } = req.query;
   const id = req.user.sub;
   try {
-    let user = await ctrlUser.get(id, query);
+    let user = await ctrlUser.get(id, limit, offset);
     return res.status(201).send(user);
   } catch (error) {
     next(error);
