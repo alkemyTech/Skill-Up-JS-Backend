@@ -2,7 +2,6 @@ import { useState } from "react";
 import { MdOutlineSpaceDashboard, MdAttachMoney, MdMoneyOff } from "react-icons/md";
 import { BiTransfer } from "react-icons/bi";
 import { RiArrowUpDownLine } from "react-icons/ri";
-
 import Header from "./Header.jsx";
 
 const HeaderContainer = () => {

@@ -4,7 +4,7 @@ import { RiTeamLine } from "react-icons/ri";
 
 const Navbar = ({ navs, handleToggle }) => {
   const user = useSelector((state) => state.users.usersList);
-  
+
   return (
     <nav
       className={`lg:flex items-center ${
