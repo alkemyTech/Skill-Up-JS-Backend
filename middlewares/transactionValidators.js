@@ -10,6 +10,7 @@ const validateTransaction = [
       }
       return true;
     }),
+
   check("description").exists().not().isEmpty(),
   check("userId").exists().not().isEmpty(),
   check("categoryId").exists().not().isEmpty(),
