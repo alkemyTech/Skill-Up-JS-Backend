@@ -54,7 +54,7 @@ class Account extends Model {
       as: 'transaction',
       foreignKey: 'accountId'
     })
-    this.hasOne(models.Transaction, {
+    this.hasMany(models.Transaction, {
       as: 'incomingTransaction',
       foreignKey: 'toAccountId'
     });
