@@ -35,6 +35,14 @@ const createUpdateUserSchema = {
     errorMessage:
       'Password must be at least 8 characters and must include at least one upper case letter, one lower case letter, one numeric digit, and one special character.',
   },
+  image: {
+    optional: {
+      nulleable: true,
+    },
+    isURL: {
+      errorMessage: 'Invalid URL',
+    },
+  },
 };
 
 module.exports = createUpdateUserSchema;

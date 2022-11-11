@@ -5,6 +5,9 @@ const {
   authenticateUser,
   checkRole,
 } = require('../../middlewares/authentication.middleware');
+const dataValidator = require('../../middlewares/dataValidator');
+const createTransaction = require('../../schemas/createTransaction');
+const updatedTransaction = require('../../schemas/updateTransaction');
 
 router.get('/paginate', authenticateUser, transactions.paginate);
 
@@ -27,32 +30,42 @@ router.get('/', authenticateUser, checkRole([1, 3]), async (req, res, next) => {
   }
 });
 
-router.post('/', authenticateUser, async (req, res, next) => {
-  try {
-    const body = req.body;
-    const userId = req.user.sub;
-    const newTransaction = await transactions.create(userId, body);
-    res.status(201).send(newTransaction);
-  } catch (error) {
-    next(error);
+router.post(
+  '/',
+  dataValidator(createTransaction),
+  authenticateUser,
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const userId = req.user.sub;
+      const newTransaction = await transactions.create(userId, body);
+      res.status(201).send(newTransaction);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
-router.put('/:id', authenticateUser, async (req, res, next) => {
-  try {
-    const { id: transactionId } = req.params;
-    const body = req.body;
-    const userId = req.user.sub;
-    const updatedTransaction = await transactions.update(
-      userId,
-      transactionId,
-      body
-    );
-    res.status(201).send(updatedTransaction);
-  } catch (error) {
-    next(error);
+router.put(
+  '/:id',
+  dataValidator(updatedTransaction),
+  authenticateUser,
+  async (req, res, next) => {
+    try {
+      const { id: transactionId } = req.params;
+      const body = req.body;
+      const userId = req.user.sub;
+      const updatedTransaction = await transactions.update(
+        userId,
+        transactionId,
+        body
+      );
+      res.status(201).send(updatedTransaction);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.delete('/:id', authenticateUser, async (req, res, next) => {
   try {

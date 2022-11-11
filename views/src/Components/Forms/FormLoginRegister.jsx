@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FormItem from "./components/FormItem";
 import { useAuth } from "../../hooks/useAuth";
 import { inputLogin, inputSchema } from "./components/validateSchema";
@@ -6,7 +6,8 @@ import { Form, Formik } from "formik";
 import { createUser } from "../../redux/features/users/usersGetSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { inputValues } from "./components/inputValues";
+import image from '../../assets/wallet.png';
 const FormLoginRegister = () => {
   const [isLogin, setIsLogin] = useState(true);
   const auth = useAuth();
@@ -22,11 +23,10 @@ const FormLoginRegister = () => {
     if (isLogin) {
       auth
         .signIn(values.email, values.password)
-        .then(console.log("logueado"))
+        .then(navigate("/dashboard"))
         .catch((error) => {
           console.log(error);
         });
-      navigate("/dashboard");
     } else {
       dispatch(createUser(values));
     }
@@ -35,75 +35,99 @@ const FormLoginRegister = () => {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-[80vh] bg-gray-100">
-      <Formik
-        initialValues={{ firstName: "", lastName: "", email: "", password: "" }}
-        validationSchema={isLogin ? inputLogin : inputSchema}
-        onSubmit={onSubmit}
-        className="flex flex-row items-center justify-center lg:justify-start"
-      >
-        {(props) => (
-          <Form>
-            <h3 className="text-2xl font-bold text-center">
-              {isLogin ? "Ingresar" : "Registrarse"}
-            </h3>
-            {!isLogin && (
-              <>
-                <FormItem
-                  classLabel="block mt-3"
-                  labelText="Nombre:"
-                  classInput="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                  type="text"
-                  name="firstName"
-                  placeholder="Nombre"
-                />
-                <FormItem
-                  classLabel="block mt-3"
-                  labelText="Apellido:"
-                  classInput="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-                  type="text"
-                  name="lastName"
-                  placeholder="Apellido"
-                />
-              </>
-            )}
-            <FormItem
-              classLabel="block mt-3"
-              labelText="Email:"
-              classInput="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-              name="email"
-              type="email"
-              placeholder="email"
-            />
-            <FormItem
-              classLabel="block mt-3"
-              labelText="Pasword:"
-              classInput="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
-              name="password"
-              type="password"
-              placeholder="password"
-            />
-            <button
-              type="submit"
-              disabled={props.isSubmitting}
-              className="mt-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-            >
-              {isLogin ? "Ingresar" : "Crear cuenta"}
-            </button>
-            {isLogin ? "Ingresar" : "Crear cuenta"}
-            <p>
-              {isLogin ? "¿No estas registrado? " : "Ya tienes una cuenta "}
-              <button
-                type="button"
-                onClick={toggleLogin}
-                className="mt-2 text-teal-500"
-              >
-                {isLogin ? " Crear cuenta" : " Ingresar"}
-              </button>
-            </p>
-          </Form>
-        )}
-      </Formik>
+    <section className="h-full gradient-form bg-gray-200 md:h-screen">
+      <div className="container py-12 px-6 h-full">
+        <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
+          <div className="xl:w-10/12">
+            <div className="block bg-white shadow-lg rounded-lg">
+              <div className="lg:flex lg:flex-wrap g-0">
+                <div className="lg:w-6/12 px-4 md:px-0">
+                  <div className="md:p-12 md:mx-6">
+                    <Formik
+                      initialValues={{
+                        firstName: "",
+                        lastName: "",
+                        email: "",
+                        password: "",
+                      }}
+                      validationSchema={isLogin ? inputLogin : inputSchema}
+                      onSubmit={onSubmit}
+                    >
+                      {(props) => (
+                        <Form>
+                          <h3 className="mb-5 text-2xl font-bold text-center">
+                            {isLogin
+                              ? "Please login to your account"
+                              : "Please enter your personal data"}
+                          </h3>
+                          {inputValues.map((input, idx) =>
+                            isLogin &&
+                            (input.name === "firstName" ||
+                              input.name === "lastName") ? null : (
+                              <div className="mb-4">
+                                <FormItem
+                                  key={idx}
+                                  classLabel="block mt-3"
+                                  classInput="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                  type={input.type}
+                                  name={input.name}
+                                  placeholder={input.placeholder}
+                                />
+                              </div>
+                            )
+                          )}
+                          <div className="text-center pt-1 mb-12 pb-1">
+                            <button
+                              type="submit"
+                              disabled={props.isSubmitting}
+                              className="mt-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                            >
+                              {isLogin ? "Login" : "Register"}
+                            </button>
+                          </div>
+                          <div className="flex items-center justify-between pb-6">
+                            <p>
+                              {isLogin
+                                ? "Don't have an account? "
+                                : "Already have an account "}
+                              <button
+                                type="button"
+                                onClick={toggleLogin}
+                                className="inline-block px-6 py-2 border-2 border-teal-600 text-teal-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
+                              >
+                                {isLogin ? " Register" : " Login"}
+                              </button>
+                            </p>
+                          </div>
+                        </Form>
+                      )}
+                    </Formik>
+                  </div>
+                </div>
+                <div className="lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none">
+                  <div className=" px-4 py-6 md:p-12 md:mx-6">
+                    <div className="text-center">
+                      <img
+                        className="mx-auto w-48"
+                        src={image}
+                        alt="logo"
+                      />
+                      <h4 className="text-2xl font-semibold mt-1 mb-12 pb-1">
+                        Alkemy Wallet
+                      </h4>
+                    </div>
+                    <p className="text-lg">
+                      The virtual wallet that connects your money with
+                      everything what you want. Your 100% digital accounts and
+                      cards.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

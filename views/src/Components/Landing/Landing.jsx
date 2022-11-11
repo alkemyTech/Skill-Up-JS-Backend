@@ -1,14 +1,36 @@
 import React from "react";
-
+import {motion} from 'framer-motion';
+import { useState } from "react";
 
 const Landing = () => {
-  
+ const [isAnimating, setIsAnimating] = useState(false);
+
+  const boxVariant = {
+    hidden: {
+      x: "-100vw",
+      opacity: 0
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition:{
+        delay: 0.5
+        
+      }
+    }
+  }
+
   return (
     <div className="">
       <div className="">
         <section className="flex px-6 justify-center py-24 md:px-5 bg-primary-white">
           <div className="flex m-auto flex-col-reverse lg:flex-row">
             <div className="md:ml-10 mt-8">
+              <motion.div
+              variants={boxVariant}
+              animate="visible"
+              initial="hidden" 
+              >
               <h2 className="text-center md:text-left mb-4 mt-5 pt-4 md:mt-0 md:px-0 text-5xl lg:text-6xl font-semibold">
                 The virtual wallet <br /> that connects your money with everything{" "}
                 <br /> what you want.{" "}
@@ -21,7 +43,13 @@ const Landing = () => {
                  Start using WALLET
                 </button>
               </div>
+              </motion.div>
             </div>
+            <motion.div
+              variants={boxVariant}
+              animate="visible"
+              initial="hidden" 
+              >
             <div
               className="md:ml-10 md:max-w-[92%] transition-all"
               width="100%"
@@ -33,10 +61,26 @@ const Landing = () => {
                 alt="logo"
               />
             </div>
+            </motion.div>
           </div>
         </section>
         <section className="bg-teal-50 flex justify-center py-24 px-6 bg-primary-white">
           <div className="flex m-auto flex-col-reverse lg:flex-row">
+            <motion.div
+            animate={{
+              x: isAnimating ? 20 : 0,
+              opacity: isAnimating ? 1 : 0.5,
+              rotate: isAnimating ? 360 : 0
+            }}
+            initial={{
+              opacity: 0.1
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 60
+            }}
+            onClick={()=> setIsAnimating(!isAnimating)}
+            >
             <div
               className="md:ml-10 md:max-w-[92%] transition-all"
               width="100%"
@@ -48,6 +92,7 @@ const Landing = () => {
                 alt="logo"
               />
             </div>
+            </motion.div>
             <div className="md:ml-10 mt-8">
               <h2 className="text-center md:text-left mb-4 mt-5 pt-4 md:mt-0 md:px-0 text-5xl lg:text-6xl font-semibold">
                  Promotions with WALLET

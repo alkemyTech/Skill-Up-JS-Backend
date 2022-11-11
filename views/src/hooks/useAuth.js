@@ -3,7 +3,6 @@ import { endPoints } from "../services/api";
 import { useDispatch } from "react-redux";
 
 function useAuth() {
-  const dispatch = useDispatch();
   const signIn = async (email, password) => {
     const options = {
       Headers: {
@@ -25,7 +24,6 @@ function useAuth() {
       }
       throw error;
     }
-    await dispatch(getUsers())
   };
 
   const logout = () => {

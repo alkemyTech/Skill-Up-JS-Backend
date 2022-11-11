@@ -9,7 +9,7 @@ const DashboardContainer = () => {
 
   useEffect(() => {
     dispatch(getUsers());
-  }, [dispatch]);
+  }, []);
 
   return (
     <>

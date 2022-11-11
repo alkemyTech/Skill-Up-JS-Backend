@@ -5,6 +5,8 @@ const {
   authenticateUser,
   checkRole,
 } = require('../../middlewares/authentication.middleware');
+const dataValidator = require('../../middlewares/dataValidator');
+const createUpdateUserSchema = require('../../schemas/createUpdateUser');
 
 router.get(
   '/all',
@@ -48,17 +50,21 @@ router.get('/', authenticateUser, async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
-  let schema = req.body; // if the body will be validate by a middleware we already expect an object with valid info.
-  // user as a account
-  // user as a roleId
-  try {
-    let user = await ctrlUser.post(schema);
-    res.status(201).send(user);
-  } catch (error) {
-    next(error);
+router.post(
+  '/',
+  dataValidator(createUpdateUserSchema),
+  async (req, res, next) => {
+    let schema = req.body; // if the body will be validate by a middleware we already expect an object with valid info.
+    // user as a account
+    // user as a roleId
+    try {
+      let user = await ctrlUser.post(schema);
+      res.status(201).send(user);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.delete(
   '/:id',
@@ -76,17 +82,20 @@ router.delete(
   }
 );
 
-
-router.put('/', authenticateUser, async (req, res, next) => {
-
-  try {
-    const { newValue } = req.body;
-    const updated = await ctrlUser.put(newValue, req.user.sub)
-    res.status(200).send(updated)
-  } catch (error) {
-    next(error)
+router.put(
+  '/',
+  dataValidator(createUpdateUserSchema),
+  authenticateUser,
+  async (req, res, next) => {
+    try {
+      const { newValue } = req.body;
+      const updated = await ctrlUser.put(newValue, req.user.sub);
+      res.status(200).send(updated);
+    } catch (error) {
+      next(error);
+    }
   }
-})
+);
 router.delete('/', authenticateUser, async (req, res, next) => {
   const id = req.user.sub;
 
