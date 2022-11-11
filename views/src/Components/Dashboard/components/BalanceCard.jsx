@@ -2,15 +2,25 @@ import { BsArrowUpCircleFill, BsArrowDownCircleFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
 
 const BalanceCard = ({ user }) => {
-  const [balance, setBalance] = useState(0);
+  // const [balance, setBalance] = useState(0);
+  const [money, setMoney] = useState(0);
+  const [Incomes, setIncomes] = useState(0);
+  const [expenses, setExpenses] = useState(0);
 
   useEffect(() => {
-    const b = user?.account?.transaction
-      .map((item) => item.amount)
+    setMoney(user?.account?.money);
+
+    const positiveBalance = user?.account?.incomingTransaction
+      .map((transaction) => transaction.amount)
       .reduce((prev, curr) => prev + curr, 0);
 
-    setBalance(b);
-  }, [user]);
+    const negativeBalance = user?.account?.transaction
+      .map((transaction) => transaction.amount)
+      .reduce((prev, curr) => prev + curr, 0);
+
+    setIncomes(positiveBalance);
+    setExpenses(negativeBalance);
+  }, [user])
 
   return (
     <div className="flex flex-col flex-wrap w-full gap-10">
@@ -20,7 +30,7 @@ const BalanceCard = ({ user }) => {
             <p className="text-xl font-semibold gap-4 opacity-80">
               Current balance:
             </p>
-            <p className="text-4xl lg:text-5xl font-bold">${balance}</p>
+            <p className="text-4xl lg:text-5xl font-bold">${money}</p>
           </div>
           <div className="flex flex-col lg:flex-row gap-y-2">
             <div className="flex lg:border-r lg:pr-4 items-center gap-2">
@@ -29,7 +39,7 @@ const BalanceCard = ({ user }) => {
               </i>
               <div className="flex flex-col">
                 <p className="text-sm">Incomes:</p>
-                <p className="font-medium">$85,236.02</p>
+                <p className="font-medium">${Incomes} </p>
               </div>
             </div>
             <div className="flex lg:pl-4 items-center gap-2">
@@ -38,7 +48,7 @@ const BalanceCard = ({ user }) => {
               </i>
               <div className="flex flex-col">
                 <p className="text-sm">Expenses:</p>
-                <p className="font-medium">$6,701.44</p>
+                <p className="font-medium">${expenses}</p>
               </div>
             </div>
           </div>

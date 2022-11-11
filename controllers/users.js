@@ -5,9 +5,7 @@ const { encryptPassword } = require("../utils/encryptPassword");
 const { Op } = require("sequelize");
 module.exports = {
   get: async (id, limit, offset) => {
-    const options = {
-      association: 'transaction'
-    };
+    const options = {};
     if (limit && offset) {
       options.limit = parseInt(limit);
       options.offset = parseInt(offset);
@@ -16,15 +14,12 @@ module.exports = {
       include: [
         {
           association: 'account',
-          include: [
-            options
-          ]
+          include: [ 'transaction', 'incomingTransaction' ],
+          options
         }
       ]
     });
-    console.log({user})
     delete user.dataValues.password
-    console.log({user})
     return user;
   },
   getAll: async (query) => {
