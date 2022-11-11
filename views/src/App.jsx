@@ -26,6 +26,7 @@ function App() {
       <Route path="/charge" element={<BalanceChargePage />}/>
       <Route path="/expense" element={<ExpensePage />} />
       <Route path="/transfer" element={<TransferPage />} />
+      <Route path="*" element={<LandingPage fireSwal={true} />} /> {/* if no route matchs, redirects to landing */}
     </Routes>
   );
 }
