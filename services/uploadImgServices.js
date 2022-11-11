@@ -9,7 +9,8 @@ const storage = multer.diskStorage({
         next(
             null,
             destFilename,
-            req.body.mimetype = file.mimetype
+            req.body.mimetype = file.mimetype,
+            req.body.avatar = destFilename
         )
     },
 });
@@ -17,6 +18,6 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage,
     dest: path.join(__dirname, '../public/uploads'),
-}).single('image');
+}).single('avatar');
 
 module.exports = { upload }
