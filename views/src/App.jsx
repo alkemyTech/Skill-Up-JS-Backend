@@ -11,14 +11,14 @@ import MovementsPage from "./pages/MovementsPage";
 import BalanceChargePage from "./pages/BalanceChargePage"
 import ExpensePage from "./pages/ExpensePage";
 import TransferPage from "./pages/TransferPage";
-
+import UserPage from "./pages/UserPage/"
 
 function App() {
   return (
     <Routes>
       <Route path="/" index element={<LandingPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="/user/profile" element={<UserProfile />} />
+      <Route path="/user/" element={<UserPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/about" element={<About />} />
       <Route path="/movements" element={<MovementsPage />} />
