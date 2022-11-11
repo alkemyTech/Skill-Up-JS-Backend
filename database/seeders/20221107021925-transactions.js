@@ -6,7 +6,7 @@ const data = []
 for (let i = 1; i < quantity; i++) {
   data.push({
     id: i,
-    description: faker.lorem.paragraph(),
+    description: `ERROR: Data too long for column 'description' at row 1`, // Modifique esta linea porque el lorem ipsum es muy largo para description.
     amount: faker.finance.amount(100, 999999),
     userId: faker.finance.amount(1, 10),
     date: new Date(),
