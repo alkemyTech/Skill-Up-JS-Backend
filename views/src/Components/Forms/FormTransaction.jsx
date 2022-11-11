@@ -28,7 +28,7 @@ const FormTransaction = () => {
   return (
     <section className="flex items-center justify-center min-h-[80vh] bg-gray-100">
       <Formik
-        initialValues={{ amount: 0, concept: "", email: "" }}
+        initialValues={{ amount: "", concept: "", email: "" }}
         validationSchema={inputTransaction}
         onSubmit={onSubmit}
         className="flex flex-row items-center justify-center lg:justify-start"
@@ -37,9 +37,7 @@ const FormTransaction = () => {
           <Form>
             <h3 className="text-2xl font-bold text-center">
               Nueva transferencia
-              {/* {isLogin ? "Ingresar" : "Registrarse"} */}
             </h3>
-            {/* {!isLogin && ( */}
             <>
               <FormItem
                 classLabel="block mt-3"
@@ -78,21 +76,10 @@ const FormTransaction = () => {
             />
             <button
               type="submit"
-              // disabled={props.isSubmitting}
               className="mt-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             >
               {newTransaction ? "Pagar" : "Editar"}
             </button>
-            {/* <p>
-              {newTransaction ? "¿No estas registrado? " : "Ya tienes una cuenta "}
-              <button
-                type="button"
-                onClick={toggleLogin}
-                className="mt-2 text-teal-500"
-              >
-                {newTransaction ? " Crear cuenta" : " Ingresar"}
-              </button>
-            </p> */}
           </Form>
         )}
       </Formik>
