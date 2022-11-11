@@ -5,7 +5,7 @@ import image from "../../assets/wallet.png";
 import Button from "../Buttons/Button";
 import Swal from "sweetalert2";
 import {motion} from 'framer-motion';
-
+import UserPerfil from "./UserPerfil";
 const UserProfile = () => {
 
   const user = useSelector(state => state.users.usersList);
@@ -73,8 +73,10 @@ const UserProfile = () => {
     initial={{ opacity: 0}}
     animate={{ opacity: 1}}
     exit={{ opacity: 0}}
-    className="h-[80vh] flex justify-center ">
-      <form className="h-full w-[80vw]  flex flex-col  items-center border-2" onChange={(e)=> handleChange(e)}>
+      className="h-[80vh] flex justify-center ">
+      
+     
+     {/*  <form className="h-full w-[80vw]  flex flex-col  items-center border-2" onChange={(e)=> handleChange(e)}>
 
         <div className="pt-8 w-9/12 flex flex-row items-center justify-between">
           <div className="sm:ml-20"></div>
@@ -161,7 +163,7 @@ const UserProfile = () => {
             if (isEdited) return fireSwal("success", "Great! Your changes as been saved.")
             return fireSwal("warning", "Nothing to change over here...", false,false, 3000) 
           }} /> 
-      </form>
+      </form> */}
     </motion.div>
   );
 };

@@ -11,7 +11,7 @@ import BalanceChargePage from "../../pages/BalanceChargePage"
 import ExpensePage from "../../pages/ExpensePage";
 import TransferPage from "../../pages/TransferPage";
 import About from '../About/About';
-
+import UserPage from "../../pages/UserPage";
 const AnimateRoutes = () => {
     const location = useLocation();
 
@@ -19,7 +19,7 @@ const AnimateRoutes = () => {
     <Routes location={location} key={location.pathname}>
       <Route path="/" index element={<LandingPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="/user" element={<UserProfile />} />
+      <Route path="/user" element={<UserPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/about" element={<About />} />
       <Route path="/movements" element={<MovementsPage />} />

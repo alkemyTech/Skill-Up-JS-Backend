@@ -84,7 +84,6 @@ router.delete(
 
 router.put(
   '/',
-  dataValidator(createUpdateUserSchema),
   authenticateUser,
   async (req, res, next) => {
     try {
