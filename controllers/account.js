@@ -35,24 +35,18 @@ module.exports = {
     if (account !== 0) return "deleted"
     else return false
   },
-  update: async (userId, accountId, amount, toAccountId = undefined) => {
+  update: async (accountId, amount) => {
     let account = await getAccount(accountId);
 
-    if (account.dataValues.userId === userId) {
-      if (toAccountId) await getAccount(toAccountId)
-      if (account.isBlocked) throw boom.unauthorized("This account is blocked");
-      let money = Number(account.money) + Number(amount)
-      if (money >= 0) {
-        account = await account.update({
-          ...account,
-          money
-        });
-        return account
-      } else {
-        throw boom.conflict('You do not have enough money')
-      }
+    let money = Number(account.money) + Number(amount)
+    if (money >= 0) {
+      account = await account.update({
+        ...account,
+        money
+      });
+      return account
     } else {
-      throw boom.unauthorized('It is not your account :P')
+      throw boom.conflict('You do not have enough money')
     }
   },
 

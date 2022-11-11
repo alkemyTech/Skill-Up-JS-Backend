@@ -2,6 +2,7 @@ import axios from "axios";
 import { endPoints } from "../services/api";
 
 function useAuth() {
+  
   const signIn = async (email, password) => {
     const options = {
       Headers: {
@@ -23,7 +24,7 @@ function useAuth() {
       }
       throw error;
     }
-    await fetchUser();
+  
   };
 
   const logout = () => {

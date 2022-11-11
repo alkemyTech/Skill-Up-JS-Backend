@@ -1,16 +1,26 @@
 import { useState } from "react";
-
+import { MdOutlineSpaceDashboard, MdAttachMoney, MdMoneyOff } from "react-icons/md";
+import { BiTransfer } from "react-icons/bi";
+import { RiArrowUpDownLine } from "react-icons/ri";
 import Header from "./Header.jsx";
 
 const HeaderContainer = () => {
   const [handleToggle, setHandleToggle] = useState(false);
 
   const navs = [
-    { text: "Balance charge", url: "/balance/charge" },
-    { text: "Expenses", url: "/expenses" },
-    { text: "Balance", url: "/balance" },
-    { text: "Movements", url: "/movements" },
-    { text: "Transfers", url: "/transfers" },
+    {
+      text: "Dashboard",
+      url: "/dashboard",
+      icon: <MdOutlineSpaceDashboard />,
+    },
+    {
+      text: "Movements",
+      url: "/movements",
+      icon: <RiArrowUpDownLine />,
+    },
+    { text: "Balance charge", url: "/charge", icon: <MdAttachMoney /> },
+    { text: "Expense", url: "/expense", icon: <MdMoneyOff /> },
+    { text: "Transfer", url: "/transfer", icon: <BiTransfer /> },
   ];
 
   return (

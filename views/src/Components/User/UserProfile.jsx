@@ -4,6 +4,7 @@ import { getUsers,updateUser } from "../../redux/features/users/usersGetSlice";
 import image from "../../assets/wallet.png";
 import Button from "../Buttons/Button";
 import Swal from "sweetalert2";
+import {motion} from 'framer-motion';
 
 const UserProfile = () => {
 
@@ -89,7 +90,11 @@ const UserProfile = () => {
     return dispatch(updateUser(stat))
   }; */
   return (
-    <div className="h-[80vh] flex justify-center ">
+    <motion.div
+    initial={{ opacity: 0}}
+    animate={{ opacity: 1}}
+    exit={{ opacity: 0}}
+    className="h-[80vh] flex justify-center ">
       <form className="h-full w-[80vw]  flex flex-col  items-center border-2" onChange={(e)=> handleChange(e)}>
         <div className="pt-8 w-9/12 flex flex-row items-center justify-between">
           <div className="sm:ml-20"></div>
@@ -180,7 +185,7 @@ const UserProfile = () => {
             return fireSwal("warning", "Nothing to change over here...", false,false, 3000) */
           }} /> 
       </form>
-    </div>
+    </motion.div>
   );
 };
 

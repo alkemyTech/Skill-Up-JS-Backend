@@ -76,7 +76,7 @@ module.exports = {
     const transactions = [];
 
     for (const account of accounts) {
-      for (let index = 0; index < faker.random.numeric(1); index++) {
+      for (let index = 0; index < Math.floor(Math.random()*30); index++) {
         const createdAt = faker.date.recent()
         const transaction = {
           id: faker.datatype.uuid(),
@@ -84,7 +84,7 @@ module.exports = {
           concept: faker.lorem.word(),
           category: faker.helpers.arrayElement(["Income", "Expense"]),
           account_id: account.id,
-          to_account_id: accounts[faker.random.numeric(2)].id,
+          to_account_id: accounts[Math.floor(Math.random()*100)].id,
           created_at: createdAt,
           updated_at: createdAt
         }
