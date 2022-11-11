@@ -1,6 +1,5 @@
 import axios from "axios";
 import { endPoints } from "../services/api";
-import { useDispatch } from "react-redux";
 
 function useAuth() {
   const signIn = async (email, password) => {
@@ -10,8 +9,6 @@ function useAuth() {
         "Content-Type": "application/json",
       },
     };
-    console.log({email, password})
-    console.log(endPoints.auth)
     try {
       const { data } = await axios.post(endPoints.auth.login, { email, password }, options);
       console.log({ data });

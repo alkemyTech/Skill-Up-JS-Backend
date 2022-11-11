@@ -21,11 +21,14 @@ const createTransaction = {
   },
   category: {
     exists: { bail: true, errorMessage: 'Category is required' },
-    isIn: {
-      options: ['Expense', 'Income'],
-      errorMessage: 'The allowed values are Expense and Income',
-    },
+    // isIn: {
+    //   options: ['Expense', 'Income', 'User-transfer'],
+    //   errorMessage: 'The allowed values are Expense, Income and User-transfer',
+    // },
   },
+  email: {
+    exists: { bail: true, errorMessage: 'email is required' },
+  }
 };
 
 module.exports = createTransaction;

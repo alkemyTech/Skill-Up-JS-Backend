@@ -54,13 +54,13 @@ module.exports = {
 
     await accountService.update(sender.dataValues.account.id, body.amount * -1);
     await accountService.update(reciber.dataValues.account.id, body.amount);
+
     delete body.email
     const newTransaction = await models.Transaction.create({
       ...body,
       accountId: sender.dataValues.account.id,
       toAccountId: reciber.dataValues.account.id
     });
-
     return newTransaction
   },
   delete: async (userId, transactionId) => {
