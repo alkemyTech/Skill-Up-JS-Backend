@@ -10,7 +10,6 @@ const FormItem = ({
 }) => {
   // hook de formik para usar sus propiedades
   const [field, meta] = useField(props);
-  console.log(field)
   return (
     <>
       <label className={classLabel}>{labelText}</label>
