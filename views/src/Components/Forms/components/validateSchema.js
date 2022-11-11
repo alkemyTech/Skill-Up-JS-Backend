@@ -3,29 +3,29 @@ import * as yup from 'yup';
 export const inputSchema = yup.object().shape({
   firstName: yup
     .string()
-    .min(3, 'Debe tener al menos 3 caracteres')
-    .required('Campo requerido'),
+    .min(3, 'Must be at least 3 characters')
+    .required('Required'),
   lastName: yup
     .string()
-    .min(3, 'Debe tener al menos 3 caracteres')
-    .required('Campo requerido'),
+    .min(3, 'Must be at least 3 characters')
+    .required('Required'),
   email: yup
     .string()
-    .email('Por favor ingrese un email valido')
-    .required('Campo requerido'),
+    .email('Please enter a valid email')
+    .required('Required'),
   password: yup
     .string()
-    .min(4, 'Debe tener al menos 4 caracteres')
-    .required('Campo requerido'),
+    .min(4, 'Must be at least 4 characters')
+    .required('Required'),
 });
 
 export const inputLogin = yup.object().shape({
   email: yup
     .string()
-    .email('Por favor ingrese un email valido')
-    .required('Campo requerido'),
+    .email('Please enter a valid email')
+    .required('Required'),
   password: yup
     .string()
-    .min(4, 'Debe tener al menos 4 caracteres')
-    .required('Campo requerido'),
+    .min(4, 'Must be at least 4 characters')
+    .required('Required'),
 });
