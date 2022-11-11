@@ -19,9 +19,10 @@ router
 
 router
   .route("/:id")
-  .get(getTransactionById)
+  // .get(getTransactionById)
   .put(updateTransaction)
   .delete(deleteTransaction);
-router.get("/balance/:id", getBalance);
+
+router.get("/balance", getBalance);
 router.post("/send", createTransaction);
 module.exports = router;

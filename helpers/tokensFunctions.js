@@ -34,10 +34,12 @@ async function authMiddleware(req, res, next) {
   }
 
   const bearerToken = authHeader.split(" ")[1];
+
   try {
     const payload = await verifyJwt(bearerToken);
 
     req.body.id = payload.id;
+
     req.body.username = payload.username;
     return next();
   } catch (error) {

@@ -10,7 +10,7 @@ module.exports = {
   getTransactions: catchAsync(async (req, res, next) => {
     const { categoryId, description, page, size, currency } = req.query;
     const userId = req.body.id;
-
+    console.log(userId);
     const filter = filterElements({
       userId,
       categoryId,
@@ -41,31 +41,31 @@ module.exports = {
       next(httpError);
     }
   }),
-  getTransactionById: catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    try {
-      const response = await Transaction.findByPk(id);
+  // getTransactionById: catchAsync(async (req, res, next) => {
+  //   const { id } = req.params;
+  //   try {
+  //     const response = await Transaction.findByPk(id);
 
-      if (!response) {
-        const httpError = createHttpError(
-          401,
-          `[Error retrieving transaction] - [index - GET]: Couldn't find a transaction with the ID ${id}`
-        );
-        return next(httpError);
-      }
-      endpointResponse({
-        res,
-        message: "Transaction retrieved successfully",
-        body: response,
-      });
-    } catch (error) {
-      const httpError = createHttpError(
-        error.statusCode,
-        `[Error retrieving transaction] - [index - GET]: ${error.message}`
-      );
-      return next(httpError);
-    }
-  }),
+  //     if (!response) {
+  //       const httpError = createHttpError(
+  //         401,
+  //         `[Error retrieving transaction] - [index - GET]: Couldn't find a transaction with the ID ${id}`
+  //       );
+  //       return next(httpError);
+  //     }
+  //     endpointResponse({
+  //       res,
+  //       message: "Transaction retrieved successfully",
+  //       body: response,
+  //     });
+  //   } catch (error) {
+  //     const httpError = createHttpError(
+  //       error.statusCode,
+  //       `[Error retrieving transaction] - [index - GET]: ${error.message}`
+  //     );
+  //     return next(httpError);
+  //   }
+  // }),
   createTransaction: catchAsync(async (req, res, next) => {
     const { amount, description, userId, categoryId, toUserId } = req.body;
 
@@ -173,15 +173,17 @@ module.exports = {
     }
   }),
   getBalance: catchAsync(async (req, res, next) => {
-    const { id } = req.params;
+    console.log("ENTRO ACA");
+    const userId = req.body.id;
     //TODO probably we shouldn't send the id at params.
-
+    console.log(userId);
+    console.log(req.body);
     try {
       const income = await Transaction.sum("amount", {
-        where: { userId: id, categoryId: 1 },
+        where: { userId, categoryId: 1 },
       });
       const outcome = await Transaction.sum("amount", {
-        where: { userId: id, categoryId: 2 },
+        where: { userId, categoryId: 2 },
       });
       let balance = income - outcome;
       if (balance < 0) balance = 0;

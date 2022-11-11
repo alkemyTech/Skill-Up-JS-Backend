@@ -39,12 +39,11 @@ app.use((err, req, res) => {
   res.render("error");
 });
 
-db.sequelize.sync({ force: false }).then(()=>{
+db.sequelize.sync({ force: false }).then(() => {
   app.listen(port, () => {
     // eslint-disable-next-line no-console
     console.log(`Servidor funcionando en el puerto ${port}`);
   });
-})
-
+});
 
 module.exports = app;
