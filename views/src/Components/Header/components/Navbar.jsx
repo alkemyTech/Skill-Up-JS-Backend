@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RiTeamLine } from "react-icons/ri";
+import { useAuth } from "../../../hooks/useAuth";
 
 const Navbar = ({ navs, handleToggle }) => {
   const user = useSelector((state) => state.users.usersList);
+  const auth = useAuth()
 
   return (
     <nav
@@ -38,7 +40,7 @@ const Navbar = ({ navs, handleToggle }) => {
           <>
             <Link
               className="py-4 px-3 hover:text-teal-500 duration-200"
-              to="/login"
+              onClick={() => auth.logout()}
             >
               Logout
             </Link>
