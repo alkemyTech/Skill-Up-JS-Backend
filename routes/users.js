@@ -15,7 +15,7 @@ const router = express.Router()
 
 router.get('/',  getToken, userAuthenticated, get);
 
-router.post('/', upload, schemaValidator(user), schemaValidator(image), createUser);
+router.post('/', createUser);
 
 router.put('/:id', getToken, ownership, schemaValidator(user), updateUser);
 

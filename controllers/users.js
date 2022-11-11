@@ -27,8 +27,8 @@ const get = catchAsync(async (req, res, next) => {
 
 const createUser = async(req, res, next)=>{
   try{
-    const {firstName, lastName, email, password, avatar, roleId} = req.body;
-    const {user, created} = await createUserService({email: email}, {firstName: firstName, lastName: lastName, email: email, password: password, avatar: avatar, roleId: roleId});
+    const {firstName, lastName, email, password, roleId} = req.body;
+    const {user, created} = await createUserService({email: email}, {firstName: firstName, lastName: lastName, email: email, password: password, roleId: roleId});
 
     if(!created){
       endpointResponse({
