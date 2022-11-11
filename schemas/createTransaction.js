@@ -22,22 +22,8 @@ const createTransaction = {
   category: {
     exists: { bail: true, errorMessage: 'Category is required' },
     isIn: {
-      options: ['Egress', 'Income'],
-      errorMessage: 'The allowed values are Egress and Income',
-    },
-  },
-  accountId: {
-    exists: { bail: true, errorMessage: 'Account id is required' },
-    trim: true,
-    isUUID: {
-      errorMessage: 'Account id invalid',
-    },
-  },
-  toAccountId: {
-    exists: { bail: true, errorMessage: 'toAccountId is required' },
-    trim: true,
-    isUUID: {
-      errorMessage: 'Account id invalid',
+      options: ['Expense', 'Income'],
+      errorMessage: 'The allowed values are Expense and Income',
     },
   },
 };

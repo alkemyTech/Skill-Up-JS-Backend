@@ -1,6 +1,5 @@
-const createUpdateAccountSchema = {
+const updateAccountSchema = {
   money: {
-    exists: { errorMessage: 'Money field is required' },
     trim: true,
     isFloat: {
       options: {
@@ -10,17 +9,9 @@ const createUpdateAccountSchema = {
         'Invalid value. Only integer or decimal numbers separated by a point are accepted',
     },
   },
-  isBlocked: {
-    exists: { errorMessage: 'isBlocked field is required' },
-    trim: true,
-    isBoolean: {
-      options: {
-        loose: false,
-        errorMessage:
-          "Invalid value. Only 'false', 'true', '0' and '1' are accepted",
-      },
-    },
+  id: {
+    isUUID: { errorMessage: 'Invalid id' },
   },
 };
 
-module.exports = createUpdateAccountSchema;
+module.exports = updateAccountSchema;
