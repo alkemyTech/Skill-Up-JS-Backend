@@ -11,8 +11,8 @@ const UserPerfil = () => {
   const user = useSelector((state) => state.users.usersList);
   const dispatch = useDispatch();
   const [file, setFile] = useState();
-  const [formValues, setFormValues] = useState({});
-
+  /* const [formValues, setFormValues] = useState({}); */
+  const [errFile, setErrFile]=useState(false)
   const handleFile = (file) => {
     let supported = ["image/jpeg", "image/jpg", "image/svg+xml", "image/webp", "image/png"].map(img => img === file.type);
     if (supported.includes(true)) {
@@ -21,13 +21,17 @@ const UserPerfil = () => {
       formData.append("file", file);
       formData.append("upload_preset", "zcgk2l4m");
       setFile(formData);
+      setErrFile(false)
     }
-    else setFile("")
+    else {
+      setErrFile(true)
+      setFile("")
+    }
   }
   useEffect(() => {
     dispatch(getUsers());
   }, []);
-  
+  /* 
   useEffect(() => {
     setFormValues({
       firstName: user.firstName,
@@ -36,7 +40,7 @@ const UserPerfil = () => {
       password: "",
       image: user.image
     })
-  },[])
+  },[]) */
 
   return (
       <section className="flex flex-col items-center justify-center min-h-[80vh] md:mx-40 mx-10  w-[80vw] bg-gray-100">
@@ -70,14 +74,17 @@ const UserPerfil = () => {
                src={user?.image}
                alt="Profile_image"
              />
-           </div>
+           </div>       
                            <FormItem
                                classLabel="hidden"
                                classInput="w-[40vw] px-4 py-2 mt-2  rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
                  type="file"
                  onChange={(e)=> handleFile(e.target.files[0])}
                  name="file"
-             />                
+                />                
+                <div className="mr-10">
+                <span className={`md:mr-96 ${!errFile && "hidden"} ${errFile && "text-red-900"}`}>Not supported, try another or leave it!</span>
+                </div>
              </div>
              <div className="border-2 w-full mt-10">
                <FormItem

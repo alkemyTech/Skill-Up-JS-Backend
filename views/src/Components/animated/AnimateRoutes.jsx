@@ -2,7 +2,6 @@ import React from 'react'
 import { Routes, Route, useLocation } from "react-router-dom";
 import LandingPage from "../../pages/LandingPage";
 import DashboardPage from "../../pages/DashboardPage";
-import UserProfile from "../../Components/User/UserProfile";
 // import FormLoginRegister from "./Components/Forms/FormLoginRegister";
 import LoginPage from "../../pages/LoginPage";
 import MovementPage from "../../pages/MovementPage";
@@ -12,6 +11,7 @@ import ExpensePage from "../../pages/ExpensePage";
 import TransferPage from "../../pages/TransferPage";
 import About from '../About/About';
 import UserPage from "../../pages/UserPage";
+
 const AnimateRoutes = () => {
     const location = useLocation();
 
