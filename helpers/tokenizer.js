@@ -14,7 +14,7 @@ const tokenizer = {
     // Decode token
     decodeToken: (token) =>{
         const  decodeToken = jwt.decode(token)
-        return decodeToken.id;
+        return decodeToken
     },
     // Verify token
     verifyToken: (token, res) =>{

@@ -3,10 +3,9 @@ const { ErrorObject } = require('../helpers/error');
 
 const userAuthenticated = async (req, res, next) => {
   try {
-    //const { id } = req.params;
     const { id: userId } = req.user;
+    console.log("userId", userId);
 
-    //if (Number(id) === userId) {
     if ( userId && userId != null ) {
       return next();
     } else {
