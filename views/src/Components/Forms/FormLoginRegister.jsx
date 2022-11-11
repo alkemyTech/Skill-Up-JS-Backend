@@ -7,7 +7,7 @@ import { createUser } from "../../redux/features/users/usersGetSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { inputValues } from "./components/inputValues";
-
+import image from '../../assets/wallet.png';
 const FormLoginRegister = () => {
   const [isLogin, setIsLogin] = useState(true);
   const auth = useAuth();
@@ -109,7 +109,7 @@ const FormLoginRegister = () => {
                     <div className="text-center">
                       <img
                         className="mx-auto w-48"
-                        src="/wallet.png"
+                        src={image}
                         alt="logo"
                       />
                       <h4 className="text-2xl font-semibold mt-1 mb-12 pb-1">
