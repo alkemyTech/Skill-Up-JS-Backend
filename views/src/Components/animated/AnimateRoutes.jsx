@@ -19,7 +19,7 @@ const AnimateRoutes = () => {
     <Routes location={location} key={location.pathname}>
       <Route path="/" index element={<LandingPage />} />
       <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="/user/profile" element={<UserProfile />} />
+      <Route path="/user" element={<UserProfile />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/about" element={<About />} />
       <Route path="/movements" element={<MovementsPage />} />
