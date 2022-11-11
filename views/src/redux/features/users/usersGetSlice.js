@@ -52,7 +52,8 @@ export const updateUser = (value) => {
         dispatch(getUsersStart);
         try {
             let newValue = { ...value };
-            if (value.image) {
+            if (typeof (value.image) !== "string") {
+                console.log("entre")
                 let uploadedImage = await axios.post("https://api.cloudinary.com/v1_1/leo-echenique/image/upload", value.image);
                 newValue = {
                     ...value,
