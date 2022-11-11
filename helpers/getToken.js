@@ -7,9 +7,10 @@ const getToken = (req, res, next) => {
 
       const bearerToken = bearerHeader.split(' ')[1];
       req.token = bearerToken; 
-      req.user = decodeToken(bearerToken);
+      let decoded = decodeToken(bearerToken);
+      req.user =decoded.data;
+      
       let verifiedDecodeToken
-
       if (!(verifiedDecodeToken = verifyToken(bearerToken))) {
         throw new Error('Invalid token or missing');
       }

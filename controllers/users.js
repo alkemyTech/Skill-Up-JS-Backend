@@ -31,11 +31,11 @@ const createUser = async(req, res, next)=>{
     const {user, created} = await createUserService({email: email}, {firstName: firstName, lastName: lastName, email: email, password: password, roleId: roleId});
 
     if(!created){
-      endpointResponse({
-        res,
-        message: 'The email exists',
-      });
+      const error = new Error("E-mail exists")
+      error.statusCode = 403
+      throw error;
     }
+    
     else{
       endpointResponse({
         res,
@@ -173,11 +173,23 @@ const loginUser = async(req, res, next) => {
       throw new Error('Invalid e-mail or password');
     }
 
-    let encodedData = encodeToken(loginUser)
+    const userData = {
+      id: loginUser.id,
+      firstName: loginUser.firstName,
+      lastName: loginUser.lastName,
+      email: loginUser.email,
+      avatar: loginUser.avatar,
+      roleId: loginUser.roleId,
+      deletedAt: loginUser.deletedAt,
+      createdAt: loginUser.createdAt, 
+      updatedAt: loginUser.updatedAt,
+    }
+
+    let encodedData = encodeToken(userData)
     endpointResponse({
       res,
       message: 'Successful authentication',
-      body: {userData: loginUser, token: encodedData}
+      body: {userData: userData, token: encodedData}
     });
 
   } catch (error) {
