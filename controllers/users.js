@@ -75,7 +75,7 @@ module.exports = {
   }),
   editById: catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, avatar } = req.body;
     try {
       const currentUser = await User.findByPk(id);
       const hashPass = password
@@ -87,6 +87,7 @@ module.exports = {
           lastName: lastName || currentUser.lastName,
           email: email || currentUser.email,
           password: hashPass,
+          avatar,
         },
         {
           where: { id },
