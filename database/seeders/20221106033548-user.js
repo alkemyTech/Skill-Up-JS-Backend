@@ -82,7 +82,7 @@ module.exports = {
           id: faker.datatype.uuid(),
           amount: faker.finance.amount(),
           concept: faker.lorem.word(),
-          category: faker.helpers.arrayElement(["Income", "Expense"]),
+          category: faker.helpers.arrayElement(["Income", "Expense", "User-transfer"]),
           account_id: account.id,
           to_account_id: accounts[Math.floor(Math.random()*100)].id,
           created_at: createdAt,

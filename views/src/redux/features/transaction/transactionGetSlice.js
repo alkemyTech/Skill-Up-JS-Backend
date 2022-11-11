@@ -1,5 +1,6 @@
 import { getTransactionsFailed, getTransactionsStart, getTransactionsSuccess, transactionId, addTransaction, updateTransaction  } from './transactionSlice';
 import { instance } from '../../instance';
+import { getUsers } from '../users/usersGetSlice';
 
 
 export const getTransactions = () => {
@@ -32,8 +33,8 @@ export const createTransactions = (value) => {
     return async(dispatch) => {
         dispatch(getTransactionsStart());
         try {
-             await instance.post('/transaction', value);
-            dispatch(getTransactions());
+            await instance.post('/transaction', value);
+            dispatch(getUsers());
         } catch (err) {
             dispatch(getTransactionsFailed(err))
         };
