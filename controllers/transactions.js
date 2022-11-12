@@ -22,7 +22,6 @@ module.exports = {
     try {
       const data = await Transaction.findAndCountAll({
         where: { [Op.and]: [filter] },
-        include: Category,
         limit,
         offset,
       });
@@ -41,33 +40,34 @@ module.exports = {
       next(httpError);
     }
   }),
-  // getTransactionById: catchAsync(async (req, res, next) => {
-  //   const { id } = req.params;
-  //   try {
-  //     const response = await Transaction.findByPk(id);
+  getTransactionById: catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const response = await Transaction.findByPk(id);
 
-  //     if (!response) {
-  //       const httpError = createHttpError(
-  //         401,
-  //         `[Error retrieving transaction] - [index - GET]: Couldn't find a transaction with the ID ${id}`
-  //       );
-  //       return next(httpError);
-  //     }
-  //     endpointResponse({
-  //       res,
-  //       message: "Transaction retrieved successfully",
-  //       body: response,
-  //     });
-  //   } catch (error) {
-  //     const httpError = createHttpError(
-  //       error.statusCode,
-  //       `[Error retrieving transaction] - [index - GET]: ${error.message}`
-  //     );
-  //     return next(httpError);
-  //   }
-  // }),
+      if (!response) {
+        const httpError = createHttpError(
+          401,
+          `[Error retrieving transaction] - [index - GET]: Couldn't find a transaction with the ID ${id}`
+        );
+        return next(httpError);
+      }
+      endpointResponse({
+        res,
+        message: "Transaction retrieved successfully",
+        body: response,
+      });
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving transaction] - [index - GET]: ${error.message}`
+      );
+      return next(httpError);
+    }
+  }),
   createTransaction: catchAsync(async (req, res, next) => {
-    const { amount, description, userId, categoryId, toUserId, currency } = req.body;
+    const { amount, description, userId, categoryId, toUserId, currency } =
+      req.body;
 
     // if (!amount || !description || !userId || !categoryId || !type) {
     //   const httpError = createHttpError(
@@ -95,7 +95,7 @@ module.exports = {
         userId,
         categoryId,
         toUserId,
-        currency
+        currency,
       });
 
       endpointResponse({
@@ -180,15 +180,52 @@ module.exports = {
     console.log(userId);
     console.log(req.body);
     try {
-      const income = await Transaction.sum("amount", {
-        where: { userId, categoryId: 1 },
+      const incomePesos = await Transaction.sum("amount", {
+        where: { userId, categoryId: 1, currency: "pesos" },
       });
-      const outcome = await Transaction.sum("amount", {
-        where: { userId, categoryId: 2 },
+      const outcomePesos = await Transaction.sum("amount", {
+        where: { userId, categoryId: 2, currency: "pesos" },
       });
-      let balance = income - outcome;
-      if (balance < 0) balance = 0;
-      const response = { balance, income, outcome };
+      const incomeEuros = await Transaction.sum("amount", {
+        where: { userId, categoryId: 1, currency: "euros" },
+      });
+      const outcomeEuros = await Transaction.sum("amount", {
+        where: { userId, categoryId: 2, currency: "euros" },
+      });
+      const incomeDolares = await Transaction.sum("amount", {
+        where: { userId, categoryId: 1, currency: "dolares" },
+      });
+      const outcomeDolares = await Transaction.sum("amount", {
+        where: { userId, categoryId: 2, currency: "dolares" },
+      });
+      let balancePesos = incomePesos - outcomePesos;
+      if (balancePesos < 0) balancePesos = 0;
+      let balanceDolares = incomeDolares - outcomeDolares;
+      if (balanceDolares < 0) balanceDolares = 0;
+      let balanceEuros = incomeEuros - outcomeEuros;
+      if (balanceEuros < 0) balanceEuros = 0;
+      const balanceArray = [
+        {
+          currency: "pesos",
+          balance: balancePesos,
+          income: incomePesos,
+          outcome: outcomePesos,
+        },
+        {
+          currency: "dolares",
+          balance: balanceDolares,
+          income: incomeDolares,
+          outcome: outcomeDolares,
+        },
+        {
+          currency: "euros",
+          balance: balanceEuros,
+          income: incomeEuros,
+          outcome: outcomeEuros,
+        },
+      ];
+      const response = balanceArray;
+
       endpointResponse({
         res,
         message: "Get balance successfully",

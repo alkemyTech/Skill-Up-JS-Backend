@@ -38,7 +38,7 @@ module.exports = {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          avatar: user.avatar
+          avatar: user.avatar,
         });
         endpointResponse({
           res,
@@ -72,7 +72,7 @@ module.exports = {
         next(httpError);
       }
 
-      const userFound = await User.findOne({ where: { email }, include: Role });
+      const userFound = await User.findOne({ where: { email } });
 
       if (!userFound) {
         const httpError = createHttpError(
@@ -98,8 +98,7 @@ module.exports = {
           firstName: userFound.firstName,
           lastName: userFound.lastName,
           email: userFound.email,
-          role: userFound.Role.name,
-          avatar: userFound.avatar
+          avatar: userFound.avatar,
         });
 
         endpointResponse({
