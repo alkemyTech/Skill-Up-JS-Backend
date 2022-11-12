@@ -22,7 +22,6 @@ module.exports = {
     try {
       const data = await Transaction.findAndCountAll({
         where: { [Op.and]: [filter] },
-        include: Category,
         limit,
         offset,
       });
