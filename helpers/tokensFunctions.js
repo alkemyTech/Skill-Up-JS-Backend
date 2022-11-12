@@ -40,7 +40,7 @@ async function authMiddleware(req, res, next) {
 
     req.body.id = payload.id;
 
-    req.body.username = payload.username;
+    req.body.email = payload.email;
     return next();
   } catch (error) {
     return res
