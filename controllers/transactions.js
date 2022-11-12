@@ -7,6 +7,28 @@ const { Op } = require("sequelize");
 const { filterElements } = require("../helpers/filter");
 
 module.exports = {
+  getAllTransactions: catchAsync(async(req,res,next)=>{
+    const {page= 0, size=5} = req.query
+    const { limit, offset } = getPagination(page, size);
+    try {
+      const data = await Transaction.findAndCountAll({
+        limit,
+        offset,
+      })
+      const response = paginateData(data, page, limit);
+      endpointResponse({
+        res,
+        message: "Transactions retrieved successfully",
+        body: response,
+      });
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving transactions] - [index - GET]: ${error.message}`
+      );
+      next(httpError);
+    }
+  }),
   getTransactions: catchAsync(async (req, res, next) => {
     const { categoryId, description, page, size, currency } = req.query;
     const userId = req.body.id;
