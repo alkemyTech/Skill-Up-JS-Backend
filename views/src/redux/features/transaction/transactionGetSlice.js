@@ -29,7 +29,9 @@ export const getTransactionsById = (id) => {
     };
 };
 
+//Deprecated dispatch beacouse it throw an error that I can not catch
 export const createTransactions = (value) => {
+          //async(dispatch)
     return async() => {
         // dispatch(getTransactionsStart());
         try {
