@@ -42,3 +42,30 @@ export const inputTransaction = yup.object().shape({
     .email('Por favor ingrese un email valido')
     .required('Campo requerido'),
 });
+
+export const updateSchema = yup.object().shape({
+  firstName: yup
+    .string()
+    .min(3, 'Debe tener al menos 3 caracteres')
+    .required('Campo requerido'),
+  lastName: yup
+    .string()
+    .min(3, 'Debe tener al menos 3 caracteres')
+    .required('Campo requerido'),
+  email: yup
+    .string()
+    .email('Por favor ingrese un email valido')
+    .required('Campo requerido'),
+  password: yup
+    .string()
+    .test(
+      'len',
+      'can be empty or with string of at least 4 characters',
+      (val) => {
+        if (val == undefined) {
+          return true;
+        }
+        return ((val.length == 0 || (val.length >= 4 && val.length <= 130)))
+      }
+    ),
+});
