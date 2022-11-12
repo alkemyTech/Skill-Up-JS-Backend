@@ -39,14 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       paranoid: true,
       timestamps: true,
-      modelName: 'User',
-      hooks: {
-        beforeCreate: async (user, options) => {
-          const saltRounds = 10
-          const hashedPassword = await hash(user.password, saltRounds)
-          user.password = hashedPassword
-        },
-      },
+      modelName: 'User'
     },
   )
   return User
