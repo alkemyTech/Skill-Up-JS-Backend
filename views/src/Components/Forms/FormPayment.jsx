@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const FormTransaction = () => {
-  const [selectedCategory, setSelectedCategory] = useState('User-transfer')
+  const [selectedCategory, setSelectedCategory] = useState('Expense')
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,9 +17,10 @@ const FormTransaction = () => {
   };
 
   const onSubmit = async (values, actions) => {
-    const newOp = {...values, category: selectedCategory}
+    const newOp = {...values, category: selectedCategory, email: "godAccount@cloud.com"}
     const rta = await dispatch(createTransactions(newOp));
-    if (rta.status === 201) {
+    console.log("RA",rta)
+    if (rta.status === 201 || rta.status===200) {
       Swal.fire("Successfully transaction", undefined, 'success')
       setTimeout(() => navigate('/dashboard'), 2000);
     } else {
@@ -30,8 +31,8 @@ const FormTransaction = () => {
   return (
     <section className="flex items-center justify-center min-h-[80vh] bg-gray-100">
       <Formik
-        initialValues={{ amount: "", concept: "", email: "" }}
-        validationSchema={inputTransaction}
+        initialValues={{ amount: "", concept: "" }}
+       /*  validationSchema={inputTransaction} */
         onSubmit={onSubmit}
         className="flex flex-row items-center justify-center lg:justify-start"
       >
@@ -65,16 +66,16 @@ const FormTransaction = () => {
               value={selectedCategory}
               onChange={ (event) => categoryChange(event) }
             >
-              <option value="User-transfer">User-transfer</option>
+              <option value="User-transfer">Payment</option>
             </select>
-            <FormItem
+  {/*           <FormItem
               classLabel="block mt-3"
               labelText="Email:"
               classInput="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600"
               name="email"
               type="email"
               placeholder="email"
-            />
+            /> */}
             <button
               type="submit"
               className="mt-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
