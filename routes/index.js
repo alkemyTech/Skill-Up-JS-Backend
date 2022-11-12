@@ -7,8 +7,8 @@ const { authMiddleware } = require("../helpers/tokensFunctions");
 const router = express.Router();
 
 // example of a route with index controller get function
-router.use("/users",authMiddleware, usersRouter);
+router.use("/users", authMiddleware, usersRouter);
 router.use("/auth", authRouter);
-router.use("/transactions",authMiddleware, transactionsRouter);
-router.use("/categories",authMiddleware, categoriesRouter);
+router.use("/transactions", authMiddleware, transactionsRouter);
+router.use("/categories", authMiddleware, categoriesRouter);
 module.exports = router;

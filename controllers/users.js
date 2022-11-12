@@ -75,39 +75,35 @@ module.exports = {
   }),
   editById: catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const { firstName, lastName, email, password, avatar } = req.body;
+    const { firstName, lastName, email, password, avatar } = req.body.values;
     try {
-      const currentUser = await User.findByPk(id);
+      const user = await User.findByPk(id);
+      if (!user) {
+        const httpError = createHttpError(404, `User not found`);
+        res.send(httpError).status(404);
+      }
+
       const hashPass = password
         ? await bcrypt.hash(password, 10).then((hash) => hash)
-        : currentUser.password;
-      const userEdit = await User.update(
-        {
-          firstName: firstName || currentUser.firstName,
-          lastName: lastName || currentUser.lastName,
-          email: email || currentUser.email,
-          password: hashPass,
-          avatar,
-        },
-        {
-          where: { id },
-        }
-      );
-      if (userEdit[0] !== 0) {
-        endpointResponse({
-          res,
-          message: "User updated successfully",
-          //Si el body es 1 es que se modificaron bien los datos
-          //Si es 0 no se modifico ningun dato tira
-          body: userEdit[0],
-        });
-      } else {
-        const httpError = createHttpError(
-          304,
-          `[Error in put options] - [index - PUT]: 'Not fields founds to update'`
-        );
-        next(httpError);
+        : user.password;
+
+      const emailExist = await User.findOne({ where: { email } });
+      if (emailExist) {
+        const httpError = createHttpError(409, `Error Email Exist`);
+        res.send(httpError).status(404);
       }
+      const response = await user.update({
+        firstName,
+        lastName,
+        email,
+        password: hashPass,
+        avatar,
+      });
+      endpointResponse({
+        res,
+        message: "User updated successfully",
+        body: response,
+      });
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
