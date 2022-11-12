@@ -16,7 +16,7 @@ router.get(
     const query = req.query;
     try {
       let users = await ctrlUser.getAll(query);
-      return res.status(201).send(users);
+      return res.status(200).send(users);
     } catch (error) {
       next(error);
     }
@@ -32,7 +32,7 @@ router.get(
     const query = req.query;
     try {
       let user = await ctrlUser.get(id, query);
-      return res.status(201).send(user);
+      return res.status(200).send(user);
     } catch (error) {
       next(error);
     }
@@ -44,7 +44,7 @@ router.get('/', authenticateUser, async (req, res, next) => {
   const id = req.user.sub;
   try {
     let user = await ctrlUser.get(id, limit, offset);
-    return res.status(201).send(user);
+    return res.status(200).send(user);
   } catch (error) {
     next(error);
   }
@@ -75,7 +75,7 @@ router.delete(
 
     try {
       await ctrlUser.delete(id);
-      res.status(200).send('deleted');
+      res.status(202).send('deleted');
     } catch (error) {
       next(error);
     }

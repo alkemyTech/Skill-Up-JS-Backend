@@ -3,7 +3,6 @@ const boom = require('@hapi/boom');
 
 const authenticateUser = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return next(boom.unauthorized('No hay un token presente'));
   }
@@ -22,7 +21,7 @@ const checkRole = (roles) => {
     if (roles.includes(req.user.role)) {
       next();
     } else {
-      next(boom.unauthorized());
+      next(boom.unauthorized('Solo se permiten admins'));
     }
   };
 };

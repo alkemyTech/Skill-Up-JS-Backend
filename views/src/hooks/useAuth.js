@@ -2,7 +2,6 @@ import axios from "axios";
 import { endPoints } from "../services/api";
 
 function useAuth() {
-  
   const signIn = async (email, password) => {
     const options = {
       Headers: {
@@ -10,8 +9,6 @@ function useAuth() {
         "Content-Type": "application/json",
       },
     };
-    console.log({email, password})
-    console.log(endPoints.auth)
     try {
       const { data } = await axios.post(endPoints.auth.login, { email, password }, options);
       console.log({ data });
@@ -24,7 +21,6 @@ function useAuth() {
       }
       throw error;
     }
-  
   };
 
   const logout = () => {

@@ -29,6 +29,20 @@ export const inputLogin = yup.object().shape({
     .min(4, 'Must be at least 4 characters')
     .required('Required'),
 });
+
+export const inputTransaction = yup.object().shape({
+  amount: yup
+    .number()
+    .positive('Debe ser un monto positivo')
+    .required('Campo requerido'),
+  concept: yup
+    .string(),
+  email: yup
+    .string()
+    .email('Por favor ingrese un email valido')
+    .required('Campo requerido'),
+});
+
 export const updateSchema = yup.object().shape({
   firstName: yup
     .string()

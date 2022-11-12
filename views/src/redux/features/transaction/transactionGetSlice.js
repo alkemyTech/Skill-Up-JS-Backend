@@ -1,5 +1,6 @@
 import { getTransactionsFailed, getTransactionsStart, getTransactionsSuccess, transactionId, addTransaction, updateTransaction  } from './transactionSlice';
 import { instance } from '../../instance';
+import { getUsers } from '../users/usersGetSlice';
 
 
 export const getTransactions = () => {
@@ -28,14 +29,19 @@ export const getTransactionsById = (id) => {
     };
 };
 
+//Deprecated dispatch beacouse it throw an error that I can not catch
 export const createTransactions = (value) => {
-    return async(dispatch) => {
-        dispatch(getTransactionsStart());
+          //async(dispatch)
+    return async() => {
+        // dispatch(getTransactionsStart());
         try {
-             await instance.post('/transaction', value);
-            dispatch(getTransactions());
+            const rta = await instance.post('/transaction', value);
+            // dispatch(getUsers());
+            return rta
         } catch (err) {
-            dispatch(getTransactionsFailed(err))
+            if (err.name === 'AxiosError') {
+              return err.response
+            }
         };
     };
 };

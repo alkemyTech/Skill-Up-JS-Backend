@@ -39,6 +39,7 @@ router.post(
       const body = req.body;
       const userId = req.user.sub;
       const newTransaction = await transactions.create(userId, body);
+      console.log({newTransaction})
       res.status(201).send(newTransaction);
     } catch (error) {
       next(error);
