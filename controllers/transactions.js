@@ -67,7 +67,7 @@ module.exports = {
   //   }
   // }),
   createTransaction: catchAsync(async (req, res, next) => {
-    const { amount, description, userId, categoryId, toUserId } = req.body;
+    const { amount, description, userId, categoryId, toUserId, currency } = req.body;
 
     // if (!amount || !description || !userId || !categoryId || !type) {
     //   const httpError = createHttpError(
@@ -95,6 +95,7 @@ module.exports = {
         userId,
         categoryId,
         toUserId,
+        currency
       });
 
       endpointResponse({
