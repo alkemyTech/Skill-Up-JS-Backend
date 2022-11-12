@@ -2,11 +2,11 @@ const bcrypt = require('bcrypt');
 const { User } = require('../database/models');
 const { ErrorObject } = require('../helpers/error');
 
-// not used
-// const hashPassword = async(password, saltRound)=>{
-//     const salt = await bcrypt.genSalt(saltRound);
-//     return await bcrypt.hash(password, salt);        
-// }
+
+const hashPassword = async(password, saltRound)=>{
+    const salt = await bcrypt.genSalt(saltRound);
+    return await bcrypt.hash(password, salt);        
+}
 
 const getUser = async(conditions)=>{
   try{
@@ -22,13 +22,14 @@ const getUser = async(conditions)=>{
 }
 
 const createUserService = async(conditions, body)=>{
+    const hashedPassword = await hashPassword(body.password, 10)
     const [user, created] = await User.findOrCreate({
       where: conditions,
       defaults: {
         firstName: body.firstName,
         lastName: body.lastName,
         email: body.email,
-        password: body.password,
+        password: hashedPassword,
         avatar: body.avatar,
         roleId: body.roleId
       }
@@ -65,10 +66,9 @@ const updatePasswordService = async(conditions, password, newPassword)=>{
     const checkPassword = await bcrypt.compare(password, user.password)
   
     if(checkPassword){
-      //const hashedPassword = await hashPassword(newPassword, 10)
-      //the model generate password hash
+      const hashedPassword = await hashPassword(newPassword, 10)
   
-      User.update({password: newPassword}, {
+      User.update({password: hashedPassword}, {
         where: conditions,
       });
     }
