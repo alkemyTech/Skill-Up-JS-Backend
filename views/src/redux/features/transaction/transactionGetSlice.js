@@ -30,13 +30,16 @@ export const getTransactionsById = (id) => {
 };
 
 export const createTransactions = (value) => {
-    return async(dispatch) => {
-        dispatch(getTransactionsStart());
+    return async() => {
+        // dispatch(getTransactionsStart());
         try {
-            await instance.post('/transaction', value);
-            dispatch(getUsers());
+            const rta = await instance.post('/transaction', value);
+            // dispatch(getUsers());
+            return rta
         } catch (err) {
-            dispatch(getTransactionsFailed(err))
+            if (err.name === 'AxiosError') {
+              return err.response
+            }
         };
     };
 };

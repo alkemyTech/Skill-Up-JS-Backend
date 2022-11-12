@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import FormItem from "./components/FormItem";
-import { useAuth } from "../../hooks/useAuth";
 import { inputTransaction } from "./components/validateSchema";
 import { Form, Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { createTransactions } from "../../redux/features/transaction/transactionGetSlice";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const FormTransaction = () => {
-  const [newTransaction, setNewTransaction] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState('User-transfer')
-  const auth = useAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,9 +18,13 @@ const FormTransaction = () => {
 
   const onSubmit = async (values, actions) => {
     const newOp = {...values, category: selectedCategory}
-    console.log(newOp);
-    dispatch(createTransactions(newOp));
-    navigate('/dashboard')
+    const rta = await dispatch(createTransactions(newOp));
+    if (rta.status === 201) {
+      Swal.fire("Successfully transaction", undefined, 'success')
+      setTimeout(() => navigate('/dashboard'), 2000);
+    } else {
+      Swal.fire(`(${rta.status})  ${rta.data.message}`, undefined, 'error')
+    }
   };
 
   return (
@@ -78,7 +80,7 @@ const FormTransaction = () => {
               type="submit"
               className="mt-2 text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-2 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
             >
-              {newTransaction ? "Pagar" : "Editar"}
+              Enviar
             </button>
           </Form>
         )}
