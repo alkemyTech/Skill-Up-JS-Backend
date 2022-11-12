@@ -1,17 +1,5 @@
 exports.transactions = {
-    user: {
-      exists: {
-        errorMessage: 'User id is required',
-        options: { checkFalsy: true },
-      },
-      notEmpty: {
-        errorMessage: 'User Id is empty',
-      },
-      isInt: {
-        errorMessage: 'User Id must be an integer/number',
-      },
-    },
-    category: {
+    categoryId: {
       exists: {
         errorMessage: 'Category is required',
         options: { checkFalsy: true },

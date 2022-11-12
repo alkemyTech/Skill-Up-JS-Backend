@@ -5,8 +5,10 @@ const createHttpError = require("http-errors");
 //Validation middleware is needed.
 
 const getTransactions = async (req, res, next) => {
+  let queryConfig = {deletedAt: null}
+  req.user.roleId == 1 ? undefined : queryConfig.userId = req.user.id
   try {
-      const response = await Transaction.findAll({where:{deletedAt: null}})
+      const response = await Transaction.findAll({where: queryConfig})
       endpointResponse({
           res,
           message: 'Operacion Exitosa',
@@ -40,14 +42,25 @@ const getTransaction = async (req, res, next) => {
 
 const createTransaction = async (req, res, next) => {
   try {
-    const response = await Transaction.create({
-      id: req.body.id,
+    let transaction = {
       amount: req.body.amount,
       description: req.body.description,
       date: req.body.date,
-      userId: req.body.userId,
       categoryId: req.body.categoryId,
-    });
+    }
+    if (req.user.roleId == 1)  {
+      if (req.body.id) {
+        transaction.userId = req.body.id;
+      } else {
+        transaction.userId = req.user.id
+      }
+    } else {
+      transaction.userId = req.user.id
+    }
+
+    const response = await Transaction.create(
+      transaction,
+    );
     if (response) {
       endpointResponse({
         res,
@@ -67,14 +80,25 @@ const createTransaction = async (req, res, next) => {
 };
 // Operation update  controller
 const updateTransaction = async (req, res, next) => {
+  
   try {
+    let transaction = {
+      amount: req.body.amount,
+      date: req.body.date,
+      categoryId: req.body.categoryId,
+    }
+    if (req.user.roleId == 1)  {
+      if (req.body.id) {
+        transaction.userId = req.body.id;
+      } else {
+        transaction.userId = req.user.id
+      }
+    } else {
+      transaction.userId = req.user.id
+    }
+    
     const response = await Transaction.update(
-      {
-        userId: req.body.id,
-        amount: req.body.amount,
-        date: req.body.date,
-        categoryId: req.body.categoryId,
-      },
+      transaction,
       {
         where: {
           id: req.params.id,
