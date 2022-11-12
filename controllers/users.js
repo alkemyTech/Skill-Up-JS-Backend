@@ -14,7 +14,7 @@ module.exports = {
       include: [
         {
           association: 'account',
-          include: [ 'transaction', 'incomingTransaction' ],
+          include: ['transaction', 'incomingTransaction'],
           options
         }
       ]
@@ -64,6 +64,7 @@ module.exports = {
     else throw boom.forbidden("Email already exists")
   },
   put: async (schema, userId) => {
+
     // traigo el user
     // verifico que si el email es distinto al que estaba y YA EXISTE en la base de datos, error.
     // si no, modifico y devuelvo lo modificado
@@ -76,8 +77,17 @@ module.exports = {
         }
       }
     })
+
     if (existingEmail) throw boom.unauthorized("This email already exists");
-    if (schema.image.length < 2) schema.image = user.image;
+    if (schema.image === undefined) {
+
+      schema.image = user.image;
+
+    }
+    if (typeof (schema.image) === "string") {
+      if (schema.image.length < 2) schema.image = user.image;
+
+    }
     if (schema.password.length) {
       if (schema.password === user.password) schema.password = user.password
       else {
@@ -86,7 +96,7 @@ module.exports = {
       }
 
     } else schema.password = user.password;
-
+    console.log(schema, "THE SCHEMA")
     await user.update(schema)
     return user
   },
