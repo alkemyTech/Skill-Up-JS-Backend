@@ -78,19 +78,16 @@ module.exports = {
     const { firstName, lastName, email, password, avatar } = req.body.values;
     try {
       const user = await User.findByPk(id);
-      if (!user) {
-        const httpError = createHttpError(404, `User not found`);
-        res.send(httpError).status(404);
-      }
+      if (!user) return res.status(404).send({ error: "User not found" });
 
       const hashPass = password
         ? await bcrypt.hash(password, 10).then((hash) => hash)
         : user.password;
 
       const emailExist = await User.findOne({ where: { email } });
-      if (emailExist) {
-        const httpError = createHttpError(409, `Error Email Exist`);
-        res.send(httpError).status(404);
+      if (emailExist?.email !== user.email) {
+        if (emailExist)
+          return res.status(404).send({ error: "Error Email Exist!" });
       }
       const response = await user.update({
         firstName,
