@@ -2,7 +2,7 @@ const createHttpError = require('http-errors')
 const { User } = require('../database/models')
 const { endpointResponse } = require('../helpers/success')
 const { catchAsync } = require('../helpers/catchAsync');
-const { createUserService, userUpdateService, userDeleteService, updatePasswordService, loginUserService } = require('../services/userServices');
+const { createUserService, userUpdateService, userDeleteService, updatePasswordService, loginUserService, getUserService } = require('../services/userServices');
 const { encodeToken } = require('../helpers/tokenizer');
 const { ErrorObject } = require('../helpers/error');
 
@@ -190,7 +190,7 @@ const loginUser = async(req, res, next) => {
 }
 const getUser = async (req, res ,next) => {
   try {
-    const response = await User.findOne({where:{userId: req.params.id}})
+    const response = await getUserService({id: req.user.id})
     if(response){
       endpointResponse({
         res,

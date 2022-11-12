@@ -25,7 +25,7 @@ router.put('/changepassword/:id', getToken, userAuthenticated, ownership, update
 
 router.post('/login', schemaValidator(login), loginUser)
 
-router.get('/:id',  getToken, userAuthenticated, ownership, getUser)
+router.get('/user',  getToken, userAuthenticated, ownership, getUser)
 
 
 module.exports = router

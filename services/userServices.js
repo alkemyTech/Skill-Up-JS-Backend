@@ -8,7 +8,7 @@ const hashPassword = async(password, saltRound)=>{
     return await bcrypt.hash(password, salt);        
 }
 
-const getUser = async(conditions)=>{
+const getUserService = async(conditions)=>{
   try{
     const user = await User.findOne({
       where: conditions
@@ -121,7 +121,7 @@ const loginUserService = async(email, password)=>{
   try{
     let userToLogin
     try {
-      userToLogin = await getUser({ email: email })
+      userToLogin = await getUserService({ email: email })
     } catch (err) {
       return new ErrorObject(err.message, 500, err);
     }
@@ -141,5 +141,6 @@ module.exports = {
   userUpdateService,
   userDeleteService,
   updatePasswordService,
-  loginUserService
+  loginUserService,
+  getUserService
 }
