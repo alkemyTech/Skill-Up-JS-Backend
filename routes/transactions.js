@@ -1,7 +1,6 @@
 const express = require('express');
 const { getTransactions, getTransaction, createTransaction, updateTransaction, deleteTransaction } = require('../controllers/transactions');
 const getToken = require('../helpers/getToken');
-const ownership = require('../middlewares/ownership');
 const { userAuthenticated } = require('../middlewares/userAuthenticated');
 const { schemaValidator } = require('../middlewares/validator');
 const { transactions } = require('../schemas/transactions');
