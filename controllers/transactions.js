@@ -40,33 +40,34 @@ module.exports = {
       next(httpError);
     }
   }),
-  // getTransactionById: catchAsync(async (req, res, next) => {
-  //   const { id } = req.params;
-  //   try {
-  //     const response = await Transaction.findByPk(id);
+  getTransactionById: catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const response = await Transaction.findByPk(id);
 
-  //     if (!response) {
-  //       const httpError = createHttpError(
-  //         401,
-  //         `[Error retrieving transaction] - [index - GET]: Couldn't find a transaction with the ID ${id}`
-  //       );
-  //       return next(httpError);
-  //     }
-  //     endpointResponse({
-  //       res,
-  //       message: "Transaction retrieved successfully",
-  //       body: response,
-  //     });
-  //   } catch (error) {
-  //     const httpError = createHttpError(
-  //       error.statusCode,
-  //       `[Error retrieving transaction] - [index - GET]: ${error.message}`
-  //     );
-  //     return next(httpError);
-  //   }
-  // }),
+      if (!response) {
+        const httpError = createHttpError(
+          401,
+          `[Error retrieving transaction] - [index - GET]: Couldn't find a transaction with the ID ${id}`
+        );
+        return next(httpError);
+      }
+      endpointResponse({
+        res,
+        message: "Transaction retrieved successfully",
+        body: response,
+      });
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving transaction] - [index - GET]: ${error.message}`
+      );
+      return next(httpError);
+    }
+  }),
   createTransaction: catchAsync(async (req, res, next) => {
-    const { amount, description, userId, categoryId, toUserId, currency } = req.body;
+    const { amount, description, userId, categoryId, toUserId, currency } =
+      req.body;
 
     // if (!amount || !description || !userId || !categoryId || !type) {
     //   const httpError = createHttpError(
@@ -94,7 +95,7 @@ module.exports = {
         userId,
         categoryId,
         toUserId,
-        currency
+        currency,
       });
 
       endpointResponse({
