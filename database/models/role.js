@@ -10,8 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Role.hasMany(models.User, {
         foreignKey: "roleId",
-        onDelete: "cascade",
-        onUpdate: "cascade",
+        allowNull: false,
       });
     }
   }
