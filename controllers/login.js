@@ -15,43 +15,40 @@ module.exports = {
       );
       next(httpError);
     }
+    console.log("asd");
+
     const hashPass = await bcrypt.hash(password, 10).then(function (hash) {
       return hash;
     });
     try {
-      const searchUser = await User.findOne({
-        where: {
-          email,
-        },
+      console.log("asd");
+
+      const searchUser = await User.findOne({ where: { email } });
+
+      if (searchUser) {
+        return res.status(404).send({ error: "Error Email Exist!" });
+      }
+      console.log(req.body);
+      const user = await User.create({
+        firstName,
+        lastName,
+        email,
+        password: hashPass,
+        avatar,
       });
 
-      if (!searchUser) {
-        const user = await User.create({
-          firstName,
-          lastName,
-          email,
-          password: hashPass,
-          avatar: avatar && avatar,
-        });
-        const token = await generateToken({
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email,
-          avatar: user.avatar,
-        });
-        endpointResponse({
-          res,
-          message: "User created successfully",
-          body: { token },
-        });
-      } else {
-        const httpError = createHttpError(
-          404,
-          `[Error email already exist] - [index - POST]: 'Error the email: ${email} already exist`
-        );
-        next(httpError);
-      }
+      const token = await generateToken({
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        avatar: user.avatar,
+      });
+      endpointResponse({
+        res,
+        message: "User created successfully",
+        body: { token },
+      });
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
@@ -72,7 +69,6 @@ module.exports = {
         next(httpError);
       }
 
-
       const userFound = await User.findOne({ where: { email } });
 
       console.log(userFound);
@@ -87,7 +83,6 @@ module.exports = {
         password,
         userFound?.dataValues.password
       );
-      // console.log(validPassword);
       if (!validPassword) {
         const httpError = createHttpError(
           404,
@@ -102,8 +97,7 @@ module.exports = {
           email: userFound.email,
 
           avatar: userFound.avatar,
-          roleId: userFound.roleId
-
+          roleId: userFound.roleId,
         });
 
         endpointResponse({
