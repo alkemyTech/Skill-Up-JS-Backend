@@ -7,14 +7,14 @@ const { Op } = require("sequelize");
 const { filterElements } = require("../helpers/filter");
 
 module.exports = {
-  getAllTransactions: catchAsync(async(req,res,next)=>{
-    const {page= 0, size=5} = req.query
+  getAllTransactions: catchAsync(async (req, res, next) => {
+    const { page = 0, size = 5 } = req.query;
     const { limit, offset } = getPagination(page, size);
     try {
       const data = await Transaction.findAndCountAll({
         limit,
         offset,
-      })
+      });
       const response = paginateData(data, page, limit);
       endpointResponse({
         res,
@@ -89,7 +89,7 @@ module.exports = {
   }),
   createTransaction: catchAsync(async (req, res, next) => {
     const { amount, description, userId, categoryId, currency } = req.body;
-
+    console.log(req.body);
     const date = new Date();
 
     try {
@@ -99,7 +99,6 @@ module.exports = {
         date,
         userId,
         categoryId,
-        toUserId,
         currency,
       });
 
