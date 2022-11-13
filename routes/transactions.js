@@ -6,6 +6,7 @@ const {
   updateTransaction,
   deleteTransaction,
   getBalance,
+  sendMoney,
 } = require("../controllers/transactions");
 const { validateTransaction } = require("../middlewares/transactionValidators");
 const { authMiddleware } = require("../helpers/tokensFunctions");
@@ -24,5 +25,5 @@ router
   .delete(deleteTransaction);
 
 router.get("/balance/user", getBalance);
-router.post("/send", createTransaction);
+router.post("/send", sendMoney);
 module.exports = router;

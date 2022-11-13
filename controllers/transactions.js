@@ -1,5 +1,5 @@
 const createHttpError = require("http-errors");
-const { Transaction, Category } = require("../database/models");
+const { Transaction, User } = require("../database/models");
 const { endpointResponse } = require("../helpers/success");
 const { catchAsync } = require("../helpers/catchAsync");
 const { getPagination, paginateData } = require("../helpers/pagination");
@@ -10,7 +10,7 @@ module.exports = {
   getTransactions: catchAsync(async (req, res, next) => {
     const { categoryId, description, page, size, currency } = req.query;
     const userId = req.body.id;
-    console.log(userId);
+
     const filter = filterElements({
       userId,
       categoryId,
@@ -66,25 +66,8 @@ module.exports = {
     }
   }),
   createTransaction: catchAsync(async (req, res, next) => {
-    const { amount, description, userId, categoryId, toUserId, currency } =
-      req.body;
+    const { amount, description, userId, categoryId, currency } = req.body;
 
-    // if (!amount || !description || !userId || !categoryId || !type) {
-    //   const httpError = createHttpError(
-    //     400,
-    //     `[Error creating transactions] - [index - POST]: All fields are required`
-
-    //   )
-    //   return next(httpError)
-    // }
-    // if (amount <= 0) {
-    //   const httpError = createHttpError(
-    //     403,
-    //     'apllication/json'
-    //       `[Error creating transactions] - [index - POST]: Amount must be greater than 0`,
-    //   )
-    //   return next(httpError)
-    // }
     const date = new Date();
 
     try {
@@ -174,11 +157,8 @@ module.exports = {
     }
   }),
   getBalance: catchAsync(async (req, res, next) => {
-    console.log("ENTRO ACA");
     const userId = req.body.id;
-    //TODO probably we shouldn't send the id at params.
-    console.log(userId);
-    console.log(req.body);
+
     try {
       const incomePesos = await Transaction.sum("amount", {
         where: { userId, categoryId: 1, currency: "pesos" },
@@ -235,6 +215,51 @@ module.exports = {
       const httpError = createHttpError(
         error.statusCode,
         `[Error getting transactions] - [index - GET]: ${error.message}`
+      );
+      next(httpError);
+    }
+  }),
+  sendMoney: catchAsync(async (req, res, next) => {
+    const { amount, description, toUserEmail } = req.body;
+    const userId = req.body.id;
+    console.log(req.body);
+    const date = new Date();
+    const findSendUser = await User.findOne({ where: { email: toUserEmail } });
+    if (!findSendUser) {
+      const httpError = createHttpError(
+        404,
+        `[Error Sending Money] - [index - PUT]: Cannot Send Money To This User`
+      );
+      return next(httpError);
+    }
+    console.log(findSendUser);
+    try {
+      const response = await Transaction.create({
+        amount,
+        description,
+        date,
+        userId,
+        categoryId: 2,
+        toUserId: findSendUser.id,
+      });
+
+      await Transaction.create({
+        amount,
+        description,
+        date,
+        userId: findSendUser.id,
+        categoryId: 1,
+      });
+
+      endpointResponse({
+        res,
+        message: "Money send successfully",
+        body: response,
+      });
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error Sending Money] - [index - POST]: ${error.message}`
       );
       next(httpError);
     }

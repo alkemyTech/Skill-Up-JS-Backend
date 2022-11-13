@@ -6,7 +6,7 @@ module.exports = {
       "Transactions",
       [
         {
-          description: "transfer1",
+          description: "Carga Dinero",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -15,7 +15,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer2",
+          description: "Compra pantalon",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -24,7 +24,7 @@ module.exports = {
           categoryId: 2,
         },
         {
-          description: "transfer3",
+          description: "Compra remera",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -33,7 +33,7 @@ module.exports = {
           categoryId: 2,
         },
         {
-          description: "transfer4",
+          description: "Venta ropa usada",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -42,7 +42,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer5",
+          description: "Venta computadora",
           amount: 8000,
           userId: 2,
           date: new Date(),
@@ -51,7 +51,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "sendMoney",
+          description: "Enviar dinero",
           amount: 8000,
           userId: 2,
           date: new Date(),
@@ -61,7 +61,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer6",
+          description: "Venta",
           amount: 5000,
           userId: 3,
           date: new Date(),
@@ -70,7 +70,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer7",
+          description: "Venta Pantalon",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -79,7 +79,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer8",
+          description: "Venta Remera",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -88,7 +88,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer9",
+          description: "Venta Celular",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -97,7 +97,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer10",
+          description: "Venta utiles",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -106,7 +106,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer11",
+          description: "Venta Remera",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -115,7 +115,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer12",
+          description: "Venta Estufa",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -124,7 +124,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer13",
+          description: "Venta Aire",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -133,7 +133,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer14",
+          description: "Venta Escritorio",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -142,7 +142,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer15",
+          description: "Venta Heladera",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -151,7 +151,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer16",
+          description: "Compra Mesa",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -160,7 +160,7 @@ module.exports = {
           categoryId: 2,
         },
         {
-          description: "transfer17",
+          description: "Venta Rapida",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -169,7 +169,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer18",
+          description: "Compra Mc Donalds",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -178,7 +178,7 @@ module.exports = {
           categoryId: 2,
         },
         {
-          description: "transfer19",
+          description: "Venta Pasaje",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -187,7 +187,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer20",
+          description: "Compra Silla",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -196,7 +196,7 @@ module.exports = {
           categoryId: 2,
         },
         {
-          description: "transfer21",
+          description: "Venta Balanza",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -205,7 +205,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer22",
+          description: "Compra Estufa",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -214,7 +214,7 @@ module.exports = {
           categoryId: 2,
         },
         {
-          description: "transfer23",
+          description: "Venta Usados",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -223,7 +223,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer24",
+          description: "Compra",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -232,7 +232,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer25",
+          description: "Compra",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -241,7 +241,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer26",
+          description: "Venta",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -250,7 +250,7 @@ module.exports = {
           categoryId: 2,
         },
         {
-          description: "transfer27",
+          description: "Compra",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -259,7 +259,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer28",
+          description: "Compra",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -268,7 +268,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer29",
+          description: "Venta",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -277,7 +277,7 @@ module.exports = {
           categoryId: 2,
         },
         {
-          description: "transfer30",
+          description: "Compra",
           amount: 2000,
           userId: 1,
           date: new Date(),
@@ -286,7 +286,7 @@ module.exports = {
           categoryId: 1,
         },
         {
-          description: "transfer31",
+          description: "Venta",
           amount: 2000,
           userId: 1,
           date: new Date(),
