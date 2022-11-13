@@ -18,7 +18,7 @@ module.exports = {
         error.statusCode,
         `[Error retrieving users] - [index - GET]: ${error.message}`
       );
-      next(httpError);
+      return next(httpError) ;
     }
   }),
   getById: catchAsync(async (req, res, next) => {
@@ -36,14 +36,14 @@ module.exports = {
           404,
           `[Error retrieving users] - [index - GET]: 'User not exist'`
         );
-        next(httpError);
+        return next(httpError);
       }
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
         `[Error retrieving users] - [index - GET]: ${error.message}`
       );
-      next(httpError);
+      return next(httpError) ;
     }
   }),
 
@@ -60,35 +60,46 @@ module.exports = {
         });
       } else {
         const httpError = createHttpError(
-          304,
+          404,
           `[Id not found] - [index - DELETE]: 'User not found'`
         );
-        next(httpError);
+        return next(httpError) ;
       }
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
         `[Error in delete options] - [index - DELETE]: ${error.message}`
       );
-      next(httpError);
+      return next(httpError) ;
     }
   }),
   editById: catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const { firstName, lastName, email, password, avatar } = req.body.values;
+    const { firstName, lastName, email, password, avatar } = req.body;
+
+    if (!firstName || !lastName || !email || !password ) {
+      const httpError = createHttpError(
+        400,
+        `[Error missing fields] - [index - POST]: 'Required fields`
+      );
+      return next(httpError) ;
+    }
+
+    const user = await User.findByPk(id);
+    if (!user) return res.status(404).send({ error: "User not found" });
+
+    const hashPass = password
+      ? await bcrypt.hash(password, 10).then((hash) => hash)
+      : user.password;
+
+    const emailExist = await User.findOne({ where: { email } });
+    if (emailExist?.email !== user.email) {
+      if (emailExist)
+        return res.status(404).send({ error: "Error Email Exist!" });
+    }
+
     try {
-      const user = await User.findByPk(id);
-      if (!user) return res.status(404).send({ error: "User not found" });
 
-      const hashPass = password
-        ? await bcrypt.hash(password, 10).then((hash) => hash)
-        : user.password;
-
-      const emailExist = await User.findOne({ where: { email } });
-      if (emailExist?.email !== user.email) {
-        if (emailExist)
-          return res.status(404).send({ error: "Error Email Exist!" });
-      }
       const response = await user.update({
         firstName,
         lastName,
@@ -106,7 +117,7 @@ module.exports = {
         error.statusCode,
         `[Error in put options] - [index - PUT]: ${error.message}`
       );
-      next(httpError);
+      return next(httpError) ;
     }
   }),
 };

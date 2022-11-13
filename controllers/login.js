@@ -13,7 +13,14 @@ module.exports = {
         404,
         `[Error missing fields] - [index - POST]: 'Required fields`
       );
-      next(httpError);
+      return next(httpError);
+    }
+    if (!firstName || !lastName || !email || !password) {
+      const httpError = createHttpError(
+        404,
+        `[Error missing fields] - [index - POST]: 'Required fields`
+      );
+      return next(httpError);
     }
     const hashPass = await bcrypt.hash(password, 10).then(function (hash) {
       return hash;
@@ -50,14 +57,14 @@ module.exports = {
           404,
           `[Error email already exist] - [index - POST]: 'Error the email: ${email} already exist`
         );
-        next(httpError);
+       return  next(httpError);
       }
     } catch (error) {
       const httpError = createHttpError(
         error.statusCode,
         `[Error retrieving users] - [index - POST]: ${error.message}`
       );
-      next(httpError);
+     return next(httpError);
     }
   }),
 

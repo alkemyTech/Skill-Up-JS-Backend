@@ -11,8 +11,9 @@
   },
   "scripts": {
     "start": "nodemon node app.js",
-    "test": "mocha ./test/*.js",
+    "test": " npm run deletedb & npm run createdbtest & npm run migrate & npm run seed & mocha ./test/*.js --exit",
     "createdb": "sequelize db:create alkemybank",
+    "createdbtest": "sequelize db:create alkemybank-test",
     "deletedb": "sequelize db:drop",
     "migrate": "sequelize db:migrate",
     "seed": "sequelize db:seed:all",
