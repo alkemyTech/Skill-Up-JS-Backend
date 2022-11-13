@@ -76,7 +76,6 @@ module.exports = {
         where: { email },
         // , include: Role
       });
-      console.log(userFound);
       if (!userFound) {
         const httpError = createHttpError(
           404,
@@ -88,7 +87,6 @@ module.exports = {
         password,
         userFound?.dataValues.password
       );
-      // console.log(validPassword);
       if (!validPassword) {
         const httpError = createHttpError(
           404,
