@@ -91,7 +91,7 @@ module.exports = {
 
       const emailExist = await User.findOne({ where: { email } });
 
-      if (emailExist) {
+      if (emailExist && emailExist.email !== user.email) {
         return res.status(404).send({ error: "Error Email Exist!" });
       }
 
