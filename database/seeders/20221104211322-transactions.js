@@ -13,6 +13,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Compra pantalon",
@@ -22,6 +23,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 2,
+          currency: "pesos",
         },
         {
           description: "Compra remera",
@@ -31,6 +33,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 2,
+          currency: "pesos",
         },
         {
           description: "Venta ropa usada",
@@ -40,6 +43,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta computadora",
@@ -49,6 +53,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Enviar dinero",
@@ -59,6 +64,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta",
@@ -68,6 +74,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta Pantalon",
@@ -77,6 +84,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta Remera",
@@ -86,6 +94,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta Celular",
@@ -95,6 +104,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta utiles",
@@ -104,6 +114,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta Remera",
@@ -113,6 +124,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta Estufa",
@@ -122,6 +134,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta Aire",
@@ -131,6 +144,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta Escritorio",
@@ -140,6 +154,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta Heladera",
@@ -149,6 +164,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Compra Mesa",
@@ -158,6 +174,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 2,
+          currency: "pesos",
         },
         {
           description: "Venta Rapida",
@@ -167,6 +184,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Compra Mc Donalds",
@@ -176,6 +194,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 2,
+          currency: "pesos",
         },
         {
           description: "Venta Pasaje",
@@ -185,6 +204,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Compra Silla",
@@ -194,6 +214,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 2,
+          currency: "pesos",
         },
         {
           description: "Venta Balanza",
@@ -203,6 +224,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Compra Estufa",
@@ -212,6 +234,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 2,
+          currency: "pesos",
         },
         {
           description: "Venta Usados",
@@ -221,6 +244,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Compra",
@@ -230,6 +254,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Compra",
@@ -239,6 +264,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta",
@@ -248,6 +274,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 2,
+          currency: "pesos",
         },
         {
           description: "Compra",
@@ -257,6 +284,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Compra",
@@ -264,8 +292,9 @@ module.exports = {
           userId: 1,
           date: new Date(),
           createdAt: new Date(),
-          updatedAt: new Date(),
           categoryId: 1,
+          updatedAt: new Date(),
+          currency: "pesos",
         },
         {
           description: "Venta",
@@ -275,6 +304,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 2,
+          currency: "pesos",
         },
         {
           description: "Compra",
@@ -284,6 +314,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 1,
+          currency: "pesos",
         },
         {
           description: "Venta",
@@ -293,6 +324,7 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
           categoryId: 2,
+          currency: "pesos",
         },
       ],
       {}
