@@ -8,6 +8,7 @@ const { generateToken } = require("../helpers/tokensFunctions");
 module.exports = {
   signUp: catchAsync(async (req, res, next) => {
     const { firstName, lastName, email, password, avatar } = req.body;
+
     if (!firstName || !lastName || !email || !password) {
       const httpError = createHttpError(
         404,
@@ -106,8 +107,12 @@ module.exports = {
           body: { token },
         });
       }
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      const httpError = createHttpError(
+        error.statusCode,
+        `[Error retrieving users] - [index - POST]: ${error.message}`
+      );
+      next(httpError);
     }
   }),
 };

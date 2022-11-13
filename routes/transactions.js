@@ -6,13 +6,15 @@ const {
   updateTransaction,
   deleteTransaction,
   getBalance,
-  getAllTransactions
+  sendMoney,
+
+  getAllTransactions,
 } = require("../controllers/transactions");
 const { validateTransaction } = require("../middlewares/transactionValidators");
 
 const router = express.Router();
 
-router.get('/all',getAllTransactions)
+router.get("/admin/all", getAllTransactions);
 
 router
   .route("/")
@@ -26,5 +28,5 @@ router
   .delete(deleteTransaction);
 
 router.get("/balance/user", getBalance);
-router.post("/send", createTransaction);
+router.post("/send", sendMoney);
 module.exports = router;
