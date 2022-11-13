@@ -7,11 +7,14 @@ const {
   deleteTransaction,
   getBalance,
   sendMoney,
+
+  getAllTransactions,
 } = require("../controllers/transactions");
 const { validateTransaction } = require("../middlewares/transactionValidators");
-const { authMiddleware } = require("../helpers/tokensFunctions");
 
 const router = express.Router();
+
+router.get("/admin/all", getAllTransactions);
 
 router
   .route("/")
