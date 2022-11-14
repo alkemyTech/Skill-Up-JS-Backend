@@ -69,7 +69,7 @@ module.exports = {
 
       if (!response) {
         const httpError = createHttpError(
-          401,
+          404,
           `[Error retrieving transaction] - [index - GET]: Couldn't find a transaction with the ID ${id}`
         );
         return next(httpError);
@@ -121,7 +121,7 @@ module.exports = {
     if (!description) {
       const httpError = createHttpError(
         400,
-        `[Error updating transactions] - [index - PUT]: amount, userId, categoryId and date are required`
+        `[Error updating transactions] - [index - PUT]: description is required`
       );
       return next(httpError);
     }
@@ -129,7 +129,7 @@ module.exports = {
     const foundTransaction = await Transaction.findByPk(id);
     if (!foundTransaction) {
       const httpError = createHttpError(
-        401,
+        404,
         `[Error updating transactions] - [index - PUT]: Couldn't find a transaction with the ID ${id}`
       );
       return next(httpError);
@@ -161,6 +161,15 @@ module.exports = {
   }),
   deleteTransaction: catchAsync(async (req, res, next) => {
     const { id } = req.params;
+
+    const foundTransaction = await Transaction.findByPk(id);
+    if (!foundTransaction) {
+      const httpError = createHttpError(
+        404,
+        `[Error updating transactions] - [index - PUT]: Couldn't find a transaction with the ID ${id}`
+      );
+      return next(httpError);
+    }
 
     try {
       const response = await Transaction.destroy({ where: { id } });

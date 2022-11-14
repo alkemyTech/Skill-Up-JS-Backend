@@ -30,7 +30,7 @@ module.exports = {
 
       if (!response) {
         const httpError = createHttpError(
-          401,
+          404,
           `[Error retrieving categories] - [index - GET]: Couldn't find a category`, 
         )
         return next(httpError)
@@ -52,6 +52,16 @@ module.exports = {
 
   deleteCategory: catchAsync(async (req, res, next) => {
     const { id } = req.params;
+
+    const foundCategory = await Category.findByPk(id)
+
+    if (!foundCategory) {
+      const httpError = createHttpError(
+        404,
+        `[Error updating category] - [index - PUT]: Couldn't find a category`,
+      )
+      return next(httpError)
+    }
 
     try {
       const response = await Category.destroy({where: {id}})
@@ -113,7 +123,7 @@ module.exports = {
 
     if (!foundCategory) {
       const httpError = createHttpError(
-        401,
+        404,
         `[Error updating category] - [index - PUT]: Couldn't find a category`,
       )
       return next(httpError)

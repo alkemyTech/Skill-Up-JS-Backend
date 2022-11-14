@@ -14,15 +14,20 @@ module.exports = {
         404,
         `[Error missing fields] - [index - POST]: 'Required fields`
       );
-      next(httpError);
+      return next(httpError);
     }
-    console.log("asd");
+    if (!firstName || !lastName || !email || !password) {
+      const httpError = createHttpError(
+        404,
+        `[Error missing fields] - [index - POST]: 'Required fields`
+      );
+      return next(httpError);
+    }
 
     const hashPass = await bcrypt.hash(password, 10).then(function (hash) {
       return hash;
     });
     try {
-      console.log("asd");
 
       const searchUser = await User.findOne({ where: { email } });
 
@@ -55,7 +60,7 @@ module.exports = {
         error.statusCode,
         `[Error retrieving users] - [index - POST]: ${error.message}`
       );
-      next(httpError);
+     return next(httpError);
     }
   }),
 
