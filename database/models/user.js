@@ -1,7 +1,7 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
+const bcrypt = require("bcrypt");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -10,22 +10,40 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.belongsTo(models.Role, { foreignKey: 'roleId' });
+      User.belongsTo(models.Role, {
+        foreignKey: "roleId",
+      });
+      User.hasMany(models.Transaction, {
+        foreignKey: "userId",
+      });
     }
+  }
+  User.prototype.comparePassword = async (inputPassword, password) => {
+    return await bcrypt.compare(inputPassword, password);
   };
-  User.init({
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    avatar: DataTypes.STRING,
-    roleId: DataTypes.INTEGER,
-    deletedAt: {
-      type: DataTypes.STRING
+  User.init(
+    {
+      firstName: DataTypes.STRING,
+      lastName: DataTypes.STRING,
+
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      avatar: {
+        type: DataTypes.STRING,
+        defaultValue:
+          "http://www.elblogdecha.org/wp-content/uploads/2021/06/perfil-vacio.jpg",
+      },
+      password: DataTypes.STRING,
+      roleId: { type: DataTypes.INTEGER, defaultValue: 2 },
     },
-  }, {
-    sequelize,
-    timestamps: true,
-    modelName: 'User',
-  });
+    {
+      sequelize,
+      paranoid: true,
+      timestamps: true,
+      modelName: "User",
+    }
+  );
   return User;
 };
